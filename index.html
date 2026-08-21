@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ro" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studiu și Organizare – Pregătire Întruniri Creștine</title>
+  <meta name="description" content="Aplicație personală pentru pregătirea întrunirilor creștine, studiul publicațiilor Turnul de Veghe și organizarea notițelor." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2b5797" />
+<link rel="icon" href="icons/icon-192.png" type="image/png" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Studiu și Organizare" />
+<style>
+#pwaInstallBtn{
+  position:fixed;
+  bottom:18px;
+  right:18px;
+  z-index:100000;
+  display:none;
+  align-items:center;
+  gap:8px;
+  padding:12px 18px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,#4f8ef7,#6c63ff);
+  color:#fff;
+  font-size:14px;
+  font-weight:600;
+  font-family:inherit;
+  box-shadow:0 6px 18px rgba(76,99,255,0.4);
+  cursor:pointer;
+}
+#pwaInstallBtn svg{flex-shrink:0}
+</style>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("service-worker.js")})}</script>
+</head>
+<body>
+<main class="main-content" id="mainContent"></main>
+
+<script>
+(function () {
+  'use strict';
+
+  const htmlModules = [
+    { target: 'body', path: 'html/layout-sidebar.html', position: 'afterbegin' },
+    { target: '#mainContent', path: 'html/layout-topbar.html' },
+    { target: '#mainContent', path: 'html/acasa.html' },
+    { target: '#mainContent', path: 'html/turnul-de-veghe.html' },
+    { target: '#mainContent', path: 'html/discurs.html' },
+    { target: '#mainContent', path: 'html/tema-cursant.html' },
+    { target: '#mainContent', path: 'html/caiet-intrunire.html' },
+    { target: '#mainContent', path: 'html/cuvantare-5-minute.html' },
+    { target: '#mainContent', path: 'html/citeste-biblia.html' },
+    { target: '#mainContent', path: 'html/biblioteca.html' },
+    { target: '#mainContent', path: 'html/studiu-biblic.html' },
+    { target: '#mainContent', path: 'html/serviciu-teren.html' },
+    { target: '#mainContent', path: 'html/programare-teren.html' },
+    { target: '#mainContent', path: 'html/programare-stand.html' },
+    { target: '#mainContent', path: 'html/asistent-predicare.html' },
+    { target: '#mainContent', path: 'html/vestitor.html' },
+    { target: '#mainContent', path: 'html/notite.html' },
+    { target: '#mainContent', path: 'html/calendar-intruniri.html' },
+    { target: 'body', path: 'html/setari.html' },
+    { target: 'body', path: 'html/transfer.html' },
+    { target: 'body', path: 'html/toast.html' },
+    { target: 'body', path: 'html/suprapuneri-pwa.html' }
+  ];
+
+  const appScripts = [
+    {"src":"js/study/verse-of-day.local.js","optionalMessage":"verse-of-day.local.js nu exista - Versetul Zilei porneste gol."},
+    {"src":"js/core/storage.js"},
+    {"src":"js/core/utils.js"},
+    {"src":"https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.5/peerjs.min.js","optionalMessage":"PeerJS nu s-a incarcat - trimiterea directa poate fi indisponibila offline."},
+    {"src":"js/core/navigation.js"},
+    {"src":"js/core/dashboard.js"},
+    {"src":"js/study/wtStudy.js"},
+    {"src":"js/study/workbook.js"},
+    {"src":"js/study/temacursant.js"},
+    {"src":"js/study/verses.js"},
+    {"src":"js/study/prophecies.js"},
+    {"src":"js/field-service/fieldServiceUI.js"},
+    {"src":"js/meetings/icsExport.js"},
+    {"src":"js/field-service/fieldScheduling.js"},
+    {"src":"js/field-service/standScheduling.js"},
+    {"src":"js/field-service/vestitor.js"},
+    {"src":"js/field-service/fieldService.js"},
+    {"src":"js/study/library.js"},
+    {"src":"js/study/notes.js"},
+    {"src":"js/meetings/meetings.js"},
+    {"src":"js/study/search.js"},
+    {"src":"js/core/theme.js"},
+    {"src":"js/study/bibleReader.js"},
+    {"src":"js/core/dataIO.js"},
+    {"src":"js/core/settings.js"},
+    {"src":"js/meetings/discursTimer.js"},
+    {"src":"js/meetings/talkTimer.js"},
+    {"src":"js/core/fontScale.js"},
+    {"src":"js/meetings/wordCounter.js"},
+    {"src":"js/core/transfer.js"},
+    {"src":"js/core/notifications.js"},
+    {"src":"js/core/app.js"}
+  ];
+
+  function loadHtmlModule(module) {
+    return fetch(module.path, { cache: 'no-cache' })
+      .then((response) => {
+        if (!response.ok) throw new Error(module.path + ' (' + response.status + ')');
+        return response.text();
+      })
+      .then((html) => {
+        const target = document.querySelector(module.target);
+        if (!target) throw new Error('Container lipsa pentru ' + module.path + ': ' + module.target);
+        target.insertAdjacentHTML(module.position || 'beforeend', html);
+      });
+  }
+
+  function loadScript(definition) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = definition.src;
+      script.onload = resolve;
+      script.onerror = () => {
+        if (definition.optionalMessage) {
+          console.info(definition.optionalMessage);
+          resolve();
+        } else {
+          reject(new Error('Nu s-a putut incarca scriptul: ' + definition.src));
+        }
+      };
+      document.body.appendChild(script);
+    });
+  }
+
+  window.__studiuMeuHtmlReady = htmlModules.reduce((chain, module) => chain.then(() => loadHtmlModule(module)), Promise.resolve())
+    .then(() => appScripts.reduce((chain, script) => chain.then(() => loadScript(script)), Promise.resolve()))
+    .catch((error) => {
+      console.error('Eroare la incarcarea aplicatiei StudiuMeu:', error);
+      throw error;
+    });
+}());
+</script>
+
+<script>
+window.__studiuMeuHtmlReady.then(() => {
+  let deferredInstallPrompt = null;
+  const pwaInstallBtn = document.getElementById('pwaInstallBtn');
+  if (!pwaInstallBtn) return;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    pwaInstallBtn.style.display = 'flex';
+  });
+
+  pwaInstallBtn.addEventListener('click', async () => {
+    if (!deferredInstallPrompt) return;
+    pwaInstallBtn.style.display = 'none';
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+  });
+
+  window.addEventListener('appinstalled', () => {
+    pwaInstallBtn.style.display = 'none';
+    deferredInstallPrompt = null;
+  });
+
+  // Ascunde butonul daca aplicatia ruleaza deja instalata (standalone)
+  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+    pwaInstallBtn.style.display = 'none';
+  }
+});
+</script>
+
+</body>
+</html>

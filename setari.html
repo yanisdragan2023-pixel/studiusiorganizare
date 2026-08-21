@@ -1,0 +1,184 @@
+<!-- MODAL: Note Editor -->
+<div class="modal-overlay" id="settingsModal" onclick="if(event.target===this) closeSettingsModal()">
+  <div class="modal modal-settings">
+    <div class="modal-header">
+      <h3>⚙️ Setări</h3>
+      <button class="modal-close" onclick="closeSettingsModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="settings-row">
+        <span class="settings-label">Versiune aplicație</span>
+        <span class="settings-value">
+          v0.9.3
+          <button type="button" class="changelog-link-btn" onclick="openChangelogModal()">Ce e nou</button>
+        </span>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Limbă</span>
+        <span class="settings-value">Română</span>
+      </div>
+
+      <div class="settings-section-label">ℹ️ INFORMAȚIE</div>
+      <div class="info-box">
+        <p><strong>Studiu și Organizare</strong> este o aplicație personală, necomercială, gândită să adune într-un singur loc toate uneltele de care ai nevoie pentru pregătirea temeinică a întrunirilor și a serviciului de teren.</p>
+
+        <p><strong>🔒 Confidențialitate deplină.</strong> Aplicația funcționează <strong>offline</strong> și toate notițele, listele cu nume și documentele tale rămân salvate <strong>exclusiv pe acest dispozitiv</strong> — nimic nu este urcat automat pe internet sau pe vreun server. Singurul moment în care datele tale „ies" de pe dispozitiv este atunci când <em>tu</em> alegi explicit să exporți un backup sau să trimiți o cuvântare cuiva.</p>
+
+        <p><strong>📖 Ce poți face în aplicație:</strong></p>
+        <ul>
+          <li><strong>Biblia</strong> — citești toate cele 66 de cărți, capitol cu capitol, direct din aplicație.</li>
+          <li><strong>Notițe</strong> — organizate pe categorii și etichete, cu căutare rapidă.</li>
+          <li><strong>Cuvântarea de 5 minute</strong> — cronometru dedicat, cu pornire/pauză.</li>
+          <li><strong>Discursul Biblic de 30 minute</strong> — cronometru pe subtitluri, cu alerte, plus loc pentru notițe și versetul de bază.</li>
+          <li><strong>Temă pentru cursant (S-89-M)</strong> — fiecare cursant își notează propriile date de temă, le vede într-un calendar și le poate printa în formatul fișei oficiale.</li>
+          <li><strong>Serviciul de teren</strong> — organizare locală a ieșirilor, cu notificări care te anunță cu o zi înainte și în ziua respectivă cine e programat.</li>
+          <li><strong>Studiul Turnului de Veghe</strong> — notițe pe paragrafe, pregătite din timp.</li>
+          <li><strong>Profeții și împlinirea lor</strong>, <strong>Studiu biblic pe versete</strong> și <strong>calculator de cuvinte</strong> pentru cuvântări.</li>
+          <li><strong>Bibliotecă</strong> — linkuri/PDF-uri de pe jw.org și materiale video redate direct din aplicație; videoclipurile nu sunt niciodată stocate sau încărcate — doar citite de pe calculator, la cerere.</li>
+        </ul> Din Setări poți exporta oricând toate datele într-un fișier JSON, ca să nu le pierzi dacă schimbi telefonul sau ștergi accidental aplicația. Ai și un export separat, în format Word, doar pentru cuvântări. Îți recomand să faci un export din când în când — mai ales înainte de o actualizare majoră a telefonului.</p>
+
+        <p><strong>📤 Trimite Cuvântări.</strong> Poți trimite o cuvântare direct altui utilizator al aplicației, fără WhatsApp sau e-mail. Datele circulă direct între cele două telefoane (conexiune criptată telefon-la-telefon), nu trec prin niciun server care le stochează. Condiție: ambele aplicații trebuie să fie deschise în același timp; dacă destinatarul nu e conectat în acel moment, trimiterea eșuează și ești anunțat imediat.</p>
+
+        <p><strong>🔔 Notificări program teren.</strong> Pe Chrome/Edge (Android sau calculator, instalată ca aplicație) funcționează și cu aplicația închisă. Pe iPhone (Safari) verificarea se face automat de fiecare dată când deschizi aplicația.</p>
+
+        <p style="margin-bottom:8px"><strong>📲 Cum instalezi aplicația</strong> — o poți adăuga pe ecranul principal, ca pe orice aplicație obișnuită:</p>
+        <div class="install-guide">
+          <div class="install-detected" id="installDetectedBanner">
+            <span class="install-detected-icon" id="installDetectedIcon">📱</span>
+            <span id="installDetectedText">Se detectează dispozitivul…</span>
+          </div>
+          <div class="install-manual-label">Alege manual sistemul de operare mai jos</div>
+          <div class="install-tabs">
+            <button type="button" class="install-tab" id="installBtnAndroid" onclick="showInstallPanel('android')">🤖 Android</button>
+            <button type="button" class="install-tab" id="installBtnIos" onclick="showInstallPanel('ios')">🍎 iPhone</button>
+          </div>
+          <div class="install-panel" id="installPanelAndroid">
+            <ol class="install-steps">
+              <li><span class="install-num">1</span><span>Deschide aplicația în <strong>Google Chrome</strong>.</span></li>
+              <li><span class="install-num">2</span><span>Apasă pe cele <strong>trei puncte</strong> din colțul din dreapta sus.</span></li>
+              <li><span class="install-num">3</span><span>Derulează în jos și alege <strong>Instalează aplicația</strong>.</span></li>
+              <li><span class="install-num">4</span><span>Confirmă apăsând <strong>Instalează</strong> sau <strong>Adaugă</strong> (în funcție de versiunea browserului).</span></li>
+              <li><span class="install-num">5</span><span>Aplicația va apărea pe <strong>ecranul principal</strong> al telefonului.</span></li>
+            </ol>
+          </div>
+          <div class="install-panel" id="installPanelIos">
+            <ol class="install-steps">
+              <li><span class="install-num">1</span><span>Deschide aplicația în <strong>Safari</strong>.</span></li>
+              <li><span class="install-num">2</span><span>Apasă pe butonul <strong>Partajare</strong> (pătratul cu săgeata în sus).</span></li>
+              <li><span class="install-num">3</span><span>Derulează în jos și alege <strong>Adaugă la ecranul principal</strong>.</span></li>
+              <li><span class="install-num">4</span><span>Apasă <strong>Adaugă</strong> pentru confirmare.</span></li>
+              <li><span class="install-num">5</span><span>Aplicația va apărea pe <strong>ecranul principal</strong> al iPhone-ului și se va deschide ca o aplicație.</span></li>
+            </ol>
+          </div>
+        </div>
+
+        <p style="margin-bottom:8px"><strong>❓ Întrebări frecvente</strong></p>
+        <details class="faq-item">
+          <summary>De ce nu se trimite cuvântarea?</summary>
+          <p>Cel mai des, pentru că destinatarul nu are aplicația deschisă în acel moment — conexiunea se face direct telefon-la-telefon, deci ambele trebuie să fie online simultan. Verifică ID-ul introdus și roagă persoana să deschidă aplicația, apoi mai încearcă.</p>
+        </details>
+        <details class="faq-item">
+          <summary>De ce nu îmi vin notificările pe iPhone?</summary>
+          <p>Safari pe iPhone nu permite notificări în fundal pentru aplicații web. Vei primi/vedea alertele automat de fiecare dată când deschizi aplicația, dar nu și cât timp e închisă.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Unde sunt salvate, de fapt, datele mele?</summary>
+          <p>Local, în memoria browserului de pe acest dispozitiv (localStorage / IndexedDB). Dacă ștergi datele browser-ului, dezinstalezi aplicația sau schimbi telefonul fără să faci export, datele se pierd — de-asta contează backup-ul periodic.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Ce se întâmplă dacă șterg aplicația fără backup?</summary>
+          <p>Notițele, cuvântările, programul de teren și tot restul se pierd definitiv — nu există nicio copie „în cloud" care să le recupereze. Fă un export din Setări înainte de orice schimbare majoră a telefonului.</p>
+        </details>
+
+        <p style="margin-bottom:0;margin-top:10px">Dacă ai sugestii sau observi ceva ce nu funcționează cum trebuie, spune-mi — aplicația e gândită să evolueze pe măsură ce ne este de folos în studiul personal și în pregătirea pentru întruniri.</p>
+      </div>
+
+      <div class="settings-row">
+        <span class="settings-label">Mod Afișare</span>
+        <button type="button" class="theme-toggle-btn" id="settingsThemeSwitch" onclick="toggleSettingsTheme()" title="Comută tema" aria-label="Comută tema întunecat/luminos">
+          <span class="theme-icon-moon">🌙</span>
+          <span class="toggle-track">
+            <span class="toggle-thumb"></span>
+          </span>
+          <span class="theme-icon-sun">☀️</span>
+        </button>
+      </div>
+
+      <div class="settings-section-label">🔔 Notificări Program Teren</div>
+      <div class="settings-row">
+        <span class="settings-label">Stare</span>
+        <span class="settings-value" id="notifStatusLabel">Dezactivate</span>
+      </div>
+      <button type="button" class="settings-action-btn" id="notifToggleBtn" onclick="toggleNotifSettings()">
+        Activează
+      </button>
+      <p style="font-size:0.75rem;color:var(--text-secondary);margin-top:6px;line-height:1.4;">
+        Te anunță cu o zi înainte și în ziua respectivă cine e programat (Marți/Vineri/Sâmbătă),
+        precum și propriile tale programări din tabelul „Programare de ieșire pe teren".
+        Funcționează și cu aplicația închisă pe Chrome/Edge (Android sau Desktop, instalată ca aplicație);
+        pe iPhone (Safari) verificarea se face automat când deschizi aplicația.
+      </p>
+
+      <div class="settings-section-label">Export</div>
+      <div class="settings-row">
+        <span class="settings-label">Ultimul backup</span>
+        <span class="settings-value" id="lastExportLabel">Niciodată</span>
+      </div>
+      <button type="button" class="settings-action-btn" onclick="exportData()">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="7 10 12 15 17 10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Exportă date (JSON)</span>
+      </button>
+      <button type="button" class="settings-action-btn" onclick="exportTalksWord()">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="8" y1="13" x2="16" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="17" x2="13" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Exportă Cuvântări (Word)</span>
+      </button>
+
+      <div class="settings-section-label">Import</div>
+      <button type="button" class="settings-action-btn" onclick="triggerImport()">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="17 8 12 3 7 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Importă date (JSON)</span>
+      </button>
+
+      <div class="settings-section-label">Trimite Cuvântări</div>
+      <div class="t-status-row">
+        <span class="t-status-dot" id="tStatusDot"></span>
+        <span id="tStatusLabel">Neconectat</span>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Ultima trimitere reușită</span>
+        <span class="settings-value" id="tLastSendLabel">Nicio trimitere încă</span>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Numele meu</span>
+        <span class="settings-value" id="tMyName">—</span>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">ID-ul meu</span>
+        <button type="button" class="settings-value t-id-copy" id="tMyId" onclick="copyMyId()" title="Copiază ID-ul">—</button>
+      </div>
+      <button type="button" class="settings-action-btn" onclick="openIdentityModal()">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 20h9" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+        <span id="tIdentityBtnLabel">Editează numele</span>
+      </button>
+      <div class="t-contacts-settings" id="tContactsSettingsList"></div>
+
+      <div class="settings-section-label settings-danger-label">⚠️ Zonă periculoasă</div>
+      <p style="font-size:0.75rem;color:var(--text-secondary);margin:0 0 10px;line-height:1.4;">
+        Șterge permanent toate datele din această aplicație (notițe, cuvântări, program teren, temă cursant, contacte etc.) de pe acest dispozitiv. Recomandăm un export înainte.
+      </p>
+      <details class="faq-item" style="margin-bottom:10px;">
+        <summary>Nu e ceva de rutină — când ai de fapt nevoie de asta?</summary>
+        <p style="margin-top:8px">Datele tale rămân salvate la nesfârșit, fără nicio ștergere automată — nu trebuie să folosești niciodată acest buton. E util doar în situații rare, cum ar fi:</p>
+        <ul style="margin:8px 0 0;padding-left:18px;">
+          <li style="margin-bottom:6px">Dai telefonul/laptopul altcuiva (îl vinzi, îl predai la service, îl moștenește altă persoană) și vrei să pleci fără notele, numele din programul de teren sau cuvântările tale personale rămase pe el.</li>
+          <li style="margin-bottom:6px">Ai testat aplicația cu date de probă și vrei un start curat, fără să dezinstalezi/reinstalezi manual.</li>
+          <li>Ceva pare corupt sau blocat — rar, dar în acest caz ștergerea completă urmată de reimportul unui backup vechi e cea mai sigură cale de reparare.</li>
+        </ul>
+      </details>
+      <button type="button" class="settings-action-btn settings-danger-btn" onclick="resetAllData()">
+        <svg viewBox="0 0 24 24" width="16" height="16"><polyline points="3 6 5 6 21 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11v6M14 11v6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        <span>Șterge toate datele</span>
+      </button>
+    </div>
+  </div>
+</div>

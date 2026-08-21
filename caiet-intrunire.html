@@ -1,0 +1,130 @@
+  <section class="page" id="page-workbook">
+    <div class="page-header">
+      <h2>📋 Viața creștină și predicarea</h2>
+      <p class="page-sub">Pregătire pentru întrunirea de mijlocul săptămânii</p>
+    </div>
+
+    <div class="wt-container">
+      <div class="wt-meta-card card">
+        <h3>Detalii Săptămână</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Săptămâna</label>
+            <input type="text" id="wb-week" placeholder="ex: 2-8 Iunie 2025" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label>Data Întrunirii</label>
+            <input type="date" id="wb-date" class="form-input" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Citirea Bibliei Săptămânală</label>
+          <input type="text" id="wb-reading" placeholder="ex: Geneza 1-3" class="form-input" />
+        </div>
+      </div>
+
+      <!-- SECTIONS -->
+      <div class="card">
+        <div class="card-header"><h3>🎵 Cântare & Rugăciune de Deschidere</h3></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Număr Cântare</label>
+            <input type="text" id="wb-song-open" placeholder="ex: Cântarea 72" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label>Notițe</label>
+            <input type="text" id="wb-song-open-notes" placeholder="Impresii..." class="form-input" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>📖 Comori din Cuvântul lui Dumnezeu</h3>
+        </div>
+        <div class="wb-section-items" id="wbTreasures">
+          <div class="wb-item">
+            <div class="form-group"><label>Discurs principal</label><input type="text" class="form-input" placeholder="Titlu discurs" /></div>
+            <div class="form-group"><label>Notițe personale</label><textarea class="form-textarea small" placeholder="Ce m-a impresionat..."></textarea></div>
+          </div>
+          <div class="wb-item">
+            <div class="form-group"><label>Căutați nestemate spirituale</label></div>
+            <div class="form-group"><textarea class="form-textarea small" placeholder="Versete cheie, idei principale..."></textarea></div>
+          </div>
+          <div class="wb-item">
+            <div class="form-group"><label>Citirea Bibliei</label><input type="text" class="form-input" placeholder="Pasaj citit" /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>🌾 Să fim mai eficienți în Predicare</h3>
+          <button class="btn-primary btn-sm" onclick="addWbMinistryItem()">+ Adaugă</button>
+        </div>
+        <div id="wbMinistryList" class="wb-section-items">
+          <div class="wb-item">
+            <div class="form-row">
+              <div class="form-group"><label>Subiect / Tip</label><input type="text" class="form-input" placeholder="ex: Prezentarea inițială"/></div>
+              <div class="form-group"><label>Asistent / Student</label><input type="text" class="form-input" placeholder="Nume"/></div>
+            </div>
+            <div class="form-group"><label>Notițe pregătire</label><textarea class="form-textarea small" placeholder="Ce vei spune, versete de folosit..."></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>🎤 Cuvântare</h3>
+        </div>
+        <div class="wb-section-items">
+          <div class="wb-item">
+            <p class="page-sub" style="margin:0 0 10px 0">Cuvântarea de 5 minute are acum pagina ei proprie, cu timer și notițe pe tot ecranul.</p>
+            <button class="btn-primary" onclick="navigateTo('talk5cuv')">🎤 Deschide Cuvântarea</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>❤️ VIAȚA DE CREȘTIN</h3></div>
+        <div id="wbChristianLife" class="wb-section-items">
+          <div class="wb-item">
+            <div class="form-group"><label>Studiu biblic congregațional – Carte/Capitol</label><input type="text" class="form-input" placeholder="ex: Acesta este viața veșnică, Cap. 3"/></div>
+            <div class="form-group"><label>Întrebări/Răspunsuri de pregătit</label><textarea class="form-textarea small" placeholder="Notițele tale..."></textarea></div>
+          </div>
+        </div>
+
+        <div class="book-card" style="margin-top:16px;padding:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface2)">
+          <h3 style="font-size:0.95rem;font-weight:600;margin-bottom:10px;color:var(--text-primary)">Să umblăm cu Dumnezeu plini de curaj</h3>
+
+          <div class="book-item" style="padding:7px 0;border-bottom:1px solid var(--border)">
+            <a href="https://www.jw.org/ro/biblioteca/carti/sa-umblam-cu-dumnezeu-plini-de-curaj/" target="_blank" style="color:var(--accent);text-decoration:none;font-size:0.88rem">
+              Scrisoare din partea Corpului de Guvernare
+            </a>
+          </div>
+
+          <div class="book-item" style="padding:7px 0;border-bottom:1px solid var(--border)">
+            <a href="https://www.jw.org/ro/biblioteca/carti/sa-umblam-cu-dumnezeu-plini-de-curaj/" target="_blank" style="color:var(--accent);text-decoration:none;font-size:0.88rem">
+              INTRODUCERE
+            </a>
+          </div>
+
+          <div class="book-item" style="padding:7px 0">
+            <a href="https://www.jw.org/ro/biblioteca/carti/sa-umblam-cu-dumnezeu-plini-de-curaj/patriarhi-epoca-judecatorilor/" target="_blank" style="color:var(--accent);text-decoration:none;font-size:0.88rem">
+              SECȚIUNEA 1
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <div class="action-row">
+          <button class="btn-ghost">↩ Resetează</button>
+          <button class="btn-primary" onclick="saveWorkbook()">💾 Salvează Pregătirea</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: CUVÂNTARE 5 MINUTE (pagină separată) -->

@@ -1,0 +1,236 @@
+  <section class="page" id="page-vestitor">
+    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+      <p class="page-sub">Numele tău, cronometrul de predicare și rapoartele lunare — totul salvat automat.</p>
+      <button type="button" class="icon-btn" onclick="navigateTo('preachingassistant')" title="Ieși din pagină" aria-label="Ieși din pagină">✕</button>
+    </div>
+    <div class="wt-container">
+
+      <!-- NUME VESTITOR -->
+      <div class="card">
+        <div class="card-header">
+          <h3>📋 Vestitor</h3>
+        </div>
+        <div class="form-group">
+          <label>Numele vestitorului</label>
+          <input type="text" id="vestitor-nume" class="form-input" placeholder="Scrie numele vestitorului" oninput="saveVestitorNume()" />
+        </div>
+      </div>
+
+      <!-- BUTON PROFILUL VESTITORULUI -->
+      <div class="card">
+        <button type="button" class="btn-primary btn-sm" id="vestitorProfileBtn" onclick="toggleVestitorProfileSection()">👤 Profilul Vestitorului</button>
+      </div>
+
+      <div id="vestitorProfileSection" style="display:none">
+        <div class="card">
+          <div class="card-header">
+            <h3>👤 Profilul Vestitorului</h3>
+          </div>
+
+          <div class="vprofile-status">
+            <label class="vprofile-status-row">
+              <span class="vprofile-status-label">Vestitor</span>
+              <span class="vprofile-fixed">DA</span>
+              <input type="checkbox" id="vprofile-vestitor" onchange="saveVestitorProfil()" />
+            </label>
+            <label class="vprofile-status-row">
+              <span class="vprofile-status-label">Vestitor auxiliar</span>
+              <span class="vprofile-fixed">15 ore</span>
+              <input type="checkbox" id="vprofile-auxiliar15" onchange="saveVestitorProfil()" />
+            </label>
+            <label class="vprofile-status-row">
+              <span class="vprofile-status-label">Vestitor auxiliar</span>
+              <span class="vprofile-fixed">30 ore</span>
+              <input type="checkbox" id="vprofile-auxiliar30" onchange="saveVestitorProfil()" />
+            </label>
+            <label class="vprofile-status-row">
+              <span class="vprofile-status-label">Vestitor regulat</span>
+              <span class="vprofile-fixed">50 ore</span>
+              <input type="checkbox" id="vprofile-regulat" onchange="saveVestitorProfil()" />
+            </label>
+          </div>
+
+          <div class="page-sub" style="margin:16px 0 8px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+            <span>Anul teocratic începe cu luna Septembrie</span>
+            <button type="button" class="btn-ghost btn-sm" onclick="clearAllVestitorProfilMonthColors()">🧹 Șterge culorile</button>
+          </div>
+
+          <div class="vprofile-months" id="vprofileMonths"></div>
+
+          <!-- RAPORTUL ANUAL TEOCRATIC -->
+          <div class="vannual-wrap" id="vestitorAnnualReportWrap">
+            <div class="page-sub" style="margin:20px 0 8px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <h3 style="margin:0">📅 Raportul Anual Teocratic</h3>
+            </div>
+            <div class="vannual-year-switch">
+              <button type="button" class="btn-ghost btn-sm" onclick="changeVestitorAnnualYear(-1)" aria-label="Anul teocratic anterior">◀</button>
+              <span id="vestitorAnnualYearLabel">-</span>
+              <button type="button" class="btn-ghost btn-sm" onclick="changeVestitorAnnualYear(1)" aria-label="Anul teocratic următor">▶</button>
+            </div>
+            <div id="vestitorAnnualStatus"></div>
+            <div class="fs2-table-wrap" style="margin-top:12px">
+              <table class="fs2-table">
+                <thead>
+                  <tr>
+                    <th>Luna</th>
+                    <th>Activă</th>
+                    <th>Ore raportate</th>
+                  </tr>
+                </thead>
+                <tbody id="vestitorAnnualTableBody"></tbody>
+              </table>
+            </div>
+            <p class="page-sub" style="margin-top:8px">Orele se iau automat din „🗓️ Raport lunar” de mai jos. Doar lunile colorate mai sus contează la calculul țintei.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUTON TOGGLE RAPORT LUNAR -->
+      <div class="card">
+        <button type="button" class="btn-primary btn-sm" id="vestitorReportToggleBtn" onclick="toggleVestitorReportSection()">📊 Raport lunar</button>
+      </div>
+
+      <div id="vestitorReportSection" style="display:none">
+
+      <!-- CRONOMETRU -->
+      <div class="card">
+        <div class="card-header">
+          <h3>⏱️ Cronometru</h3>
+        </div>
+        <div class="preach-timer-wrap">
+          <button type="button" class="preach-timer-toggle" id="vestitorTimerToggleBtn" onclick="vestitorTimerToggle()" aria-label="Pornește cronometrul">▶</button>
+          <div class="preach-timer-value" id="vestitorTimerValue">00:00:00</div>
+        </div>
+        <div class="preach-timer-actions">
+          <button type="button" class="btn-ghost btn-sm" onclick="vestitorTimerReset()">↺ Resetează</button>
+          <button type="button" class="btn-outline btn-sm" onclick="vestitorTimerAddToReport()">➕ Adaugă timpul în raport</button>
+        </div>
+      </div>
+
+      <!-- RAPORT LUNAR -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🗓️ Raport lunar</h3>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Luna</label>
+            <select id="vestitor-luna" class="form-input">
+              <option value="Ianuarie">Ianuarie</option>
+              <option value="Februarie">Februarie</option>
+              <option value="Martie">Martie</option>
+              <option value="Aprilie">Aprilie</option>
+              <option value="Mai">Mai</option>
+              <option value="Iunie">Iunie</option>
+              <option value="Iulie">Iulie</option>
+              <option value="August">August</option>
+              <option value="Septembrie">Septembrie</option>
+              <option value="Octombrie">Octombrie</option>
+              <option value="Noiembrie">Noiembrie</option>
+              <option value="Decembrie">Decembrie</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Anul</label>
+            <input type="number" id="vestitor-anul" class="form-input" placeholder="ex: 2026" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ore</label>
+            <input type="number" id="vestitor-ore" class="form-input" placeholder="0" min="0" />
+          </div>
+          <div class="form-group">
+            <label>Minute</label>
+            <input type="number" id="vestitor-minute" class="form-input" placeholder="0" min="0" max="59" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Observații</label>
+          <textarea id="vestitor-observatii" class="form-textarea" placeholder="Observații (opțional)"></textarea>
+        </div>
+        <div style="margin:10px 0 4px;display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn-primary btn-sm" onclick="saveVestitorReport()">💾 Salvează</button>
+          <button type="button" class="btn-outline btn-sm" onclick="clearVestitorReportForm()">🗑️ Șterge</button>
+        </div>
+      </div>
+
+      <!-- TRIMITE RAPORT PE WHATSAPP -->
+      <div class="card">
+        <div class="card-header">
+          <h3>📤 Trimite raport pe WhatsApp</h3>
+        </div>
+        <div class="form-group">
+          <label>Numele vestitorului</label>
+          <input type="text" id="vwa-nume" class="form-input" placeholder="Numele vestitorului" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Luna</label>
+            <select id="vwa-luna" class="form-input" onchange="renderVestitorWhatsAppFields()">
+              <option value="Ianuarie">Ianuarie</option>
+              <option value="Februarie">Februarie</option>
+              <option value="Martie">Martie</option>
+              <option value="Aprilie">Aprilie</option>
+              <option value="Mai">Mai</option>
+              <option value="Iunie">Iunie</option>
+              <option value="Iulie">Iulie</option>
+              <option value="August">August</option>
+              <option value="Septembrie">Septembrie</option>
+              <option value="Octombrie">Octombrie</option>
+              <option value="Noiembrie">Noiembrie</option>
+              <option value="Decembrie">Decembrie</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Anul</label>
+            <input type="number" id="vwa-anul" class="form-input" placeholder="ex: 2026" onchange="renderVestitorWhatsAppFields()" />
+          </div>
+        </div>
+        <div id="vwaDynamicField"></div>
+        <div style="margin:10px 0 4px">
+          <button type="button" class="btn-outline btn-sm" onclick="shareVestitorReportWhatsApp()">📲 Trimite pe WhatsApp</button>
+        </div>
+        <p class="page-sub" style="margin-top:4px">Vestitorii simpli trimit „Da/Nu” (au predicat luna asta). Vestitorii auxiliari/regulați primesc orele completate automat (din raportul salvat sau din ținta lor), dar le pot modifica înainte de trimitere.</p>
+      </div>
+
+      <!-- REAMINTIRE RAPORT -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🔔 Reamintire raport lunar</h3>
+        </div>
+        <p class="page-sub" id="vestitorReportSentStatus" style="margin:0 0 10px">-</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn-primary btn-sm" id="vestitorReportSentBtn" onclick="markVestitorReportSent()">✅ Raport trimis</button>
+        </div>
+        <p class="page-sub" style="margin-top:10px">Notificările locale trebuie activate din Setări. Dacă preferi calendarul telefonului în loc de notificări, poți <a href="#" onclick="exportVestitorReportReminderICS();return false;">exporta o reamintire în calendar</a> (opțional).</p>
+      </div>
+
+      </div>
+
+      <!-- ISTORIC RAPOARTE -->
+      <div class="card">
+        <div class="card-header">
+          <h3>📚 Rapoarte salvate</h3>
+        </div>
+        <div class="fs2-table-wrap">
+          <table class="fs2-table">
+            <thead>
+              <tr>
+                <th>Luna</th>
+                <th>Anul</th>
+                <th>Ore</th>
+                <th>Minute</th>
+                <th>Observații</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="vestitorReportsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PAGE: NOTES -->

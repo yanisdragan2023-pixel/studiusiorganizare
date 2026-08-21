@@ -1,0 +1,59 @@
+<!-- MODAL: Ce e nou (changelog) -->
+<div class="modal-overlay" id="changelogModal" onclick="if(event.target===this) closeChangelogModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>🆕 Ce e nou</h3>
+      <button class="modal-close" onclick="closeChangelogModal()">✕</button>
+    </div>
+    <div class="modal-body" id="changelogList"></div>
+  </div>
+</div>
+
+<!-- MODAL: Identitate (nume + ID pentru trimitere directă) -->
+<div class="modal-overlay" id="identityModal" onclick="if(event.target===this) closeIdentityModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>👤 Identitatea ta</h3>
+      <button class="modal-close" onclick="closeIdentityModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="page-sub" style="margin-top:0">Numele tău va fi văzut de persoana căreia îi trimiți o cuvântare. ID-ul e generat automat și e unic pentru tine.</p>
+      <div class="form-group">
+        <label>Numele tău</label>
+        <input type="text" id="tIdentityName" class="form-input" placeholder="Ex nume" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeIdentityModal()">Anulează</button>
+      <button class="btn-primary" onclick="saveMyIdentity()">💾 Salvează</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Trimite cuvântare/discurs direct către alt utilizator -->
+<div class="modal-overlay" id="sendTransferModal" onclick="if(event.target===this) closeSendModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>📤 Trimite</h3>
+      <button class="modal-close" onclick="closeSendModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Contacte recente</label>
+        <div class="t-contacts-list" id="tContactsList"></div>
+      </div>
+      <div class="form-group">
+        <label>Sau introdu direct ID-ul destinatarului</label>
+        <div class="form-row">
+          <input type="text" id="tRecipientId" class="form-input" placeholder="ex: A1B2C3" style="text-transform:uppercase" />
+          <input type="text" id="tRecipientName" class="form-input" placeholder="Numele lui (opțional)" />
+        </div>
+      </div>
+      <p class="page-sub" style="margin-bottom:0">Persoana trebuie să aibă aplicația deschisă chiar acum, ca să primească direct.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeSendModal()">Anulează</button>
+      <button class="btn-primary" onclick="sendFromForm()">📤 Trimite</button>
+    </div>
+  </div>
+</div>

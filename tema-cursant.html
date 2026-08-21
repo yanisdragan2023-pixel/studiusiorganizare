@@ -1,0 +1,69 @@
+  <section class="page" id="page-temacursant">
+    <div class="page-header">
+      <h2>📝 Temă pentru cursant</h2>
+      <p class="page-sub">Notează-ți datele pentru tema de la întrunirea „Viața creștină și predicarea", salvează-le și generează fișa de printat.</p>
+    </div>
+
+    <div class="wt-container">
+      <div class="card">
+        <div class="card-header"><h3>✏️ Temă nouă</h3></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nume</label>
+            <input type="text" id="tc-nume" class="form-input" placeholder="Drăgan Ion" />
+          </div>
+          <div class="form-group">
+            <label>Partener</label>
+            <input type="text" id="tc-partener" class="form-input" placeholder="Nume partener (opțional)" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Data</label>
+            <input type="date" id="tc-data" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label>Tema nr.</label>
+            <input type="text" id="tc-temanr" class="form-input" placeholder="ex: 1" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Se va ține în</label>
+          <select id="tc-sala" class="form-input">
+            <option value="principala">Sala principală</option>
+            <option value="secundara1">Prima sală secundară</option>
+            <option value="secundara2">A doua sală secundară</option>
+          </select>
+        </div>
+        <div class="action-row">
+          <button class="btn-ghost" id="tcDeleteBtn" onclick="deleteTemaCursant()" style="display:none;color:var(--red)">🗑 Șterge</button>
+          <button class="btn-ghost" onclick="resetTemaCursantForm()">↩ Temă nouă</button>
+          <button class="btn-primary" onclick="saveTemaCursant()">💾 Salvează Tema</button>
+        </div>
+
+        <div class="tc-note-box" style="margin-top:16px;padding:12px 14px;border-radius:10px;background:var(--bg-secondary,rgba(127,127,127,0.08));font-size:0.82rem;line-height:1.5;color:var(--text-secondary,#666)">
+          <strong>Notă pentru cursant:</strong> Materialul și lecția pentru tema repartizată
+          sunt indicate în Caietul pentru întrunirea „Viața creștină și predicarea”.
+          Când îți pregătești tema, te rugăm să ții cont de Instrucțiunile
+          pentru întrunirea „Viața creștină și predicarea” (S-38).
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 id="tcCalendarTitle">📅 Calendar</h3>
+          <div style="display:flex;gap:6px">
+            <button class="btn-ghost btn-sm" onclick="shiftTemaCursantCalendar(-1)">◀</button>
+            <button class="btn-ghost btn-sm" onclick="shiftTemaCursantCalendar(0)">Azi</button>
+            <button class="btn-ghost btn-sm" onclick="shiftTemaCursantCalendar(1)">▶</button>
+          </div>
+        </div>
+        <div id="tcCalendarGrid" class="tc-calendar-grid"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>📋 Teme salvate</h3></div>
+        <div id="tcList" class="notes-grid"></div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,54 @@
+  <section class="page" id="page-fieldschedulingpreview">
+    <div class="page-header">
+      <div style="font-size:2rem;line-height:1;margin-bottom:6px">🖼️</div>
+      <h2>Programare de ieșire pe teren</h2>
+      <p class="page-sub">Tabel pentru programarea ieșirilor pe teren</p>
+    </div>
+
+    <div class="wt-container">
+      <div class="card">
+        <div class="card-header">
+          <h3>Imagine</h3>
+        </div>
+        <div style="display:flex;justify-content:center;margin-bottom:16px">
+          <img src="assets/predicare-din-casa-in-casa.webp" alt="Predicare din casă în casă" style="max-width:100%;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.15)" />
+        </div>
+      </div>
+
+      <!-- TABEL PROGRAMARE DE IEȘIRE PE TEREN -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Programările mele</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="btn-outline btn-sm" onclick="addFieldSchedulingRow()" style="font-size:0.75rem;padding:5px 10px">+ Adaugă programare</button>
+            <button type="button" class="btn-outline btn-sm" onclick="saveFieldSchedulingTable()" style="font-size:0.75rem;padding:5px 10px">💾 Salvează</button>
+            <button type="button" class="btn-outline btn-sm" onclick="shareFieldSchedulingWhatsApp()" style="font-size:0.75rem;padding:5px 10px">📲 Trimite pe WhatsApp</button>
+            <button type="button" class="btn-outline btn-sm" onclick="exportFieldSchedulingICS()" style="font-size:0.75rem;padding:5px 10px">📅 Exportă în Calendar</button>
+          </div>
+        </div>
+        <p class="page-sub" style="margin:0 0 10px">
+          Fiecare vestitor își programează aici ieșirile. Dacă alegi un coleg cu care ai mai fost programat,
+          apare un avertisment — ca să nu vă programați din nou împreună data viitoare.
+        </p>
+        <div class="fs2-table-wrap">
+          <table class="fs2-table">
+            <thead>
+              <tr>
+                <th>Calendar</th>
+                <th>Ziua</th>
+                <th>Luna</th>
+                <th>Anul</th>
+                <th>Ora</th>
+                <th>Nume vestitor</th>
+                <th>Nume vestitor colaborator</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="fs2TableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: PROGRAMARE DE IEȘIRE CU STANDUL (previzualizare poză + tabel) -->

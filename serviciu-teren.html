@@ -1,0 +1,46 @@
+  <section class="page" id="page-fieldservice">
+    <div class="page-header">
+      <div style="font-size:2rem;line-height:1;margin-bottom:6px">🧑‍🤝‍🧑</div>
+      <h2>Serviciul de ieșire pe teren</h2>
+      <p class="page-sub">Notițe și idei pentru lucrarea de predicare</p>
+    </div>
+
+    <div class="wt-container">
+      <div class="card">
+        <div class="card-header">
+          <h3>Adaugă Notiță Serviciu de ieșire pe Teren</h3>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Data Întrunirii</label>
+            <input type="date" id="fs-date" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label>Titlu / Subiect</label>
+            <input type="text" id="fs-title" placeholder="ex: Discuții purtate, Textul zilei..." class="form-input" />
+          </div>
+        </div>
+        <div class="form-group" style="margin-top: 12px;">
+          <label>Notițele mele</label>
+          <textarea class="form-textarea" id="fs-content" placeholder="Scrie idei din discuție, versete folosite, grupuri de teren..." style="min-height: 150px;"></textarea>
+        </div>
+        <div class="action-row">
+          <button class="btn-primary" onclick="saveFieldServiceNote()">💾 Salvează Notița</button>
+        </div>
+      </div>
+
+      <!-- SAVED FIELD SERVICE NOTES -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Notițe Serviciu de Teren Salvate</h3>
+        </div>
+        <div id="fsNotesList" class="notes-grid">
+          <div class="empty-state full-width">
+            <p>Nicio notiță de serviciu de teren salvată.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: PROGRAMARE DE IEȘIRE PE TEREN (previzualizare poză + notiță) -->

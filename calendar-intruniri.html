@@ -1,0 +1,58 @@
+  <section class="page" id="page-meetings">
+    <div class="page-header">
+      <h2>📅 Programul Meu de Întruniri</h2>
+      <p class="page-sub">Planifică și urmărește pregătirea pentru fiecare întrunire</p>
+    </div>
+
+    <div class="meetings-grid">
+      <div class="card meeting-type-card">
+        <div class="meeting-badge" style="background:linear-gradient(135deg,#4f8ef7,#6c63ff)">
+          <span>DUMINICĂ</span>
+        </div>
+        <h3>Întrunire de Weekend</h3>
+        <ul class="meeting-agenda">
+          <li>🎵 Cântare & Rugăciune</li>
+          <li>📢 Discurs public (30 min)</li>
+          <li><svg viewBox="0 0 130 60" width="19" height="8.8" style="vertical-align:middle;margin-right:5px;margin-top:-2px"><path d="M19,56 L19,43 L11,43 L11,36 L2,36 L2,2 L21,2 L21,12 L32,12 L32,2 L46,2 L46,12 L57,12 L57,2 L72,2 L72,12 L83,12 L83,2 L98,2 L98,12 L109,12 L109,2 L127,2 L127,36 L119,36 L119,43 L111,43 L111,56" stroke="currentColor" stroke-width="8" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>Studierea Turnului de Veghe (60 min)</li>
+          <li>🎵 Cântare & Rugăciune de Încheiere</li>
+        </ul>
+        <div class="progress-section">
+          <div class="progress-label"><span>Pregătire</span><span id="weekendProgress">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="weekendProgressBar" style="width:0%"></div></div>
+        </div>
+        <button class="btn-outline w-full" style="margin-top:12px" onclick="navigateTo('watchtower')">Pregătește Turnul de Veghe →</button>
+      </div>
+
+      <div class="card meeting-type-card">
+        <div class="meeting-badge" style="background:linear-gradient(135deg,#10c9a0,#0ea47a)">
+          <span>JOI</span>
+        </div>
+        <h3>Întrunire de Mijlocul Săptămânii</h3>
+        <ul class="meeting-agenda">
+          <li>🎵 Cântare & Rugăciune</li>
+          <li>💎 Comori din Cuvântul lui Dumnezeu</li>
+          <li>🌾 Să fim mai eficienți în Predicare</li>
+          <li>❤️ VIAȚA DE CREȘTIN</li>
+          <li>🎵 Cântare & Rugăciune de Încheiere</li>
+        </ul>
+        <div class="progress-section">
+          <div class="progress-label"><span>Pregătire</span><span id="weekdayProgress">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="weekdayProgressBar" style="width:0%"></div></div>
+        </div>
+        <button class="btn-outline w-full" style="margin-top:12px" onclick="navigateTo('workbook')">Pregătește Viața creștină și predicarea →</button>
+      </div>
+
+      <!-- UPCOMING MEETINGS CALENDAR -->
+      <div class="card" style="grid-column: 1/-1">
+        <div class="card-header">
+          <h3>📅 Calendar Pregătire</h3>
+          <button class="btn-primary btn-sm" onclick="addMeetingEntry()">+ Adaugă Întrunire</button>
+        </div>
+        <div id="meetingsCalendar" class="meetings-calendar-list">
+          <div class="empty-state-small">Nicio întrunire planificată. Adaugă una!</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>

@@ -1,0 +1,96 @@
+  <section class="page" id="page-discurs">
+    <div class="page-header">
+      <h2>📢 Cuvântare Publică – 30 minute</h2>
+      <p class="page-sub">Întrunirea Publică și Studiul Turnului de Veghe</p>
+    </div>
+
+    <div class="wt-container">
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:20px">
+          <div class="form-row">
+            <div class="form-group" style="max-width:220px">
+              <label>Data Cuvântării</label>
+              <input type="date" id="discursData" class="form-input" onchange="loadDiscursDraftForDate(this.value)" />
+            </div>
+            <div class="form-group" style="flex:1">
+              <label>Titlul Discursului</label>
+              <input type="text" id="discursTitlu" class="form-input" placeholder="ex: Fidelitatea față de Iehova în vremuri dificile" oninput="saveDiscursDraft()" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Notă</label>
+            <textarea id="discursVerset" class="form-textarea small" placeholder="ex: Vorbește cu căldură și convingere. Menționează ideile principale și foloasele practice." oninput="saveDiscursDraft()"></textarea>
+          </div>
+          <div class="discurs-sections-panel">
+            <div class="card-header">
+              <div>
+                <h3>Subtitlurile cuvântării</h3>
+                <p class="page-sub" style="margin:4px 0 0">Durata totală se calculează automat din minutele introduse.</p>
+              </div>
+              <button type="button" class="btn-outline btn-sm" onclick="addDiscursSection()">+ Subtitlu</button>
+            </div>
+            <div id="discursSectionsList" class="discurs-sections-list"></div>
+          </div>
+
+          <div class="discurs-timer-bar" id="discursTimerBar">
+            <div class="discurs-timer-display">
+              <span class="discurs-timer-icon" id="discursTimerIcon">⏱</span>
+              <span class="discurs-timer-value" id="discursTimerValue">30:00</span>
+              <span class="discurs-timer-label" id="discursTimerLabel">din 30 minute</span>
+            </div>
+            <div class="discurs-timer-progress-wrap">
+              <div class="discurs-active-section" id="discursActiveSection">Subtitlul activ: -</div>
+              <div class="discurs-section-time" id="discursSectionTime">Timp subtitlu: 00:00</div>
+              <div class="discurs-timer-progress-bg">
+                <div class="discurs-timer-progress-fill" id="discursTimerFill" style="width:0%"></div>
+              </div>
+              <div class="discurs-total-progress-row">
+                <span>Progres total</span>
+                <span id="discursTotalProgress">0%</span>
+              </div>
+            </div>
+            <div class="discurs-timer-alert" id="discursTimerAlert" aria-live="polite"></div>
+            <div class="discurs-timer-btns">
+              <button class="btn-primary btn-sm" id="discursTimerStartBtn" onclick="discursTimerStart()">▶ Start</button>
+              <button class="btn-ghost btn-sm" id="discursTimerPauseBtn" onclick="discursTimerPause()" style="display:none">⏸ Pauză</button>
+              <button class="btn-ghost btn-sm" onclick="discursTimerReset()">↺ Reset</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="note-label-row">
+              <label id="discursNotesLabel">Notițele Discursului</label>
+              <div class="note-font-control">
+                <button type="button" class="note-font-btn" onclick="changeDiscursNoteFontSize(-1)" title="Micșorează text">A</button>
+                <span class="note-font-value" id="discursNoteFontValue">14</span>
+                <button type="button" class="note-font-btn note-font-btn-lg" onclick="changeDiscursNoteFontSize(1)" title="Mărește text">A</button>
+                <button type="button" class="note-fullscreen-btn" onclick="openFullscreenNote('discursNote', 'Cuvântare Publică – 30 minute')" title="Ecran complet">🖥 Ecran complet</button>
+              </div>
+            </div>
+            <textarea id="discursNote" class="form-textarea discurs-textarea"
+              placeholder="Scrie discursul tău aici... Introducere, punctele principale, concluzie."
+              oninput="saveDiscursDraft(); updateWordCounters()"></textarea>
+            <div class="word-counter" id="discursWordCounter">Cuvinte: 0</div>
+            <div id="discursBlockedMsg" style="display:none" class="discurs-blocked-msg">
+              ⛔ Timpul de 30 minute s-a încheiat. Discursul a fost blocat. Poți salva notițele.
+            </div>
+          </div>
+          <div class="action-row">
+            <button class="btn-ghost" onclick="newDiscursTalk()">➕ Cuvântare Nouă</button>
+            <button class="btn-ghost" id="discursDeleteBtn" onclick="deleteDiscursDraft()" style="display:none;color:var(--red)">🗑 Șterge</button>
+            <button class="btn-primary" onclick="saveDiscursNote()">💾 Salvează Cuvântarea</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <div class="page-header" style="margin-bottom:12px">
+          <h3 style="margin:0">📚 Cuvântări Salvate</h3>
+          <p class="page-sub" style="margin:0">Apasă pe o cuvântare pentru a o încărca și edita.</p>
+        </div>
+        <div id="discursTalksList" class="notes-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: TEMĂ PENTRU CURSANT -->

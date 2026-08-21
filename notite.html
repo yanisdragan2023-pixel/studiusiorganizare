@@ -1,0 +1,77 @@
+  <section class="page" id="page-notes">
+    <div class="notes-split-layout">
+
+      <!-- Panoul stâng: filtre + lista notițelor -->
+      <div class="notes-list-panel">
+        <div class="notes-list-header">
+          <h2>📄 Notițele Mele</h2>
+          <button class="btn-primary btn-sm" onclick="openNewNoteInline()">+ Notiță Nouă</button>
+        </div>
+        <div class="filter-tabs" id="notesFilters" style="flex-wrap:wrap;gap:6px;margin-bottom:12px">
+          <button class="filter-tab active" data-filter="all" onclick="renderNotesList('all')">Toate</button>
+          <button class="filter-tab" data-filter="watchtower" onclick="renderNotesList('watchtower')">TV</button>
+          <button class="filter-tab" data-filter="workbook" onclick="renderNotesList('workbook')">VCP</button>
+          <button class="filter-tab" data-filter="bible" onclick="renderNotesList('bible')">Biblie</button>
+          <button class="filter-tab" data-filter="fieldservice" onclick="renderNotesList('fieldservice')">Teren</button>
+          <button class="filter-tab" data-filter="general" onclick="renderNotesList('general')">Generale</button>
+        </div>
+        <div id="notesList" class="notes-list-stack">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" width="44" height="44" opacity=".2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+            <p>Nicio notiță salvată.</p>
+            <button class="btn-primary" onclick="openNewNoteInline()" style="margin-top:10px">Creează Prima Notiță</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panoul drept: editor inline (fără modal/popup) -->
+      <div class="notes-editor-panel" id="notesEditorPanel">
+        <!-- Placeholder când nicio notiță nu e selectată -->
+        <div class="notes-editor-placeholder" id="notesEditorPlaceholder">
+          <svg viewBox="0 0 24 24" width="52" height="52" opacity=".2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+          <p style="color:var(--text-muted);font-size:0.9rem;text-align:center;margin-top:12px">
+            Selectează o notiță sau<br>apasă <strong>+ Notiță Nouă</strong>
+          </p>
+        </div>
+
+        <!-- Editor propriu-zis -->
+        <div class="notes-editor-form" id="notesEditorForm" style="display:none">
+          <div class="notes-editor-header">
+            <span class="notes-editor-title-label" id="notesEditorTitleLabel">Notiță Nouă</span>
+            <div style="display:flex;gap:8px">
+              <button class="btn-danger btn-sm" id="deleteNoteBtn" onclick="deleteCurrentNote()" style="display:none">🗑 Șterge</button>
+              <button class="btn-primary btn-sm" onclick="saveNote()">💾 Salvează</button>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:12px">
+            <label>Titlu</label>
+            <input type="text" id="noteTitle" class="form-input" placeholder="Titlul notiței..." />
+          </div>
+          <div class="form-row" style="margin-bottom:12px">
+            <div class="form-group">
+              <label>Categoria</label>
+              <select class="form-input" id="noteCategory">
+                <option value="general">Generală</option>
+                <option value="watchtower">Turnul de Veghe</option>
+                <option value="workbook">Viața creștină și predicarea</option>
+                <option value="bible">Studiu Biblic</option>
+                <option value="fieldservice">Serviciu de ieșire pe teren</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Etichete (virgulă)</label>
+              <input type="text" id="noteTags" class="form-input" placeholder="credință, dragoste, speranță" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Conținut</label>
+            <textarea class="form-textarea" id="noteContent" style="min-height:280px" placeholder="Scrie notița ta..."></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PAGE: MEETINGS -->

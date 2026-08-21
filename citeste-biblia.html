@@ -1,0 +1,98 @@
+  <section class="page" id="page-biblereader">
+    <div class="bible-reader-layout">
+
+      <!-- LEFT: Navigation + Notes -->
+      <div class="bible-sidebar">
+        <!-- Book selector -->
+        <div class="bible-nav-card">
+          <div class="bible-nav-header">
+            <button type="button" class="bible-nav-title bible-nav-title-img-btn" onclick="backToBooks()" title="Citește Biblia — înapoi la lista de cărți">
+              <img src="assets/citeste-biblia.webp" alt="Citește Biblia" class="bible-nav-title-img" />
+            </button>
+            <a href="https://www.jw.org/ro/biblioteca/biblia/biblia-de-studiu/c%C4%83r%C8%9Bi/" target="_blank" class="jw-badge">jw.org/ro ↗</a>
+          </div>
+
+          <div class="bible-testament-tabs">
+            <button class="testament-tab active" id="tab-ot" onclick="switchTestament('ot')">Scripturile Ebraice</button>
+            <button class="testament-tab" id="tab-nt" onclick="switchTestament('nt')">Scripturile Grecești</button>
+          </div>
+
+          <div class="bible-books-grid" id="bibleBooksList"></div>
+        </div>
+
+        <!-- Chapter selector -->
+        <div class="bible-nav-card" id="chapterSelectorCard" style="display:none">
+          <div class="bible-chap-header">
+            <button class="btn-ghost btn-sm" onclick="backToBooks()">← Înapoi</button>
+            <span class="bible-book-name" id="selectedBookName"></span>
+          </div>
+          <div class="bible-chapters-grid" id="bibleChaptersList"></div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Editor integrat direct în pagină, fără popup/modal -->
+      <div class="bible-reading-panel">
+
+        <!-- Placeholder când nu este selectat niciun capitol (zonă goală) -->
+        <div class="bible-inline-placeholder" id="bibleWelcome">
+        </div>
+
+        <!-- Editor capitol – apare direct în panou când se selectează un capitol -->
+        <div class="bible-chapter-view" id="bibleChapterView" style="display:none">
+
+          <!-- Bara de navigare capitol -->
+          <div class="chapter-view-header">
+            <div class="chapter-nav-btns">
+              <button class="chapter-nav-btn" id="btnPrevChap" onclick="navigateChapter(-1)">‹ Anterior</button>
+              <h2 class="chapter-title" id="chapterTitle"></h2>
+              <button class="chapter-nav-btn" id="btnNextChap" onclick="navigateChapter(1)">Următor ›</button>
+            </div>
+            <a id="jwReadLink" href="#" target="_blank" rel="noopener" class="jw-badge" style="margin-top:6px;display:inline-block">
+              Citește pe jw.org ↗
+            </a>
+          </div>
+
+          <!-- Notițe capitol -->
+          <div class="bible-inline-section">
+            <p class="bible-inline-label">📝 Notițe – <span id="chapterNotesBadge"></span></p>
+            <textarea class="form-textarea" id="chapterNotesText"
+              style="min-height:120px"
+              placeholder="Scrie notițe, impresii sau versete marcate din acest capitol..."
+              oninput="autoSaveChapterNote()"></textarea>
+          </div>
+
+          <!-- Versete marcate -->
+          <div class="bible-inline-section">
+            <p class="bible-inline-label">⭐ Versete marcate</p>
+            <div class="marked-verse-input">
+              <input type="text" id="markedVerseRef" class="form-input" placeholder="ex: v.3, v.16-18" />
+              <button class="btn-primary btn-sm" onclick="addMarkedVerse()">+ Marchează</button>
+            </div>
+            <div id="markedVersesList" class="marked-verses-list"></div>
+          </div>
+
+          <!-- Text capitol lipit/scris de utilizator -->
+          <div class="bible-inline-section">
+            <p class="bible-inline-label">📄 Textul capitolului (local)</p>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin:0 0 8px">
+              Lipește sau scrie textul versetelor. Salvat automat, doar pe acest dispozitiv.
+            </p>
+            <textarea class="form-textarea" id="chapterVerseText"
+              style="min-height:200px;font-size:0.92rem;line-height:1.65"
+              placeholder="Lipește aici textul capitolului..."
+              oninput="autoSaveChapterVerseText()"></textarea>
+          </div>
+
+          <!-- Notițe salvate – afișare -->
+          <div class="chapter-notes-display" id="chapterNotesDisplay"></div>
+
+          <!-- Highlights versete marcate -->
+          <div class="chapter-highlights" id="chapterHighlights"></div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: BIBLIOTECĂ -->
