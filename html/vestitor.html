@@ -199,11 +199,10 @@
         <div class="card-header">
           <h3>🔔 Reamintire raport lunar</h3>
         </div>
-        <label class="vprofile-status-row" style="margin-bottom:10px">
-          <span class="vprofile-status-label" id="vestitorReportSentLabel">Raport trimis</span>
-          <input type="checkbox" id="vestitorReportSentCheckbox" onchange="markVestitorReportSent()" />
-        </label>
         <p class="page-sub" id="vestitorReportSentStatus" style="margin:0 0 10px">-</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn-primary btn-sm" id="vestitorReportSentBtn" onclick="markVestitorReportSent()">✅ Raport trimis</button>
+        </div>
         <p class="page-sub" style="margin-top:10px">Notificările locale trebuie activate din Setări. Dacă preferi calendarul telefonului în loc de notificări, poți <a href="#" onclick="exportVestitorReportReminderICS();return false;">exporta o reamintire în calendar</a> (opțional).</p>
       </div>
 

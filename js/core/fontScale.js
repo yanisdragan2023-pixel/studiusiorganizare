@@ -48,16 +48,10 @@ function changeTalkNoteFontSize(delta) {
   changeNoteFontSize('talk-notes', 'talkNoteFontValue', 'studiuMeu_talkNoteSize', delta);
 }
 
-function changeTalk10NoteFontSize(delta) {
-  changeNoteFontSize('talk10-notes', 'talk10NoteFontValue', 'studiuMeu_talk10NoteSize', delta);
-}
-
 function initNoteFontSizes() {
   const discursSize = parseInt(localStorage.getItem('studiuMeu_discursNoteSize')) || 14;
   applyNoteFontSize('discursNote', 'discursNoteFontValue', 'studiuMeu_discursNoteSize', discursSize);
   const talkSize = parseInt(localStorage.getItem('studiuMeu_talkNoteSize')) || 14;
   applyNoteFontSize('talk-notes', 'talkNoteFontValue', 'studiuMeu_talkNoteSize', talkSize);
-  const talk10Size = parseInt(localStorage.getItem('studiuMeu_talk10NoteSize')) || 14;
-  applyNoteFontSize('talk10-notes', 'talk10NoteFontValue', 'studiuMeu_talk10NoteSize', talk10Size);
 }
 

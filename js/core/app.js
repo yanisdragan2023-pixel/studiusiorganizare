@@ -25,7 +25,6 @@ function init() {
   loadState();
   loadTheme();
   updateGreeting();
-  if (typeof fetchWeather === 'function') fetchWeather();
   loadYearText();
   setVerse(DAILY_VERSES.length ? DAILY_VERSES[currentVerseIdx] : null);
   renderDashboard();
@@ -101,9 +100,6 @@ function init() {
 
   // Actualizare salut la fiecare minut
   setInterval(updateGreeting, 60000);
-
-  // Actualizare vreme la fiecare 30 de minute
-  if (typeof fetchWeather === 'function') setInterval(fetchWeather, 30 * 60000);
 
   // Scalare font
   initFontScale();
