@@ -1,0 +1,35 @@
+  <section class="page" id="page-pdflibrary">
+    <div class="page-header">
+      <div style="font-size:2rem;line-height:1;margin-bottom:6px">📚</div>
+      <h2>Biblioteca PDF</h2>
+      <p class="page-sub">PDF-urile tale, salvate direct pe acest dispozitiv</p>
+    </div>
+
+    <div class="wt-container">
+      <div class="card">
+        <div class="card-header">
+          <h3>Importă PDF</h3>
+        </div>
+        <p class="page-sub" style="margin:0 0 12px">
+          📱💻 Fișierele PDF importate rămân doar pe acest dispozitiv (laptop sau mobil) —
+          nu se încarcă niciunde online și nu sunt incluse în exportul/transferul de date.
+        </p>
+        <input type="file" id="pdfLibraryFileInput" accept="application/pdf" multiple hidden
+          onchange="importPdfFiles(this.files)" />
+        <button type="button" class="btn-primary" onclick="document.getElementById('pdfLibraryFileInput').click()">
+          + Importă PDF
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>PDF-urile mele</h3>
+        </div>
+        <div id="pdfLibraryList" class="notes-grid">
+          <div class="empty-state full-width">
+            <p>Niciun PDF importat încă.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

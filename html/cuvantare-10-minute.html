@@ -1,0 +1,68 @@
+  <section class="page" id="page-talk10cuv">
+    <div class="page-header">
+      <h2>🎤 Discurs principal – 10 minute</h2>
+      <p class="page-sub">Pregătirea și cronometrul pentru discursul de 10 minute din cadrul Comorilor din Cuvântul lui Dumnezeu</p>
+    </div>
+
+    <div class="wt-container">
+      <div class="card">
+        <div class="card-header">
+          <h3>🎤 Discurs principal</h3>
+        </div>
+
+        <!-- TIMER 10 MINUTE -->
+        <div class="discurs-timer-bar timer-bar-inline" id="talk10TimerBar">
+          <div class="discurs-timer-display">
+            <span class="discurs-timer-icon" id="talk10TimerIcon">⏱</span>
+            <span class="discurs-timer-value" id="talk10TimerValue">10:00</span>
+            <span class="discurs-timer-label" id="talk10TimerLabel">din 10 minute</span>
+          </div>
+          <div class="discurs-timer-progress-wrap">
+            <div class="discurs-timer-progress-bg">
+              <div class="discurs-timer-progress-fill" id="talk10TimerFill" style="width:100%"></div>
+            </div>
+          </div>
+          <div class="discurs-timer-btns">
+            <button class="btn-primary btn-sm" id="talk10TimerStartBtn" onclick="talk10TimerStart()">▶ Start</button>
+            <button class="btn-ghost btn-sm" id="talk10TimerPauseBtn" onclick="talk10TimerPause()" style="display:none">⏸ Pauză</button>
+            <button class="btn-ghost btn-sm" onclick="talk10TimerReset()">↺ Reset</button>
+          </div>
+        </div>
+
+        <div class="wb-section-items">
+          <div class="wb-item">
+            <div class="form-row">
+              <div class="form-group"><label>Titlu discurs</label><input type="text" id="talk10-subject" class="form-input" placeholder="Titlu discurs" oninput="saveTalk10Draft()"/></div>
+              <div class="form-group"><label>Durată</label><input type="text" id="talk10-duration" class="form-input" value="10 minute" oninput="saveTalk10Draft()"/></div>
+            </div>
+
+            <div class="form-group">
+              <div class="note-label-row">
+                <label>Notițe pregătire</label>
+                <div class="note-font-control">
+                  <button type="button" class="note-font-btn" onclick="changeTalk10NoteFontSize(-1)" title="Micșorează text">A</button>
+                  <span class="note-font-value" id="talk10NoteFontValue">14</span>
+                  <button type="button" class="note-font-btn note-font-btn-lg" onclick="changeTalk10NoteFontSize(1)" title="Mărește text">A</button>
+                </div>
+              </div>
+              <textarea id="talk10-notes" class="form-textarea small" placeholder="Idei principale, introducere, concluzie..." oninput="saveTalk10Draft(); updateWordCounters()"></textarea>
+              <div class="word-counter" id="talk10WordCounter">Cuvinte: 0</div>
+            </div>
+            <div class="action-row">
+              <button class="btn-ghost" onclick="newTalk10()">➕ Discurs Nou</button>
+              <button class="btn-ghost" id="talk10DeleteBtn" onclick="deleteTalk10Draft()" style="display:none;color:var(--red)">🗑 Șterge</button>
+              <button class="btn-primary" onclick="saveTalk10Note()">💾 Salvează Discursul</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <div class="page-header" style="margin-bottom:12px">
+          <h3 style="margin:0">📚 Discursuri Salvate</h3>
+          <p class="page-sub" style="margin:0">Apasă pe un discurs pentru a-l încărca și edita.</p>
+        </div>
+        <div id="talk10TalksList" class="notes-grid"></div>
+      </div>
+    </div>
+  </section>

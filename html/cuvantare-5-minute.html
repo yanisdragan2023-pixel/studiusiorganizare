@@ -1,0 +1,84 @@
+  <section class="page" id="page-talk5cuv">
+    <div class="page-header">
+      <h2>🎤 Cuvântare – 5 minute</h2>
+      <p class="page-sub">Pregătirea și cronometrul pentru cuvântarea de 5 minute din cadrul Vieții creștine</p>
+    </div>
+
+    <div class="wt-container">
+      <div class="card">
+        <div class="card-header">
+          <h3>🎤 Cuvântare</h3>
+          <span class="badge badge-purple" style="font-size:0.75rem;cursor:pointer" onclick="toggleTalkAiPanel()">✨ Asistent AI</span>
+        </div>
+
+        <!-- TIMER 5 MINUTE -->
+        <div class="discurs-timer-bar timer-bar-inline" id="talkTimerBar">
+          <div class="discurs-timer-display">
+            <span class="discurs-timer-icon" id="talkTimerIcon">⏱</span>
+            <span class="discurs-timer-value" id="talkTimerValue">05:00</span>
+            <span class="discurs-timer-label" id="talkTimerLabel">din 5 minute</span>
+          </div>
+          <div class="discurs-timer-progress-wrap">
+            <div class="discurs-timer-progress-bg">
+              <div class="discurs-timer-progress-fill" id="talkTimerFill" style="width:100%"></div>
+            </div>
+          </div>
+          <div class="discurs-timer-btns">
+            <button class="btn-primary btn-sm" id="talkTimerStartBtn" onclick="talkTimerStart()">▶ Start</button>
+            <button class="btn-ghost btn-sm" id="talkTimerPauseBtn" onclick="talkTimerPause()" style="display:none">⏸ Pauză</button>
+            <button class="btn-ghost btn-sm" onclick="talkTimerReset()">↺ Reset</button>
+          </div>
+        </div>
+
+        <div class="wb-section-items">
+          <div class="wb-item">
+            <div class="form-row">
+              <div class="form-group"><label>Subiect</label><input type="text" id="talk-subject" class="form-input" placeholder="Tema cuvântării" oninput="saveTalkDraft()"/></div>
+              <div class="form-group"><label>Durată</label><input type="text" id="talk-duration" class="form-input" value="5 minute" oninput="saveTalkDraft()"/></div>
+            </div>
+
+            <!-- Talk AI Helper Panel -->
+            <div id="talkAiPanel" class="ai-assistant-panel" style="display:none; margin: 10px 0; padding: 12px; border: 1px dashed var(--accent); background: var(--bg-card-glow);">
+              <p style="font-size:0.8rem; font-weight:600; margin-bottom:6px">🔮 Asistent Plan Cuvântare</p>
+              <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px">Introduceți subiectul cuvântării de mai sus, apoi selectați un stil de schiță:</p>
+              <div style="display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap">
+                <button type="button" class="btn-xs btn-primary" onclick="generateTalkOutline('explicativ')">📚 Schiță Explicativă</button>
+                <button type="button" class="btn-xs btn-primary" onclick="generateTalkOutline('practic')">🌱 Schiță Practică</button>
+                <button type="button" class="btn-xs btn-primary" onclick="generateTalkOutline('incurajator')">❤️ Schiță Încurajatoare</button>
+              </div>
+              <div id="talkAiSuggestions" style="font-size:0.8rem; line-height:1.4; color:var(--text-secondary); background:rgba(0,0,0,0.15); padding:8px; border-radius:4px; display:none; max-height:150px; overflow-y:auto; margin-bottom:6px"></div>
+              <button type="button" id="useTalkOutlineBtn" class="btn-xs btn-outline" style="display:none" onclick="applyTalkOutline()">✍️ Folosește această schiță</button>
+            </div>
+
+            <div class="form-group">
+              <div class="note-label-row">
+                <label>Notițe pregătire</label>
+                <div class="note-font-control">
+                  <button type="button" class="note-font-btn" onclick="changeTalkNoteFontSize(-1)" title="Micșorează text">A</button>
+                  <span class="note-font-value" id="talkNoteFontValue">14</span>
+                  <button type="button" class="note-font-btn note-font-btn-lg" onclick="changeTalkNoteFontSize(1)" title="Mărește text">A</button>
+                </div>
+              </div>
+              <textarea id="talk-notes" class="form-textarea small" placeholder="Idei principale, introducere, concluzie..." oninput="saveTalkDraft(); updateWordCounters()"></textarea>
+              <div class="word-counter" id="talkWordCounter">Cuvinte: 0</div>
+            </div>
+            <div class="action-row">
+              <button class="btn-ghost" onclick="newTalk5()">➕ Cuvântare Nouă</button>
+              <button class="btn-ghost" id="talk5DeleteBtn" onclick="deleteTalk5Draft()" style="display:none;color:var(--red)">🗑 Șterge</button>
+              <button class="btn-primary" onclick="saveTalk5Note()">💾 Salvează Cuvântarea</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <div class="page-header" style="margin-bottom:12px">
+          <h3 style="margin:0">📚 Cuvântări Salvate</h3>
+          <p class="page-sub" style="margin:0">Apasă pe o cuvântare pentru a o încărca și edita.</p>
+        </div>
+        <div id="talk5TalksList" class="notes-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: BIBLE READER (jw.org/ro) -->

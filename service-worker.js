@@ -1,7 +1,7 @@
 // StudiuMeu — Service Worker
 // Cache-first pentru fisierele aplicatiei = functionare completa offline.
 
-const CACHE_VERSION = 'studiumeu-v21';
+const CACHE_VERSION = 'studiumeu-v25';
 const CACHE_NAME = CACHE_VERSION;
 
 const APP_SHELL = [
@@ -17,12 +17,14 @@ const APP_SHELL = [
   './html/calendar-intruniri.html',
   './html/citeste-biblia.html',
   './html/cuvantare-5-minute.html',
+  './html/cuvantare-10-minute.html',
   './html/discurs.html',
   './html/layout-sidebar.html',
   './html/layout-topbar.html',
   './html/notite.html',
   './html/programare-stand.html',
   './html/programare-teren.html',
+  './html/radar-meteo.html',
   './html/serviciu-teren.html',
   './html/setari.html',
   './html/studiu-biblic.html',
@@ -38,6 +40,7 @@ const APP_SHELL = [
   './js/core/fontScale.js',
   './js/core/navigation.js',
   './js/core/notifications.js',
+  './js/core/radarMeteo.js',
   './js/core/settings.js',
   './js/core/storage.js',
   './js/core/theme.js',
@@ -57,6 +60,7 @@ const APP_SHELL = [
   './js/meetings/icsExport.js',
   './js/meetings/meetings.js',
   './js/meetings/talkTimer.js',
+  './js/meetings/talkTimer10.js',
   './js/meetings/wordCounter.js',
   './js/field-service/fieldService.js',
   './js/field-service/fieldServiceUI.js',
@@ -102,6 +106,17 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(req.url);
   const isSameOrigin = url.origin === self.location.origin;
+
+  // Plăcuțele hărții (radar meteo + hartă de bază) și metadatele radar sunt
+  // date live, care se schimbă des — nu le ținem în cache-ul aplicației,
+  // doar rețea directă (altfel s-ar putea afișa un radar vechi/depășit).
+  const isLiveWeatherRequest = url.hostname.endsWith('tilecache.rainviewer.com') ||
+    url.hostname.endsWith('basemaps.cartocdn.com') ||
+    url.hostname === 'api.rainviewer.com';
+  if (isLiveWeatherRequest) {
+    event.respondWith(fetch(req));
+    return;
+  }
 
   if (req.mode === 'navigate') {
     event.respondWith(

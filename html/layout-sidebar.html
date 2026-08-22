@@ -1,0 +1,153 @@
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="38" height="38">
+        <rect width="40" height="40" rx="10" fill="url(#grad1)"/>
+        <path d="M10 28V14c0-1.1.9-2 2-2h6l2 3h8a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2z" stroke="white" stroke-width="1.5" fill="none"/>
+        <line x1="14" y1="20" x2="26" y2="20" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="14" y1="23" x2="22" y2="23" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="grad1" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#4f8ef7"/>
+            <stop offset="100%" stop-color="#6c63ff"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div>
+        <span class="logo-title">Studiu și Organizare</span>
+        <span class="logo-sub">Pregătire Întruniri</span>
+      </div>
+    </div>
+    <button class="sidebar-toggle-btn" id="sidebarToggle" title="Închide meniu">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <span class="nav-section-label">PRINCIPAL</span>
+    <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">
+      <svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" fill="none"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" fill="none"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" fill="none"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+      PAGINA PRINCIPALĂ
+    </a>
+    <a href="#" class="nav-item" data-page="temacursant" id="nav-temacursant">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Temă pentru cursant
+    </a>
+    <div class="nav-group" id="navGroup-intruniri">
+      <a href="#" class="nav-item nav-group-toggle" onclick="toggleNavGroup('intruniri')">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="nav-item-label">Întruniri</span>
+        <svg class="nav-group-chevron" viewBox="0 0 24 24" width="14" height="14"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav-group-content">
+        <div class="nav-group" id="navGroup-workbook">
+          <a href="#" class="nav-item nav-group-toggle" onclick="toggleNavGroup('workbook')">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" stroke="currentColor" stroke-width="2" fill="none"/><rect x="9" y="3" width="6" height="4" rx="1" stroke="currentColor" stroke-width="2" fill="none"/><line x1="9" y1="12" x2="15" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="9" y1="16" x2="13" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="nav-item-label">Viața creștină și predicarea</span>
+            <svg class="nav-group-chevron" viewBox="0 0 24 24" width="14" height="14"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </a>
+          <div class="nav-group-content">
+            <a href="#" class="nav-item nav-subitem" data-page="workbook" id="nav-workbook">
+              <span class="nav-subitem-dot">📋</span>
+              Pregătire
+            </a>
+            <a href="#" class="nav-item nav-subitem" data-page="talk5cuv" id="nav-talk5cuv">
+              <span class="nav-subitem-dot">🎤</span>
+              Cuvântare 5 minute
+            </a>
+            <a href="#" class="nav-item nav-subitem" data-page="talk10cuv" id="nav-talk10cuv">
+              <span class="nav-subitem-dot">🎤</span>
+              Discurs 10 minute
+            </a>
+          </div>
+        </div>
+        <div class="nav-group" id="navGroup-watchtower">
+          <a href="#" class="nav-item nav-group-toggle" onclick="toggleNavGroup('watchtower')">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" stroke-width="2" fill="none"/><line x1="8" y1="7" x2="16" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="11" x2="14" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="nav-item-label">Întrunirea Publică și Studiul Turnului de Veghe</span>
+            <svg class="nav-group-chevron" viewBox="0 0 24 24" width="14" height="14"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </a>
+          <div class="nav-group-content">
+            <a href="#" class="nav-item nav-subitem" data-page="discurs" id="nav-discurs">
+              <span class="nav-subitem-dot">📢</span>
+              Cuvântare Publică 30 minute
+            </a>
+            <a href="#" class="nav-item nav-subitem" data-page="watchtower" id="nav-watchtower">
+              <span class="nav-subitem-dot"><svg viewBox="0 0 130 60" width="16" height="7.4" style="display:block"><path d="M19,56 L19,43 L11,43 L11,36 L2,36 L2,2 L21,2 L21,12 L32,12 L32,2 L46,2 L46,12 L57,12 L57,2 L72,2 L72,12 L83,12 L83,2 L98,2 L98,12 L109,12 L109,2 L127,2 L127,36 L119,36 L119,43 L111,43 L111,56" stroke="currentColor" stroke-width="9" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
+              Turnul de Veghe
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" class="nav-item" data-page="library" id="nav-library">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+      Bibliotecă
+    </a>
+    <a href="#" class="nav-item" data-page="pdflibrary" id="nav-pdflibrary">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Biblioteca PDF
+    </a>
+    <a href="#" class="nav-item" data-page="bible" id="nav-bible">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      Studiu Biblic
+    </a>
+    <a href="#" class="nav-item" data-page="notes" id="nav-notes">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" stroke="currentColor" stroke-width="2" fill="none"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="8" y1="13" x2="16" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="17" x2="12" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Notițele Mele
+    </a>
+    <a href="#" class="nav-item" data-page="radarmeteo" id="nav-radarmeteo">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-1.41-8.78A6 6 0 0 0 4 12.5 4.5 4.5 0 0 0 4.5 19H17.5z"/><line x1="8" y1="19" x2="8" y2="22"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="16" y1="19" x2="16" y2="22"/></svg>
+      Radar Meteo
+    </a>
+    <div class="nav-group" id="navGroup-fieldservice">
+      <a href="#" class="nav-item nav-group-toggle" onclick="toggleNavGroup('fieldservice')">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg>
+        <span class="nav-item-label">Întrunirea de ieșire pe teren</span>
+        <svg class="nav-group-chevron" viewBox="0 0 24 24" width="14" height="14"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav-group-content">
+        <a href="#" class="nav-item nav-subitem" data-page="fieldservice" id="nav-fieldservice">
+          <span class="nav-subitem-dot">🧑‍🤝‍🧑</span>
+          Serviciul de ieșire pe teren
+        </a>
+        <a href="#" class="nav-item nav-subitem" data-page="fieldschedulingpreview" id="nav-fieldschedulingpreview">
+          <span class="nav-subitem-dot">🖼️</span>
+          Programare de ieșire pe teren
+        </a>
+        <a href="#" class="nav-item nav-subitem" data-page="standscheduling" id="nav-standscheduling">
+          <span class="nav-subitem-dot">🖼️</span>
+          Programare de ieșire cu standul
+        </a>
+        <a href="#" class="nav-item nav-subitem" data-page="preachingassistant" id="nav-preachingassistant">
+          <span class="nav-subitem-dot">🗣️</span>
+          Ministry Assistant (Raport)
+        </a>
+      </div>
+    </div>
+
+    <span class="nav-section-label" style="margin-top:12px">ÎNTRUNIRI</span>
+    <a href="#" class="nav-item" data-page="meetings" id="nav-meetings">
+      <svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Programul Meu
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="font-scale-control">
+      <button class="font-scale-btn" id="fontDecreaseBtn" onclick="changeFontScale(-1)" title="Micșorează text">A</button>
+      <span class="font-scale-value" id="fontScaleValue">14</span>
+      <button class="font-scale-btn font-scale-btn-lg" id="fontIncreaseBtn" onclick="changeFontScale(1)" title="Mărește text">A</button>
+    </div>
+  </div>
+</aside>
+
+
+<!-- BUTON EXTINDERE SIDEBAR (vizibil doar când sidebar e restrâns) -->
+<button class="sidebar-expand-btn" id="sidebarExpandBtn" title="Deschide meniu">
+  <svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- MAIN CONTENT -->

@@ -1,0 +1,98 @@
+  <section class="page" id="page-bible">
+    <div class="page-header">
+      <h2>✏️ Studiu Biblic Personal</h2>
+      <p class="page-sub">Versete, pasaje și meditații personale</p>
+    </div>
+
+    <div class="wt-container">
+      <div class="card">
+        <div class="card-header">
+          <h3>Adaugă Verset / Pasaj</h3>
+          <button class="btn-primary btn-sm" onclick="addVerseEntry()">+ Adaugă</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Referință Biblică</label>
+            <input type="text" id="verse-ref-input" placeholder="ex: Ioan 3:16" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label>Categoria</label>
+            <select class="form-input" id="verse-category">
+              <option>Credință</option>
+              <option>Iubire</option>
+              <option>Speranță</option>
+              <option>Rugăciune</option>
+              <option>Înțelepciune</option>
+              <option>Altele</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Textul Versetului</label>
+          <textarea class="form-textarea" id="verse-text-input" placeholder="Copiați textul versetului din NWT sau Biblia în versiunea preferată..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Meditație / Aplicare Personală</label>
+          <textarea class="form-textarea" id="verse-meditation" placeholder="Cum mă ajută acest verset? Cum îl aplic în viața mea?"></textarea>
+        </div>
+        <div class="action-row">
+          <button class="btn-primary" onclick="saveVerse()">💾 Salvează Versetul</button>
+        </div>
+      </div>
+
+      <!-- VERSES LIST -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Versetele Mele Salvate</h3>
+          <div class="filter-tabs" id="verseFilters">
+            <button class="filter-tab active" data-filter="all">Toate</button>
+            <button class="filter-tab" data-filter="Credință">Credință</button>
+            <button class="filter-tab" data-filter="Dragoste">Iubire</button>
+            <button class="filter-tab" data-filter="Speranță">Speranță</button>
+            <button class="filter-tab" data-filter="Rugăciune">Rugăciune</button>
+          </div>
+        </div>
+        <div id="versesList" class="verses-list">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" width="48" height="48" opacity=".3"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+            <p>Niciun verset salvat încă.</p>
+            <p style="font-size:0.85rem;opacity:.6">Adaugă primul tău verset de mai sus.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROPHECIES -->
+      <div class="card prophecies-card">
+        <div class="card-header">
+          <h3>📜 Profeții și Împlinirea lor</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn-primary btn-sm" onclick="addProphecy()">+ Adaugă Profeție</button>
+            <button class="btn-ghost btn-sm" onclick="exportProphecies()">📤 Export</button>
+            <button class="btn-ghost btn-sm" onclick="addExampleProphecies()">📖 Exemple</button>
+          </div>
+        </div>
+
+        <div style="overflow-x:auto; margin-top: 4px;">
+          <table class="prophecy-table" id="prophecyTable">
+            <thead>
+              <tr>
+                <th style="width:30%;">📖 Profeția</th>
+                <th style="width:12%;">📅 Anul</th>
+                <th style="width:38%;">✅ Împlinirea</th>
+                <th style="width:15%;">🔗 Referință</th>
+                <th style="width:40px;">⚙️</th>
+              </tr>
+            </thead>
+            <tbody id="prophecyTableBody">
+            </tbody>
+          </table>
+        </div>
+
+        <div id="prophecyEmpty" class="empty-state-small">
+          Nicio profeție adăugată. Apasă „+ Adaugă Profeție" pentru a începe.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: FIELD SERVICE -->

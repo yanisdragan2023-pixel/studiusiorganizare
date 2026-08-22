@@ -1,0 +1,242 @@
+  <section class="page" id="page-library">
+    <div class="page-header">
+      <h2>🎬 Bibliotecă</h2>
+      <p class="page-sub">Publicații și materiale video</p>
+    </div>
+
+    <!-- ── BIG TAB BUTTONS ── -->
+    <div class="lib-big-tabs">
+      <button class="lib-big-tab active" id="tab-pub" data-libtab="pub" onclick="switchLibTab('pub')">
+        <div class="lib-big-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+        </div>
+        <span class="lib-big-label">PUBLICAȚII</span>
+      </button>
+      <button class="lib-big-tab" id="tab-video" data-libtab="video" onclick="switchLibTab('video')">
+        <div class="lib-big-icon lib-big-icon-photo">
+          <img src="assets/Video.webp" alt="Materiale Video" loading="lazy" />
+        </div>
+      </button>
+      <button class="lib-big-tab" id="tab-music" data-libtab="music" onclick="switchLibTab('music')">
+        <div class="lib-big-icon lib-big-icon-photo">
+          <img src="assets/MUZICA.webp" alt="Muzică" loading="lazy" />
+        </div>
+      </button>
+    </div>
+
+    <!-- ══ TAB: PUBLICAȚII ══ -->
+    <div id="lib-pub" class="lib-panel active">
+      <p class="lib-hint">Publicații din <strong>jw.org</strong> — adaugă linkuri sau fișiere PDF descărcate.</p>
+      <div class="pub-list" id="pub-list">
+        <div class="pub-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <p>Nicio publicație adăugată încă.</p>
+        </div>
+      </div>
+      <button class="add-media-btn" id="add-pub-btn" onclick="openPubModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Adaugă Publicație
+      </button>
+      <!-- Modal adăugare publicație -->
+      <div id="pub-modal" class="mini-modal hidden">
+        <div class="mini-modal-box">
+          <h4>Publicație nouă</h4>
+          <input type="text" id="pub-title-input" placeholder="Titlu publicație..." class="mini-input" />
+          <input type="url" id="pub-url-input" placeholder="Link jw.org (opțional)" class="mini-input" />
+          <div class="mini-modal-btns">
+            <button class="mini-btn-cancel" id="pub-cancel" onclick="closePubModal()">Anulează</button>
+            <button class="mini-btn-ok" id="pub-save" onclick="savePub()">Salvează</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: MATERIALE VIDEO ══ -->
+    <div id="lib-video" class="lib-panel hidden">
+      <p class="lib-hint">💻 Videourile rămân <strong>doar pe acest calculator</strong> — nimic nu se încarcă pe internet sau pe GitHub. Pe Chrome/Edge aplicația își amintește locul fișierului și îl reconectează cu un click; pe Firefox/Safari trebuie reselectat de fiecare dată.</p>
+
+      <div class="video-series">
+        <div class="series-header">
+          <span class="series-badge">📂</span>
+          <h3 class="series-title">Materiale Video</h3>
+          <span class="series-count" id="video-count">6 episoade</span>
+        </div>
+        <div class="video-toolbar">
+          <button class="reset-titles-btn" id="reset-titles-btn" title="Resetează titlurile la valorile implicite">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            Resetează titlurile
+          </button>
+        </div>
+        <div class="video-cards-list" id="video-cards-list">
+          <!-- Episoadele sunt generate dinamic din library.js (EPISODE_IDS) -->
+        </div>
+      </div>
+
+      <!-- Player modal (apare când dai play) -->
+      <div id="video-player-modal" class="vplayer-overlay hidden">
+        <div class="vplayer-box">
+          <div class="vplayer-header">
+            <span id="vplayer-title">Video</span>
+            <button id="vplayer-close" class="vplayer-close" title="Închide">✕</button>
+          </div>
+          <video id="vplayer-el" class="vplayer-el" controls></video>
+          <div class="vplayer-footer">
+            <button id="vplayer-exit" class="vplayer-exit-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Ieșire
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TAB: MUZICĂ ══ -->
+    <div id="lib-music" class="lib-panel hidden">
+      <p class="lib-hint">🎵 Melodiile rămân <strong>doar pe acest calculator</strong> — nimic nu se încarcă pe internet. Adaugă-le una câte una, cu titlul pe care îl vrei. Aplicația reține exact de unde ai rămas la fiecare melodie.</p>
+
+      <!-- Card "Continuă ascultarea" -->
+      <div class="continue-listen-card hidden" id="continue-listen-card">
+        <div class="continue-listen-icon">🎧</div>
+        <div class="continue-listen-info">
+          <span class="continue-listen-label">Continuă ascultarea</span>
+          <span class="continue-listen-title" id="continue-listen-title"></span>
+          <span class="continue-listen-time" id="continue-listen-time"></span>
+        </div>
+        <button class="continue-listen-btn" id="continue-listen-btn" title="Continuă">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </button>
+      </div>
+
+      <div class="video-series">
+        <div class="series-header">
+          <span class="series-badge">🎶</span>
+          <h3 class="series-title">Melodiile Mele</h3>
+          <span class="series-count" id="music-count">0 melodii</span>
+        </div>
+        <div class="video-cards-list" id="music-cards-list">
+          <div class="pub-empty" id="music-empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            <p>Nicio melodie adăugată încă.</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="add-media-btn" id="add-song-btn" onclick="openAddSongModal()" style="margin-top:14px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Adaugă Melodie
+      </button>
+
+      <!-- Modal adăugare melodie -->
+      <div id="song-modal" class="mini-modal hidden">
+        <div class="mini-modal-box">
+          <h4>Melodie nouă</h4>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin:-8px 0 12px">Scrie titlul, apoi apasă Salvează — se va deschide selectorul de fișiere ca să alegi melodia de pe calculator.</p>
+          <input type="text" id="song-title-input" placeholder="Titlu melodie..." class="mini-input" maxlength="120" />
+          <div class="mini-modal-btns">
+            <button class="mini-btn-cancel" id="song-cancel" onclick="closeAddSongModal()">Anulează</button>
+            <button class="mini-btn-ok" id="song-save" onclick="saveNewSong()">Salvează</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Player audio (apare când dai play) -->
+      <div id="audio-player-modal" class="vplayer-overlay hidden">
+        <div class="vplayer-box">
+          <div class="vplayer-header">
+            <span id="aplayer-title">Melodie</span>
+            <button id="aplayer-close" class="vplayer-close" title="Închide">✕</button>
+          </div>
+          <div class="aplayer-art">🎵</div>
+          <audio id="aplayer-el" class="aplayer-el" controls></audio>
+          <div class="vplayer-footer">
+            <button id="aplayer-prev" class="vplayer-exit-btn" title="Melodia anterioară">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+            <button id="aplayer-exit" class="vplayer-exit-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Ieșire
+            </button>
+            <button id="aplayer-next" class="vplayer-exit-btn" title="Melodia următoare">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="lib-section-title" style="margin-top:24px">Muzică internațională</h3>
+
+      <!-- Card "Continuă ascultarea" — Muzică internațională -->
+      <div class="continue-listen-card hidden" id="continue-listen-card-intl">
+        <div class="continue-listen-icon">🎧</div>
+        <div class="continue-listen-info">
+          <span class="continue-listen-label">Continuă ascultarea</span>
+          <span class="continue-listen-title" id="continue-listen-title-intl"></span>
+          <span class="continue-listen-time" id="continue-listen-time-intl"></span>
+        </div>
+        <button class="continue-listen-btn" id="continue-listen-btn-intl" title="Continuă">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </button>
+      </div>
+
+      <div class="video-series">
+        <div class="series-header">
+          <span class="series-badge">🎶</span>
+          <h3 class="series-title">Muzică Internațională</h3>
+          <span class="series-count" id="music-intl-count">0 melodii</span>
+        </div>
+        <div class="video-cards-list" id="music-intl-cards-list">
+          <div class="pub-empty" id="music-intl-empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            <p>Nicio melodie adăugată încă.</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="add-media-btn" id="add-song-intl-btn" onclick="openAddSongModalIntl()" style="margin-top:14px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Adaugă Melodie
+      </button>
+
+      <!-- Modal adăugare melodie — Muzică internațională -->
+      <div id="song-modal-intl" class="mini-modal hidden">
+        <div class="mini-modal-box">
+          <h4>Melodie nouă</h4>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin:-8px 0 12px">Scrie titlul, apoi apasă Salvează — se va deschide selectorul de fișiere ca să alegi melodia de pe calculator.</p>
+          <input type="text" id="song-title-input-intl" placeholder="Titlu melodie..." class="mini-input" maxlength="120" />
+          <div class="mini-modal-btns">
+            <button class="mini-btn-cancel" id="song-cancel-intl" onclick="closeAddSongModalIntl()">Anulează</button>
+            <button class="mini-btn-ok" id="song-save-intl" onclick="saveNewSongIntl()">Salvează</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Player audio — Muzică internațională -->
+      <div id="audio-player-modal-intl" class="vplayer-overlay hidden">
+        <div class="vplayer-box">
+          <div class="vplayer-header">
+            <span id="aplayer-title-intl">Melodie</span>
+            <button id="aplayer-close-intl" class="vplayer-close" title="Închide">✕</button>
+          </div>
+          <div class="aplayer-art">🎵</div>
+          <audio id="aplayer-el-intl" class="aplayer-el" controls></audio>
+          <div class="vplayer-footer">
+            <button id="aplayer-prev-intl" class="vplayer-exit-btn" title="Melodia anterioară">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+            <button id="aplayer-exit-intl" class="vplayer-exit-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Ieșire
+            </button>
+            <button id="aplayer-next-intl" class="vplayer-exit-btn" title="Melodia următoare">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: BIBLE STUDY -->

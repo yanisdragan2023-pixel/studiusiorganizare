@@ -1,0 +1,33 @@
+  <section class="page" id="page-radarmeteo">
+    <div class="page-header">
+      <h2>🌧️ Radar Meteo — Reșița</h2>
+      <p class="page-sub">Vezi în timp real în ce zonă a orașului plouă, pe baza radarului meteorologic public.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Precipitații acum</h3>
+        <div class="radar-controls">
+          <span class="radar-updated" id="radarUpdated">—</span>
+          <button type="button" class="btn-outline btn-sm" id="radarRefreshBtn" onclick="refreshRadarMeteo()">🔄 Reîmprospătează</button>
+        </div>
+      </div>
+
+      <div class="radar-map-wrap">
+        <div id="radarMapContainer" class="radar-map-container"></div>
+        <div class="radar-map-status" id="radarMapStatus" style="display:none"></div>
+      </div>
+
+      <div class="radar-legend">
+        <span class="radar-legend-title">Intensitate:</span>
+        <span class="radar-legend-item"><span class="radar-swatch" style="background:#7dd3fc"></span>Slabă</span>
+        <span class="radar-legend-item"><span class="radar-swatch" style="background:#3b82f6"></span>Moderată</span>
+        <span class="radar-legend-item"><span class="radar-swatch" style="background:#a855f7"></span>Puternică</span>
+        <span class="radar-legend-item"><span class="radar-swatch" style="background:#ef4444"></span>Foarte puternică</span>
+      </div>
+      <p class="page-sub" style="margin-top:10px">
+        Datele radar provin de la <a href="https://www.rainviewer.com/" target="_blank" rel="noopener">RainViewer</a>
+        (actualizate la câteva minute) și harta de bază de la OpenStreetMap. Necesită conexiune la internet.
+      </p>
+    </div>
+  </section>
