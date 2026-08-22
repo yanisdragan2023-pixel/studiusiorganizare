@@ -5,21 +5,18 @@
 // ============================================
 const pageTitles = {
   dashboard: 'PAGINA PRINCIPALĂ',
-  asistentai: '💬 Asistent AI',
   temacursant: 'Temă pentru cursant',
   watchtower: 'Turnul de Veghe – Studiu',
   discurs: 'Discurs Biblic – 30 minute',
   workbook: 'Viața creștină și predicarea',
   talk5cuv: 'Cuvântare – 5 minute',
-  talk10cuv: 'Discurs principal – 10 minute',
   bible: 'Studiu Biblic Personal',
   library: 'Bibliotecă',
-  pdflibrary: 'Biblioteca PDF',
   biblereader: 'Citește Biblia',
   fieldservice: 'Întrunirea de Serviciu de Teren',
   fieldschedulingpreview: 'Programare de ieșire pe teren',
   standscheduling: 'Programare de ieșire cu standul',
-  preachingassistant: 'Ministry Assistant (Raport)',
+  preachingassistant: 'Asistent de predicare (raport)',
   vestitor: 'Vestitor',
   notes: 'Notițele Mele',
   meetings: 'Programul Meu',
@@ -40,11 +37,9 @@ function navigateTo(page) {
   if (navEl) navEl.classList.add('active');
   if (page === 'watchtower' || page === 'discurs') {
     document.getElementById('navGroup-watchtower')?.classList.add('open');
-    document.getElementById('navGroup-intruniri')?.classList.add('open');
   }
-  if (page === 'workbook' || page === 'talk5cuv' || page === 'talk10cuv') {
+  if (page === 'workbook' || page === 'talk5cuv') {
     document.getElementById('navGroup-workbook')?.classList.add('open');
-    document.getElementById('navGroup-intruniri')?.classList.add('open');
   }
   if (page === 'fieldservice' || page === 'preachingassistant' || page === 'fieldschedulingpreview' || page === 'standscheduling' || page === 'vestitor') {
     document.getElementById('navGroup-fieldservice')?.classList.add('open');
@@ -69,18 +64,15 @@ function navigateTo(page) {
 function renderPage(page) {
   switch(page) {
     case 'dashboard': renderDashboard(); break;
-    case 'asistentai': renderAsistentAI(); break;
     case 'temacursant': renderTemaCursantPage(); break;
     case 'notes': renderNotesList(); break;
     case 'bible': renderVersesList('all'); renderProphecies(); break;
     case 'library': renderLibraryPage(); break;
-    case 'pdflibrary': renderPdfLibrary(); break;
     case 'meetings': renderMeetings(); break;
     case 'watchtower': renderWtParagraphs(); break;
     case 'discurs': renderDiscursPage(); break;
     case 'workbook': break;
     case 'talk5cuv': renderTalk5Page(); break;
-    case 'talk10cuv': renderTalk10Page(); break;
     case 'biblereader': initBibleReader(); break;
     case 'fieldservice': renderFieldServiceList(); break;
     case 'fieldschedulingpreview': renderFieldSchedulingTable(); break;

@@ -27,67 +27,6 @@ function updateGreeting() {
 }
 
 // ============================================
-// WEATHER (Reșița)
-// ============================================
-const WEATHER_LAT = 45.2971;
-const WEATHER_LON = 21.8892;
-
-// Cod meteo WMO -> emoji + descriere (ro)
-const WEATHER_CODE_MAP = {
-  0: ['☀️', 'Senin'],
-  1: ['🌤️', 'Predominant senin'],
-  2: ['⛅', 'Parțial noros'],
-  3: ['☁️', 'Înnorat'],
-  45: ['🌫️', 'Ceață'],
-  48: ['🌫️', 'Ceață cu chiciură'],
-  51: ['🌦️', 'Burniță slabă'],
-  53: ['🌦️', 'Burniță'],
-  55: ['🌦️', 'Burniță intensă'],
-  61: ['🌧️', 'Ploaie slabă'],
-  63: ['🌧️', 'Ploaie'],
-  65: ['🌧️', 'Ploaie puternică'],
-  71: ['🌨️', 'Ninsoare slabă'],
-  73: ['🌨️', 'Ninsoare'],
-  75: ['🌨️', 'Ninsoare puternică'],
-  80: ['🌦️', 'Averse slabe'],
-  81: ['🌧️', 'Averse'],
-  82: ['⛈️', 'Averse puternice'],
-  95: ['⛈️', 'Furtună'],
-  96: ['⛈️', 'Furtună cu grindină'],
-  99: ['⛈️', 'Furtună puternică']
-};
-
-async function fetchWeather() {
-  const widget = document.getElementById('weatherWidget');
-  if (!widget) return;
-  try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${WEATHER_LAT}&longitude=${WEATHER_LON}&current=temperature_2m,precipitation,weather_code&timezone=Europe%2FBucharest`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Weather request failed');
-    const data = await res.json();
-    const current = data.current;
-    if (!current) throw new Error('No current weather data');
-
-    const code = current.weather_code;
-    const [icon, desc] = WEATHER_CODE_MAP[code] || ['🌡️', 'Vreme'];
-    const temp = Math.round(current.temperature_2m);
-    const precip = current.precipitation ?? 0;
-
-    document.getElementById('weatherIcon').textContent = icon;
-    document.getElementById('weatherTemp').textContent = `${temp}°C`;
-    document.getElementById('weatherDetail').textContent =
-      precip > 0
-        ? `Reșița · ${desc} · ${precip} mm precipitații`
-        : `Reșița · ${desc}`;
-
-    widget.style.display = 'flex';
-  } catch (err) {
-    console.warn('Nu s-a putut încărca vremea:', err);
-    widget.style.display = 'none';
-  }
-}
-
-// ============================================
 // DASHBOARD RENDER
 // ============================================
 function renderDashboard() {

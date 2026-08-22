@@ -51,13 +51,5 @@ function updateWordCounters() {
     discursCounter.textContent = formatWordCounterText(countOnlyWords(discursNotes.value));
     autoGrowTextarea(discursNotes);
   }
-
-  const talk10Notes = document.getElementById('talk10-notes');
-  const talk10Counter = document.getElementById('talk10WordCounter');
-
-  if (talk10Notes && talk10Counter) {
-    talk10Counter.textContent = formatWordCounterText(countOnlyWords(talk10Notes.value));
-    autoGrowTextarea(talk10Notes);
-  }
 }
 
