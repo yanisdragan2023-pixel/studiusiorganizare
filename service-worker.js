@@ -1,7 +1,7 @@
 // StudiuMeu — Service Worker
 // Cache-first pentru fisierele aplicatiei = functionare completa offline.
 
-const CACHE_VERSION = 'studiumeu-v21';
+const CACHE_VERSION = 'studiumeu-v20';
 const CACHE_NAME = CACHE_VERSION;
 
 const APP_SHELL = [
@@ -12,7 +12,6 @@ const APP_SHELL = [
   './html/acasa.html',
   './html/asistent-predicare.html',
   './html/biblioteca.html',
-  './html/biblioteca-pdf.html',
   './html/caiet-intrunire.html',
   './html/calendar-intruniri.html',
   './html/citeste-biblia.html',
@@ -45,7 +44,6 @@ const APP_SHELL = [
   './js/core/utils.js',
   './js/study/bibleReader.js',
   './js/study/library.js',
-  './js/study/pdfLibrary.js',
   './js/study/notes.js',
   './js/study/prophecies.js',
   './js/study/search.js',

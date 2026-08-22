@@ -12,12 +12,11 @@ const pageTitles = {
   talk5cuv: 'Cuvântare – 5 minute',
   bible: 'Studiu Biblic Personal',
   library: 'Bibliotecă',
-  pdflibrary: 'Biblioteca PDF',
   biblereader: 'Citește Biblia',
   fieldservice: 'Întrunirea de Serviciu de Teren',
   fieldschedulingpreview: 'Programare de ieșire pe teren',
   standscheduling: 'Programare de ieșire cu standul',
-  preachingassistant: 'Ministry Assistant (Raport)',
+  preachingassistant: 'Asistent de predicare (raport)',
   vestitor: 'Vestitor',
   notes: 'Notițele Mele',
   meetings: 'Programul Meu',
@@ -69,7 +68,6 @@ function renderPage(page) {
     case 'notes': renderNotesList(); break;
     case 'bible': renderVersesList('all'); renderProphecies(); break;
     case 'library': renderLibraryPage(); break;
-    case 'pdflibrary': renderPdfLibrary(); break;
     case 'meetings': renderMeetings(); break;
     case 'watchtower': renderWtParagraphs(); break;
     case 'discurs': renderDiscursPage(); break;
