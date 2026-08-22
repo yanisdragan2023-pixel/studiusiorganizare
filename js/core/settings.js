@@ -7,6 +7,7 @@ function openSettingsModal() {
   document.getElementById('settingsModal')?.classList.add('open');
   if (typeof renderTransferSettings === 'function') renderTransferSettings();
   if (typeof updateBackupStatusUI === 'function') updateBackupStatusUI();
+  if (typeof updatePreImportBackupUI === 'function') updatePreImportBackupUI();
   if (typeof initInstallGuide === 'function') initInstallGuide();
 }
 

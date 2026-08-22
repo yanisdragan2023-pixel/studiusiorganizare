@@ -52,6 +52,8 @@ function standNamePairs(names) {
 // coleg2) au mai fost programați împreună — indiferent cu cine altcineva
 // erau atunci. Întoarce { row, a, b } (rândul găsit + numele perechii
 // care se repetă) sau null.
+// (Păstrată pentru compatibilitate — avertismentul afișat efectiv acum
+// folosește pragul săptămânal de mai jos, standCountPairInWeek.)
 function standFindPairMatch(vestitor, coleg, coleg2, excludeId) {
   const pairs = standNamePairs([vestitor, coleg, coleg2]);
   if (pairs.length === 0) return null;
@@ -63,6 +65,55 @@ function standFindPairMatch(vestitor, coleg, coleg2, excludeId) {
     if (rPairs.length === 0) continue;
     const found = pairs.find(p => rPairs.some(rp => rp.key === p.key));
     if (found) return { row: r, a: found.a, b: found.b };
+  }
+  return null;
+}
+
+// Numărul maxim recomandat de ieșiri cu standul cu ACEEAȘI pereche de
+// colegi, în aceeași săptămână, înainte de a arăta un avertisment.
+const STAND_SAME_PARTNER_WEEKLY_LIMIT = 3;
+
+// Cheia săptămânii ISO (an-săptămână) pentru o dată "yyyy-mm-dd" —
+// identică ca logică cu fs2GetWeekKey din fieldScheduling.js, dar
+// duplicată aici ca fișierul să rămână independent.
+function standGetWeekKey(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr + 'T00:00:00');
+  if (isNaN(d.getTime())) return null;
+  const target = new Date(d.valueOf());
+  const dayNr = (d.getDay() + 6) % 7;
+  target.setDate(target.getDate() - dayNr + 3);
+  const firstThursday = new Date(target.getFullYear(), 0, 4);
+  const firstDayNr = (firstThursday.getDay() + 6) % 7;
+  firstThursday.setDate(firstThursday.getDate() - firstDayNr + 3);
+  const weekNumber = 1 + Math.round((target - firstThursday) / (7 * 24 * 3600 * 1000));
+  return `${target.getFullYear()}-W${String(weekNumber).padStart(2, '0')}`;
+}
+
+// Numără de câte ori o anumită pereche (identificată prin cheia ei,
+// vezi standNamePairs) mai apare în ALTE rânduri din aceeași săptămână.
+function standCountPairInWeek(pairKey, weekKey, excludeId) {
+  if (!pairKey || !weekKey) return 0;
+  const rows = Array.isArray(state.standSchedulingRows) ? state.standSchedulingRows : [];
+  return rows.filter(r => {
+    if (r.id === excludeId) return false;
+    if (standGetWeekKey(r.date) !== weekKey) return false;
+    const rowPairs = standNamePairs([r.vestitor, r.coleg, r.coleg2]).map(p => p.key);
+    return rowPairs.includes(pairKey);
+  }).length;
+}
+
+// Dintre toate perechile rândului curent, găsește-o (dacă există) care
+// depășește limita săptămânală — folosită pentru avertismentul afișat.
+function standFindOverLimitPair(vestitor, coleg, coleg2, date, excludeId) {
+  const weekKey = standGetWeekKey(date);
+  if (!weekKey) return null;
+  const pairs = standNamePairs([vestitor, coleg, coleg2]);
+  for (const p of pairs) {
+    const count = standCountPairInWeek(p.key, weekKey, excludeId) + 1;
+    if (count > STAND_SAME_PARTNER_WEEKLY_LIMIT) {
+      return { a: p.a, b: p.b, count };
+    }
   }
   return null;
 }
@@ -93,7 +144,7 @@ function updateStandSchedulingCellSilent(id, field, value) {
   const row = (state.standSchedulingRows || []).find(r => r.id === id);
   if (!row) return;
   row[field] = value;
-  saveState();
+  saveStateDebounced();
 }
 
 function deleteStandSchedulingRow(id) {
@@ -233,18 +284,17 @@ function renderStandSchedulingTable() {
 
   container.innerHTML = rows.map(row => {
     const { ziua, luna, anul } = standDateParts(row.date);
-    const match = standFindPairMatch(row.vestitor, row.coleg, row.coleg2, row.id);
-    const warningRow = match ? `
+    const overLimit = standFindOverLimitPair(row.vestitor, row.coleg, row.coleg2, row.date, row.id);
+    const warningRow = overLimit ? `
       <tr class="fs2-warning-row">
         <td colspan="9">
-          ⚠️ ${escHtml(match.a)} a mai fost programat cu ${escHtml(match.b)}
-          ${match.row.date ? `pe ${escHtml(standDateParts(match.row.date).ziua)} ${escHtml(standDateParts(match.row.date).luna)} ${escHtml(standDateParts(match.row.date).anul)}` : 'anterior'}.
-          Alege altă combinație data aceasta, dacă se poate.
+          ⚠️ ${escHtml(overLimit.a)} și ${escHtml(overLimit.b)} sunt programați împreună de ${overLimit.count} ori în aceeași săptămână
+          (peste limita recomandată de ${STAND_SAME_PARTNER_WEEKLY_LIMIT}). Alege altă combinație, dacă se poate.
         </td>
       </tr>` : '';
 
     return `
-      <tr class="fs2-row${match ? ' fs2-row-flagged' : ''}">
+      <tr class="fs2-row${overLimit ? ' fs2-row-flagged' : ''}">
         <td class="fs2-cell fs2-cell-date-wrap">
           <input type="date" class="fs2-cell-input fs2-cell-date" value="${escHtml(row.date || '')}"
             onchange="updateStandSchedulingCell('${row.id}', 'date', this.value)" />

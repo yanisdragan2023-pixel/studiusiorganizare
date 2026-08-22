@@ -4377,3 +4377,39 @@ select.form-input option { background: var(--bg-elevated); }
   line-height: 1.35;
   margin: 0;
 }
+
+/* ============================================
+   INDICATOR DISCRET DE SALVARE (Salvat ✓ / Se salvează… / Salvare eșuată)
+   ============================================ */
+.save-indicator {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: transparent;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-2px);
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition), background var(--transition), color var(--transition);
+}
+.save-indicator.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.save-indicator.is-saving {
+  color: var(--text-secondary);
+}
+.save-indicator.is-saved {
+  color: var(--green);
+  background: rgba(16,201,160,0.12);
+}
+.save-indicator.is-error {
+  color: var(--red);
+  background: rgba(248,81,73,0.12);
+}
+
+@media (max-width: 800px) {
+  .save-indicator { display: none; }
+}

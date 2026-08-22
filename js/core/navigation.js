@@ -27,6 +27,10 @@ const pageTitles = {
 let currentPage = 'dashboard';
 
 function navigateTo(page) {
+  // Salvează imediat orice modificare încă „în așteptare" (debounced)
+  // înainte de a părăsi pagina curentă, ca să nu se piardă nimic.
+  if (typeof flushPendingSave === 'function') flushPendingSave();
+
   // Hide all pages
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));

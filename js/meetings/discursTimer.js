@@ -126,7 +126,7 @@ function loadDiscursDraftForDate(date) {
 function saveDiscursDraft() {
   state.discursDraft = buildDiscursDraftFromForm();
   rememberDiscursDraftForDay(state.discursDraft);
-  saveState();
+  saveStateDebounced();
 }
 
 function renderDiscursSectionsEditor() {
@@ -154,7 +154,7 @@ function updateDiscursSection(index, field, value) {
 
   const totalSeconds = getDiscursTotalSeconds();
   if (discursTimerElapsedSeconds > totalSeconds) discursTimerElapsedSeconds = totalSeconds;
-  saveState();
+  saveStateDebounced();
   discursTimerUpdateUI();
 }
 

@@ -4,6 +4,7 @@
 // EXPORT / IMPORT BACKUP
 // ============================================
 const LAST_EXPORT_KEY = 'studiuMeu_lastExportAt';
+const PRE_IMPORT_BACKUP_KEY = 'studiuMeu_preImportBackup';
 const BACKUP_REMINDER_KEY = 'studiuMeu_backupReminderShownDate';
 const BACKUP_REMINDER_DAYS = 14; // după câte zile fără export considerăm backup-ul "vechi"
 
@@ -38,6 +39,68 @@ function checkBackupReminder() {
     ? '💾 N-ai mai făcut un backup de ceva vreme. Un export rapid din Setări te ține în siguranță.'
     : '💾 N-ai făcut încă niciun backup. Recomandăm un export din Setări, ca să nu pierzi datele.';
   setTimeout(() => showToast(msg, 'warning'), 1200);
+}
+
+// ============================================
+// RESTAURARE BACKUP AUTOMAT (creat chiar înainte de ultimul import)
+// ============================================
+/** Întoarce { savedAt, state } dacă există un backup automat pre-import, altfel null. */
+function getPreImportBackup() {
+  try {
+    const raw = localStorage.getItem(PRE_IMPORT_BACKUP_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object' || !parsed.state) return null;
+    return parsed;
+  } catch (e) {
+    console.error('Backup pre-import corupt:', e);
+    return null;
+  }
+}
+
+/** Actualizează rândul din Setări care arată dacă există o rezervă pre-import. */
+function updatePreImportBackupUI() {
+  const row = document.getElementById('preImportBackupRow');
+  const label = document.getElementById('preImportBackupLabel');
+  const btn = document.getElementById('preImportBackupBtn');
+  const backup = getPreImportBackup();
+  if (!row || !label) return;
+  if (backup) {
+    row.style.display = '';
+    if (btn) btn.style.display = '';
+    label.textContent = formatRelativeTime(backup.savedAt);
+  } else {
+    row.style.display = 'none';
+    if (btn) btn.style.display = 'none';
+  }
+}
+
+/**
+ * Restaurează datele așa cum erau chiar înainte de ultimul import (dacă
+ * există o astfel de copie de siguranță automată). Cere confirmare, pentru
+ * că înlocuiește la rândul ei datele curente.
+ */
+function restorePreImportBackup() {
+  const backup = getPreImportBackup();
+  if (!backup) {
+    showToast('Nu există nicio copie de siguranță pre-import de restaurat.', 'error');
+    return;
+  }
+
+  const when = formatRelativeTime(backup.savedAt);
+  const shouldRestore = confirm(
+    `Restaurezi datele așa cum erau înainte de ultimul import (${when})?\n\n` +
+    'Aceasta va înlocui datele actuale din aplicație.'
+  );
+  if (!shouldRestore) return;
+
+  state = { ...defaultAppState(), ...backup.state };
+  saveState();
+  loadTheme();
+  loadYearText();
+  renderPage(currentPage);
+  renderDashboard();
+  showToast('Datele de dinainte de import au fost restaurate. ✅', 'success');
 }
 
 function exportData() {
@@ -131,9 +194,23 @@ function importData(file) {
         throw new Error('Fișierul nu pare să fie un backup StudiuMeu valid.');
       }
 
+      // Backup automat al datelor curente ÎNAINTE de a cere confirmarea —
+      // dacă utilizatorul anulează, nu s-a schimbat nimic; dacă importă și
+      // se răzgândește ulterior, datele de dinainte rămân recuperabile din
+      // această cheie (restorePreImportBackup()).
+      try {
+        localStorage.setItem(PRE_IMPORT_BACKUP_KEY, JSON.stringify({
+          savedAt: new Date().toISOString(),
+          state: JSON.parse(JSON.stringify(state)),
+        }));
+      } catch (backupError) {
+        console.error('Nu s-a putut face backup automat înainte de import:', backupError);
+      }
+
       const shouldImport = confirm(
         'Importul va înlocui datele salvate acum în aplicație. Continui?\n\n' +
-        'Recomandare: fă mai întâi un export al datelor actuale.'
+        'Datele actuale au fost salvate automat ca rezervă înainte de import ' +
+        '(o poți restaura din Setări dacă te răzgândești). Recomandăm și un export propriu.'
       );
       if (!shouldImport) return;
 
@@ -176,6 +253,7 @@ function importData(file) {
       renderDashboard();
 
       showToast('Backup importat cu succes! ✅', 'success');
+      if (typeof updatePreImportBackupUI === 'function') updatePreImportBackupUI();
     } catch (error) {
       console.error('Import error:', error);
       showToast('Fișier invalid sau backup corupt.', 'error');

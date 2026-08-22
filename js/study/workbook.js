@@ -58,7 +58,7 @@ function saveTalkDraft() {
     duration: document.getElementById('talk-duration')?.value || '5 minute',
     notes: document.getElementById('talk-notes')?.value || '',
   };
-  saveState();
+  saveStateDebounced();
 }
 
 function loadTalkDraft() {

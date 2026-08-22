@@ -13,7 +13,7 @@ function saveVestitorNume() {
   const input = document.getElementById('vestitor-nume');
   if (!input) return;
   state.vestitorNume = input.value;
-  saveState();
+  saveStateDebounced();
 }
 
 // -------- CRONOMETRU --------

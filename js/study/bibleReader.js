@@ -261,7 +261,7 @@ function autoSaveChapterNote() {
   const el = document.getElementById('chapterNotesText');
   if (typeof autoGrowTextarea === 'function') autoGrowTextarea(el);
   clearTimeout(notesSaveTimer);
-  notesSaveTimer = setTimeout(saveChapterNote, 800);
+  notesSaveTimer = setTimeout(saveChapterNote, 500);
 }
 
 function saveChapterNote() {
@@ -283,7 +283,7 @@ function autoSaveChapterVerseText() {
   const el = document.getElementById('chapterVerseText');
   if (typeof autoGrowTextarea === 'function') autoGrowTextarea(el);
   clearTimeout(verseTextSaveTimer);
-  verseTextSaveTimer = setTimeout(saveChapterVerseText, 800);
+  verseTextSaveTimer = setTimeout(saveChapterVerseText, 500);
 }
 
 function saveChapterVerseText() {

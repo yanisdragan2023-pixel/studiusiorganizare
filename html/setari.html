@@ -138,6 +138,13 @@
         <svg viewBox="0 0 24 24" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="17 8 12 3 7 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <span>Importă date (JSON)</span>
       </button>
+      <div class="settings-row" id="preImportBackupRow" style="display:none">
+        <span class="settings-label">Rezervă automată (înainte de ultimul import)</span>
+        <span class="settings-value" id="preImportBackupLabel">—</span>
+      </div>
+      <button type="button" class="settings-action-btn" id="preImportBackupBtn" onclick="restorePreImportBackup()" style="display:none">
+        <span>Restaurează datele de dinainte de import</span>
+      </button>
 
       <div class="settings-section-label">Trimite Cuvântări</div>
       <div class="t-status-row">

@@ -7,22 +7,52 @@
 
 'use strict';
 
-const AI_DEFAULT_MODEL = 'gemini-2.0-flash';
+const AI_DEFAULT_MODEL = 'gemini-2.5-flash';
+const AI_LEGACY_MODELS = new Set([
+  'gemini-1.0-pro',
+  'gemini-1.0-pro-latest',
+  'gemini-1.5-flash',
+  'gemini-1.5-flash-latest',
+  'gemini-1.5-pro',
+  'gemini-1.5-pro-latest',
+  'gemini-pro',
+  'gemini-2.0-flash',
+]);
+
+class GeminiApiError extends Error {
+  constructor(type, message, status = null) {
+    super(message);
+    this.name = 'GeminiApiError';
+    this.type = type;
+    this.status = status;
+  }
+}
 
 // -------- SETĂRI --------
 
 function renderAsistentAIPage() {
   const keyInput = document.getElementById('ai-apikey');
   const modelInput = document.getElementById('ai-model');
+  const currentModel = normalizeGeminiModel(state.geminiModel);
+  if (currentModel !== state.geminiModel) {
+    state.geminiModel = currentModel;
+    saveState();
+  }
   if (keyInput) keyInput.value = state.geminiApiKey || '';
-  if (modelInput) modelInput.value = state.geminiModel || AI_DEFAULT_MODEL;
+  if (modelInput) modelInput.value = currentModel;
   renderAIChatLog();
 }
 
 function saveAISettings() {
   state.geminiApiKey = (document.getElementById('ai-apikey')?.value || '').trim();
-  state.geminiModel = (document.getElementById('ai-model')?.value || '').trim() || AI_DEFAULT_MODEL;
+  state.geminiModel = normalizeGeminiModel(document.getElementById('ai-model')?.value);
   saveState();
+}
+
+function normalizeGeminiModel(model) {
+  const value = (model || '').trim();
+  if (!value || AI_LEGACY_MODELS.has(value)) return AI_DEFAULT_MODEL;
+  return value;
 }
 
 // -------- CONVERSAȚIE --------
@@ -67,7 +97,7 @@ async function sendAIMessage() {
 
   const apiKey = (state.geminiApiKey || '').trim();
   if (!apiKey) {
-    showToast('Completează mai întâi cheia API Gemini, mai sus');
+    showToast('Completează mai întâi cheia API Gemini, mai sus.');
     return;
   }
 
@@ -86,7 +116,7 @@ async function sendAIMessage() {
   if (sendBtn) sendBtn.disabled = true;
 
   try {
-    const reply = await callGeminiAPI(state.aiChatHistory, apiKey, state.geminiModel || AI_DEFAULT_MODEL);
+    const reply = await callGeminiAPI(state.aiChatHistory, apiKey, normalizeGeminiModel(state.geminiModel));
     state.aiChatHistory.push({ role: 'assistant', text: reply });
   } catch (err) {
     console.error('Eroare Asistent AI:', err);
@@ -99,23 +129,38 @@ async function sendAIMessage() {
 }
 
 function aiErrorMessage(err) {
+  if (err?.type === 'missing-api-key') {
+    return '⚠️ Cheia API lipsește. Introdu cheia Gemini în setările de mai sus.';
+  }
+  if (err?.type === 'invalid-api-key') {
+    return '⚠️ Cheia API Gemini pare invalidă sau nu are acces. Verifică cheia în setările de mai sus.';
+  }
+  if (err?.type === 'model-unavailable') {
+    return `⚠️ Modelul Gemini selectat nu este disponibil. Folosește un model curent, de exemplu ${AI_DEFAULT_MODEL}.`;
+  }
+  if (err?.type === 'rate-limit') {
+    return '⚠️ Limita API Gemini a fost atinsă. Mai încearcă puțin mai târziu.';
+  }
+  if (err?.type === 'network') {
+    return '⚠️ Eroare de rețea: nu am putut contacta Google Gemini. Verifică internetul și încearcă din nou.';
+  }
+  if (err?.type === 'invalid-response') {
+    return '⚠️ Gemini a trimis un răspuns invalid sau gol. Încearcă din nou.';
+  }
   const msg = (err && err.message) || '';
-  if (msg.includes('API_KEY_INVALID') || msg.includes('400') || msg.includes('403')) {
-    return '⚠️ Cheia API pare greșită sau nu are acces la acest model. Verific-o în setările de mai sus.';
-  }
-  if (msg.includes('429')) {
-    return '⚠️ Prea multe cereri la rând — mai încearcă puțin mai târziu (limita gratuită de Google).';
-  }
-  if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
-    return '⚠️ Nu am putut contacta Google (verifică internetul).';
-  }
   return `⚠️ A apărut o eroare: ${msg || 'necunoscută'}.`;
 }
 
 // Trimite ultimele mesaje ca „conversation history” către Gemini
 // și întoarce textul răspunsului asistentului.
 async function callGeminiAPI(history, apiKey, model) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
+  const cleanApiKey = (apiKey || '').trim();
+  if (!cleanApiKey) {
+    throw new GeminiApiError('missing-api-key', 'Cheia API lipsește.');
+  }
+
+  const selectedModel = normalizeGeminiModel(model);
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(selectedModel)}:generateContent`;
 
   // Gemini nu are rol „system”/„assistant” direct — folosim „user”/„model”
   // și trimitem doar ultimele mesaje ca să nu creștem prea mult cererea.
@@ -125,24 +170,58 @@ async function callGeminiAPI(history, apiKey, model) {
     parts: [{ text: m.text }],
   }));
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ contents }),
-  });
-
-  if (!response.ok) {
-    const errText = await response.text().catch(() => '');
-    throw new Error(`${response.status} ${errText}`.trim());
+  let response;
+  try {
+    response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': cleanApiKey,
+      },
+      body: JSON.stringify({ contents }),
+    });
+  } catch (err) {
+    throw new GeminiApiError('network', err?.message || 'Nu s-a putut contacta Gemini.');
   }
 
-  const data = await response.json();
+  const rawText = await response.text().catch(() => '');
+  let data = null;
+  if (rawText) {
+    try {
+      data = JSON.parse(rawText);
+    } catch (err) {
+      throw new GeminiApiError('invalid-response', 'Răspunsul Gemini nu este JSON valid.', response.status);
+    }
+  }
+
+  if (!response.ok) {
+    const googleStatus = data?.error?.status || '';
+    const googleMessage = data?.error?.message || rawText || `HTTP ${response.status}`;
+    if (response.status === 400 && googleStatus === 'INVALID_ARGUMENT' && /api key/i.test(googleMessage)) {
+      throw new GeminiApiError('invalid-api-key', googleMessage, response.status);
+    }
+    if (response.status === 400 || response.status === 404) {
+      throw new GeminiApiError('model-unavailable', googleMessage, response.status);
+    }
+    if (response.status === 401 || response.status === 403 || googleStatus === 'PERMISSION_DENIED') {
+      throw new GeminiApiError('invalid-api-key', googleMessage, response.status);
+    }
+    if (response.status === 429 || googleStatus === 'RESOURCE_EXHAUSTED') {
+      throw new GeminiApiError('rate-limit', googleMessage, response.status);
+    }
+    throw new GeminiApiError('api-error', googleMessage, response.status);
+  }
+
   const parts = data?.candidates?.[0]?.content?.parts || [];
   const text = parts.map(p => p.text || '').join('').trim();
 
   if (!text) {
-    const blockReason = data?.promptFeedback?.blockReason;
-    throw new Error(blockReason ? `Blocat de Google: ${blockReason}` : 'Răspuns gol de la Gemini');
+    const blockReason = data?.promptFeedback?.blockReason || data?.candidates?.[0]?.finishReason;
+    throw new GeminiApiError(
+      'invalid-response',
+      blockReason ? `Blocat de Google: ${blockReason}` : 'Răspuns gol de la Gemini',
+      response.status
+    );
   }
   return text;
 }
