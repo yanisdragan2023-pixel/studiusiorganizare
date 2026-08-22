@@ -122,5 +122,13 @@ function init() {
 // ============================================
 
 
-document.addEventListener('DOMContentLoaded', init);
-document.addEventListener('DOMContentLoaded', updateWordCounters);
+function runWhenDomReady(callback) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', callback);
+  } else {
+    callback();
+  }
+}
+
+runWhenDomReady(init);
+runWhenDomReady(updateWordCounters);

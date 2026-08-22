@@ -426,6 +426,7 @@ function saveVestitorProfil() {
   state.vestitorProfil.regulat = !!document.getElementById('vprofile-regulat')?.checked;
   saveState();
   renderVestitorAnnualReport();
+  renderVestitorWhatsAppFields();
 }
 
 function setVestitorProfilMonthColor(luna, color) {

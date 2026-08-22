@@ -1,7 +1,7 @@
 // StudiuMeu — Service Worker
 // Cache-first pentru fisierele aplicatiei = functionare completa offline.
 
-const CACHE_VERSION = 'studiumeu-v17';
+const CACHE_VERSION = 'studiumeu-v20';
 const CACHE_NAME = CACHE_VERSION;
 
 const APP_SHELL = [
@@ -9,6 +9,28 @@ const APP_SHELL = [
   './index.html',
   './style.css',
   './manifest.json',
+  './html/acasa.html',
+  './html/asistent-predicare.html',
+  './html/biblioteca.html',
+  './html/caiet-intrunire.html',
+  './html/calendar-intruniri.html',
+  './html/citeste-biblia.html',
+  './html/cuvantare-5-minute.html',
+  './html/discurs.html',
+  './html/layout-sidebar.html',
+  './html/layout-topbar.html',
+  './html/notite.html',
+  './html/programare-stand.html',
+  './html/programare-teren.html',
+  './html/serviciu-teren.html',
+  './html/setari.html',
+  './html/studiu-biblic.html',
+  './html/suprapuneri-pwa.html',
+  './html/tema-cursant.html',
+  './html/toast.html',
+  './html/transfer.html',
+  './html/turnul-de-veghe.html',
+  './html/vestitor.html',
   './js/core/app.js',
   './js/core/dashboard.js',
   './js/core/dataIO.js',
@@ -36,6 +58,9 @@ const APP_SHELL = [
   './js/meetings/wordCounter.js',
   './js/field-service/fieldService.js',
   './js/field-service/fieldServiceUI.js',
+  './js/field-service/fieldScheduling.js',
+  './js/field-service/standScheduling.js',
+  './js/field-service/vestitor.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-512-maskable.png'
@@ -49,6 +74,11 @@ self.addEventListener('install', (event) => {
       // GitHub) — îl cache-uim separat ca să nu pice tot instalarea dacă lipsește.
       .then(() => caches.open(CACHE_NAME).then((cache) =>
         cache.add('./js/field-service/field-service-data.local.js').catch(() => {})
+      ))
+      // verse-of-day.local.js e la fel opțional (index.html are deja fallback
+      // pentru el) — aceeași logică, nu blocăm instalarea dacă lipsește.
+      .then(() => caches.open(CACHE_NAME).then((cache) =>
+        cache.add('./js/study/verse-of-day.local.js').catch(() => {})
       ))
       .then(() => self.skipWaiting())
   );

@@ -16,7 +16,7 @@ const pageTitles = {
   fieldservice: 'Întrunirea de Serviciu de Teren',
   fieldschedulingpreview: 'Programare de ieșire pe teren',
   standscheduling: 'Programare de ieșire cu standul',
-  preachingassistant: 'Asistent de predicare (raport)',
+  preachingassistant: 'Ministry Assistant (Raport)',
   vestitor: 'Vestitor',
   notes: 'Notițele Mele',
   meetings: 'Programul Meu',
