@@ -287,32 +287,42 @@ function renderVestitorWhatsAppFields() {
   }
 }
 
-function markVestitorReportSent() {
+function onVestitorReportSentToggle(checkbox) {
   const target = getVestitorReportTargetMonth();
   state.vestitorReportSentMonths = state.vestitorReportSentMonths || {};
-  state.vestitorReportSentMonths[target.key] = true;
+
+  if (checkbox.checked) {
+    state.vestitorReportSentMonths[target.key] = true;
+    showToast(`Raport confirmat pentru ${RO_MONTHS_FULL[target.monthIdx0]} ${target.year} — reamintirile pentru luna asta sunt oprite.`);
+  } else {
+    delete state.vestitorReportSentMonths[target.key];
+    showToast(`Bifă anulată pentru ${RO_MONTHS_FULL[target.monthIdx0]} ${target.year} — reamintirile vor continua.`);
+  }
+
   saveState();
   renderVestitorReportSentStatus();
-  showToast(`Raport confirmat pentru ${RO_MONTHS_FULL[target.monthIdx0]} ${target.year} — reamintirile pentru luna asta sunt oprite.`);
 }
 
 function renderVestitorReportSentStatus() {
-  const btn = document.getElementById('vestitorReportSentBtn');
+  const row = document.getElementById('vestitorReportSentRow');
+  const checkbox = document.getElementById('vestitorReportSentCheckbox');
+  const label = document.getElementById('vestitorReportSentLabel');
   const status = document.getElementById('vestitorReportSentStatus');
-  if (!btn) return;
+  if (!checkbox) return;
 
   const target = getVestitorReportTargetMonth();
   const sentMap = state.vestitorReportSentMonths || {};
   const isSent = !!sentMap[target.key];
-  const label = `${RO_MONTHS_FULL[target.monthIdx0]} ${target.year}`;
+  const monthLabel = `${RO_MONTHS_FULL[target.monthIdx0]} ${target.year}`;
 
-  btn.textContent = isSent ? `✅ Raport trimis (${label})` : `✅ Raport trimis pentru ${label}`;
-  btn.disabled = isSent;
+  checkbox.checked = isSent;
+  if (row) row.classList.toggle('is-sent', isSent);
+  if (label) label.textContent = isSent ? `✅ Raport trimis (${monthLabel})` : `Raport trimis pentru ${monthLabel}`;
 
   if (status) {
     status.textContent = isSent
-      ? `Confirmat — nu vei mai primi reamintiri pentru ${label}.`
-      : `Nu ai confirmat încă raportul pentru ${label}. Vei primi reamintiri repetate, pe toată durata zilei, în prima și a doua zi a lunii următoare — până apeși „Raport trimis”.`;
+      ? `Confirmat — nu vei mai primi reamintiri pentru ${monthLabel}. Poți debifa dacă a fost din greșeală.`
+      : `Bifează aici după ce trimiți raportul pentru ${monthLabel}. Până atunci vei primi reamintiri repetate, pe toată durata zilei, în prima și a doua zi a lunii următoare.`;
   }
 }
 

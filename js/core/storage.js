@@ -63,6 +63,12 @@ function defaultAppState() {
     // Luni (cheie "YYYY-MM") pentru care utilizatorul a apăsat "Raport trimis",
     // folosit ca să oprim reamintirile locale pentru luna respectivă.
     vestitorReportSentMonths: {},
+
+    // Asistent AI (Google Gemini): cheia API + modelul ales, salvate local,
+    // și istoricul conversației curente.
+    geminiApiKey: '',
+    geminiModel: 'gemini-2.0-flash',
+    aiChatHistory: [], // [{ role: 'user'|'assistant'|'error', text }]
   };
 }
 

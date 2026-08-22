@@ -5,6 +5,7 @@
 // ============================================
 const pageTitles = {
   dashboard: 'PAGINA PRINCIPALĂ',
+  asistentai: 'Asistent AI',
   temacursant: 'Temă pentru cursant',
   watchtower: 'Turnul de Veghe – Studiu',
   discurs: 'Discurs Biblic – 30 minute',
@@ -65,6 +66,7 @@ function navigateTo(page) {
 function renderPage(page) {
   switch(page) {
     case 'dashboard': renderDashboard(); break;
+    case 'asistentai': renderAsistentAIPage(); break;
     case 'temacursant': renderTemaCursantPage(); break;
     case 'notes': renderNotesList(); break;
     case 'bible': renderVersesList('all'); renderProphecies(); break;

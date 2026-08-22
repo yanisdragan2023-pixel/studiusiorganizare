@@ -1388,6 +1388,91 @@ select.form-input option { background: var(--bg-elevated); }
   padding: 10px 12px;
 }
 
+/* Reamintire raport lunar: bifă verde pentru "Raport trimis" */
+.vreport-sent-row {
+  align-items: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  padding: 10px 12px;
+}
+.vreport-sent-label {
+  color: var(--text-primary);
+  flex: 1;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.vreport-sent-row input[type="checkbox"] {
+  accent-color: var(--green);
+  cursor: pointer;
+  flex-shrink: 0;
+  height: 22px;
+  width: 22px;
+}
+.vreport-sent-row.is-sent {
+  border-color: rgba(16,201,160,0.4);
+}
+
+/* Asistent AI: jurnal de conversație + rând de input */
+.ai-chat-log {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+  max-height: 50vh;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+.ai-chat-empty {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  padding: 8px 2px;
+}
+.ai-msg {
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 88%;
+  padding: 10px 12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.ai-msg-user {
+  align-self: flex-end;
+  background: var(--accent);
+  color: #fff;
+}
+.ai-msg-assistant {
+  align-self: flex-start;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+.ai-msg-error {
+  align-self: flex-start;
+  background: rgba(248,81,73,0.12);
+  border: 1px solid rgba(248,81,73,0.35);
+  color: var(--red);
+}
+.ai-msg-pending {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+.ai-chat-input-row {
+  align-items: flex-end;
+  display: flex;
+  gap: 8px;
+}
+.ai-chat-input-row .form-textarea {
+  flex: 1;
+  margin: 0;
+  resize: none;
+}
+
 /* Profilul Vestitorului: cele 12 luni ale anului teocratic, colorabile */
 .vprofile-months {
   display: grid;
