@@ -1,7 +1,7 @@
 // StudiuMeu — Service Worker
 // Cache-first pentru fisierele aplicatiei = functionare completa offline.
 
-const CACHE_VERSION = 'studiumeu-v20';
+const CACHE_VERSION = 'studiumeu-v24';
 const CACHE_NAME = CACHE_VERSION;
 
 const APP_SHELL = [
@@ -10,12 +10,15 @@ const APP_SHELL = [
   './style.css',
   './manifest.json',
   './html/acasa.html',
+  './html/asistent-ai.html',
   './html/asistent-predicare.html',
   './html/biblioteca.html',
+  './html/biblioteca-pdf.html',
   './html/caiet-intrunire.html',
   './html/calendar-intruniri.html',
   './html/citeste-biblia.html',
   './html/cuvantare-5-minute.html',
+  './html/cuvantare-10-minute.html',
   './html/discurs.html',
   './html/layout-sidebar.html',
   './html/layout-topbar.html',
@@ -32,6 +35,7 @@ const APP_SHELL = [
   './html/turnul-de-veghe.html',
   './html/vestitor.html',
   './js/core/app.js',
+  './js/core/asistentAI.js',
   './js/core/dashboard.js',
   './js/core/dataIO.js',
   './js/core/fontScale.js',
@@ -43,7 +47,9 @@ const APP_SHELL = [
   './js/core/transfer.js',
   './js/core/utils.js',
   './js/study/bibleReader.js',
+  './js/study/bibleHighlight.js',
   './js/study/library.js',
+  './js/study/pdfLibrary.js',
   './js/study/notes.js',
   './js/study/prophecies.js',
   './js/study/search.js',
@@ -55,6 +61,7 @@ const APP_SHELL = [
   './js/meetings/icsExport.js',
   './js/meetings/meetings.js',
   './js/meetings/talkTimer.js',
+  './js/meetings/talkTimer10.js',
   './js/meetings/wordCounter.js',
   './js/field-service/fieldService.js',
   './js/field-service/fieldServiceUI.js',

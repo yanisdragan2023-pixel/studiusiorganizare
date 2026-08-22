@@ -20,11 +20,17 @@ function closeSettingsModal() {
 // ============================================
 const APP_CHANGELOG = [
   {
+    version: 'v0.9.4',
+    date: '30 iulie 2026',
+    changes: [
+      'Secțiune nouă „📚 Biblioteca PDF": importă fișiere PDF direct din telefon sau calculator, cu buton „+ Importă PDF". PDF-urile rămân salvate doar pe acest dispozitiv (nu se încarcă niciunde online și nu sunt incluse în exportul/transferul de date) — pot fi deschise oricând cu „👁️ Deschide" sau șterse cu „🗑️ Șterge".',
+    ],
+  },
+  {
     version: 'v0.9.3',
     date: '16 iulie 2026',
     changes: [
-      'Blocare cu PIN pentru Programul principal de Ieșire pe Teren: din Setări (🔒 Blocare cu PIN — Program Teren) fiecare dintre cei doi colaboratori își setează propriul nume și propriul PIN (cifre și simboluri, ex: @ ! #). Tabelul rămâne blocat până se introduce un PIN corect, iar bara de blocare apare direct sub titlu, deasupra butoanelor.',
-      'Tabelul se re-blochează automat de fiecare dată când pleci de pe pagina de Serviciu de Teren.',
+      'Titlul paginii de raport „Asistent de predicare (raport)" a fost schimbat în „Ministry Assistant (Raport)" — atât în meniul lateral, cât și în titlul afișat al paginii.',
     ],
   },
   {

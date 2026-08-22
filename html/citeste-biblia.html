@@ -48,18 +48,6 @@
               <h2 class="chapter-title" id="chapterTitle"></h2>
               <button class="chapter-nav-btn" id="btnNextChap" onclick="navigateChapter(1)">Următor ›</button>
             </div>
-            <a id="jwReadLink" href="#" target="_blank" rel="noopener" class="jw-badge" style="margin-top:6px;display:inline-block">
-              Citește pe jw.org ↗
-            </a>
-          </div>
-
-          <!-- Notițe capitol -->
-          <div class="bible-inline-section">
-            <p class="bible-inline-label">📝 Notițe – <span id="chapterNotesBadge"></span></p>
-            <textarea class="form-textarea" id="chapterNotesText"
-              style="min-height:120px"
-              placeholder="Scrie notițe, impresii sau versete marcate din acest capitol..."
-              oninput="autoSaveChapterNote()"></textarea>
           </div>
 
           <!-- Versete marcate -->
@@ -74,18 +62,18 @@
 
           <!-- Text capitol lipit/scris de utilizator -->
           <div class="bible-inline-section">
-            <p class="bible-inline-label">📄 Textul capitolului (local)</p>
+            <div class="bible-inline-label-row">
+              <p class="bible-inline-label">📄 Textul capitolului (local)</p>
+              
+            </div>
             <p style="font-size:0.78rem;color:var(--text-muted);margin:0 0 8px">
-              Lipește sau scrie textul versetelor. Salvat automat, doar pe acest dispozitiv.
+              Apasă pe un cuvânt (sau mai multe) ca să le evidențiezi tip marcador.
             </p>
-            <textarea class="form-textarea" id="chapterVerseText"
-              style="min-height:200px;font-size:0.92rem;line-height:1.65"
-              placeholder="Lipește aici textul capitolului..."
-              oninput="autoSaveChapterVerseText()"></textarea>
+
+            <div id="bibleVerseColorView" class="form-textarea bible-verse-color-view"
+              style="min-height:200px;font-size:0.92rem"></div>
           </div>
 
-          <!-- Notițe salvate – afișare -->
-          <div class="chapter-notes-display" id="chapterNotesDisplay"></div>
 
           <!-- Highlights versete marcate -->
           <div class="chapter-highlights" id="chapterHighlights"></div>

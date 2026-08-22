@@ -1,0 +1,32 @@
+  <section class="page" id="page-asistentai">
+    <div class="page-header">
+      <h2>💬 Asistent AI</h2>
+      <p class="page-sub">Un spațiu dedicat unde vei putea pune întrebări asistentului AI. Momentan interfața este pregătită, iar funcționalitatea de răspuns va fi conectată în curând.</p>
+    </div>
+
+    <div class="aiassist-shell">
+      <div class="aiassist-chat" id="aiassistChat">
+        <div class="aiassist-message aiassist-message-bot">
+          <div class="aiassist-avatar aiassist-avatar-bot">💬</div>
+          <div class="aiassist-bubble aiassist-bubble-bot">
+            <p>Bun venit! Sunt Asistentul AI al aplicației <strong>Studiu și Organizare</strong>.</p>
+            <p>Aici vei putea, în curând, să pui întrebări și să primești ajutor direct în cadrul aplicației. Deocamdată această secțiune este doar o schiță de interfață — funcționalitatea de răspuns nu este încă activă.</p>
+          </div>
+        </div>
+      </div>
+
+      <form class="aiassist-inputbar" id="aiassistForm" onsubmit="return handleAiAssistantSend(event);">
+        <textarea
+          class="aiassist-textarea"
+          id="aiassistInput"
+          placeholder="Scrie o întrebare... (funcționalitatea AI va fi disponibilă în curând)"
+          rows="1"
+          maxlength="2000"
+        ></textarea>
+        <button type="submit" class="aiassist-send-btn" id="aiassistSendBtn" title="Trimite">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22 2L11 13" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+      <p class="aiassist-disclaimer">🚧 Modul în dezvoltare — răspunsurile AI nu sunt încă disponibile.</p>
+    </div>
+  </section>

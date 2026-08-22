@@ -57,10 +57,9 @@
                   <button type="button" class="note-font-btn" onclick="changeTalkNoteFontSize(-1)" title="Micșorează text">A</button>
                   <span class="note-font-value" id="talkNoteFontValue">14</span>
                   <button type="button" class="note-font-btn note-font-btn-lg" onclick="changeTalkNoteFontSize(1)" title="Mărește text">A</button>
-                  <button type="button" class="note-fullscreen-btn" onclick="openFullscreenNote('talk-notes', 'Cuvântare – 5 minute')" title="Ecran complet">🖥 Ecran complet</button>
                 </div>
               </div>
-              <textarea id="talk-notes" class="form-textarea small" style="min-height:400px" placeholder="Idei principale, introducere, concluzie..." oninput="saveTalkDraft(); updateWordCounters()"></textarea>
+              <textarea id="talk-notes" class="form-textarea small" placeholder="Idei principale, introducere, concluzie..." oninput="saveTalkDraft(); updateWordCounters()"></textarea>
               <div class="word-counter" id="talkWordCounter">Cuvinte: 0</div>
             </div>
             <div class="action-row">

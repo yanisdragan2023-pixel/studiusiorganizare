@@ -29,6 +29,7 @@ function switchLibTab(target) {
   if (target === 'music' && !musicInitialized) {
     musicInitialized = true;
     restoreSavedSongs().then(renderMusicPanel);
+    restoreSavedSongsIntl().then(renderMusicPanelIntl);
   }
 }
 
@@ -40,15 +41,17 @@ function renderLibraryPage() {
   if (!Array.isArray(state.publications)) state.publications = [];
   if (!state.videoMeta || typeof state.videoMeta !== 'object') state.videoMeta = {};
   if (!Array.isArray(state.songs)) state.songs = [];
+  if (!Array.isArray(state.songsIntl)) state.songsIntl = [];
 
   if (!libraryInitialized) {
     initLibraryOnce();
     initMusicOnce();
+    initMusicIntlOnce();
     libraryInitialized = true;
   }
   renderPubs();
   renderVideoSlots();
-  if (musicInitialized) renderMusicPanel();
+  if (musicInitialized) { renderMusicPanel(); renderMusicPanelIntl(); }
 }
 
 function initLibraryOnce() {
@@ -826,4 +829,288 @@ function playAdjacentSong(dir) {
   while (next >= 0 && next < state.songs.length && !songBlobs[state.songs[next].id]) next += dir;
   if (next < 0 || next >= state.songs.length) { closeAudioPlayer(); return; }
   openAudioPlayer(state.songs[next].id);
+}
+
+/* ============================================
+   MUZICĂ INTERNAȚIONALĂ (aceeași logică ca „Melodiile Mele”,
+   dar cu propria listă/stocare — cele două secțiuni sunt complet
+   independente una de cealaltă).
+   ============================================ */
+const songBlobsIntl = {};
+let currentPlayingSongIntlId = null;
+let musicIntlInitialized = false;
+
+function initMusicIntlOnce() {
+  if (musicIntlInitialized) return;
+  musicIntlInitialized = true;
+
+  document.getElementById('song-modal-intl')?.addEventListener('click', e => {
+    if (e.target === document.getElementById('song-modal-intl')) closeAddSongModalIntl();
+  });
+  document.getElementById('song-title-input-intl')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') saveNewSongIntl();
+  });
+
+  document.getElementById('aplayer-close-intl')?.addEventListener('click', closeAudioPlayerIntl);
+  document.getElementById('aplayer-exit-intl')?.addEventListener('click', closeAudioPlayerIntl);
+  document.getElementById('aplayer-next-intl')?.addEventListener('click', () => playAdjacentSongIntl(1));
+  document.getElementById('aplayer-prev-intl')?.addEventListener('click', () => playAdjacentSongIntl(-1));
+  document.getElementById('audio-player-modal-intl')?.addEventListener('click', e => {
+    if (e.target === document.getElementById('audio-player-modal-intl')) closeAudioPlayerIntl();
+  });
+  document.getElementById('continue-listen-btn-intl')?.addEventListener('click', () => {
+    if (state.lastPlayedSongIntlId) openAudioPlayerIntl(state.lastPlayedSongIntlId);
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeAddSongModalIntl(); closeAudioPlayerIntl(); }
+  });
+
+  const list = document.getElementById('music-intl-cards-list');
+  list?.addEventListener('input', e => {
+    if (!e.target.classList.contains('vslot-title-input')) return;
+    const song = state.songsIntl.find(s => s.id === e.target.dataset.slot);
+    if (song) song.title = e.target.value;
+  });
+  list?.addEventListener('blur', e => {
+    if (!e.target.classList || !e.target.classList.contains('vslot-title-input')) return;
+    const song = state.songsIntl.find(s => s.id === e.target.dataset.slot);
+    if (song && !e.target.value.trim()) e.target.value = song.title = 'Melodie fără titlu';
+    saveState();
+  }, true);
+  list?.addEventListener('click', e => {
+    const playBtn = e.target.closest('.vslot-play');
+    if (playBtn) { openAudioPlayerIntl(playBtn.dataset.slot); return; }
+
+    const delBtn = e.target.closest('.vslot-delete');
+    if (delBtn) { deleteSongIntl(delBtn.dataset.slot); return; }
+
+    const pickLabel = e.target.closest('.vslot-pick');
+    if (pickLabel) { e.preventDefault(); reconnectSongFileIntl(pickLabel.dataset.slot); return; }
+  });
+}
+
+// ── Adăugare melodie nouă (titlu + selectare fișier) ──
+function openAddSongModalIntl() {
+  document.getElementById('song-modal-intl')?.classList.remove('hidden');
+  document.getElementById('song-title-input-intl')?.focus();
+}
+function closeAddSongModalIntl() {
+  document.getElementById('song-modal-intl')?.classList.add('hidden');
+  document.getElementById('song-title-input-intl').value = '';
+}
+
+async function saveNewSongIntl() {
+  const titleIn = document.getElementById('song-title-input-intl');
+  const title = titleIn.value.trim();
+  if (!title) { showToast('Introdu un titlu pentru melodie!', 'error'); return; }
+  closeAddSongModalIntl();
+  await pickFileForNewSongIntl(title);
+}
+
+async function pickFileForNewSongIntl(title) {
+  const id = `si${Date.now()}${Math.floor(Math.random() * 1000)}`;
+
+  const finish = async (file, handle) => {
+    songBlobsIntl[id] = { name: file.name, url: URL.createObjectURL(file) };
+    state.songsIntl.push({ id, title, position: 0 });
+    if (handle && supportsFileHandles) await saveHandle(`song-intl-${id}`, handle).catch(() => {});
+    saveState();
+    renderMusicPanelIntl();
+    showToast(`„${title}” a fost adăugată! 🎵`, 'success');
+  };
+
+  if (supportsFileHandles) {
+    try {
+      const [handle] = await window.showOpenFilePicker({
+        types: [{ description: 'Audio', accept: { 'audio/*': ['.mp3', '.m4a', '.wav', '.ogg', '.aac', '.flac'] } }],
+        multiple: false,
+      });
+      const file = await handle.getFile();
+      await finish(file, handle);
+    } catch (err) {
+      if (err?.name === 'AbortError') return;
+      pickWithClassicInput(finish);
+    }
+  } else {
+    pickWithClassicInput(finish);
+  }
+}
+
+// ── Reconectare fișier existent (Chrome/Edge — după ce permisiunea a expirat) ──
+async function reconnectSongFileIntl(id) {
+  if (supportsFileHandles) {
+    const handle = await getHandle(`song-intl-${id}`).catch(() => null);
+    if (handle) {
+      try {
+        const perm = await handle.requestPermission({ mode: 'read' });
+        if (perm === 'granted') {
+          const file = await handle.getFile();
+          songBlobsIntl[id] = { name: file.name, url: URL.createObjectURL(file) };
+          renderMusicPanelIntl();
+          return;
+        }
+      } catch { /* trecem la selectare clasică mai jos */ }
+    }
+  }
+  pickWithClassicInput((file) => {
+    songBlobsIntl[id] = { name: file.name, url: URL.createObjectURL(file) };
+    renderMusicPanelIntl();
+  });
+}
+
+async function restoreSavedSongsIntl() {
+  if (!supportsFileHandles) return;
+  for (const song of state.songsIntl) {
+    if (songBlobsIntl[song.id]) continue;
+    const handle = await getHandle(`song-intl-${song.id}`).catch(() => null);
+    if (!handle) continue;
+    try {
+      const perm = await handle.queryPermission({ mode: 'read' });
+      if (perm === 'granted') {
+        const file = await handle.getFile();
+        songBlobsIntl[song.id] = { name: file.name, url: URL.createObjectURL(file) };
+      }
+    } catch { /* rămâne needs-reconnect, afișat la randare */ }
+  }
+}
+
+function deleteSongIntl(id) {
+  if (!confirm('Ștergi această melodie din listă? (fișierul de pe calculator nu este afectat)')) return;
+  const idx = state.songsIntl.findIndex(s => s.id === id);
+  if (idx === -1) return;
+  state.songsIntl.splice(idx, 1);
+  if (songBlobsIntl[id]) { URL.revokeObjectURL(songBlobsIntl[id].url); delete songBlobsIntl[id]; }
+  if (state.lastPlayedSongIntlId === id) state.lastPlayedSongIntlId = null;
+  saveState();
+  if (supportsFileHandles) deleteHandle(`song-intl-${id}`).catch(() => {});
+  renderMusicPanelIntl();
+  showToast('Melodie ștearsă 🗑️', 'success');
+}
+
+function createSongSlotElIntl(song, index) {
+  const el = document.createElement('div');
+  const loaded = !!songBlobsIntl[song.id];
+  el.className = 'video-slot song-slot' + (loaded ? ' loaded' : '') + (song.id === currentPlayingSongIntlId ? ' playing' : '');
+  el.id = `sslot-intl-${song.id}`;
+  el.dataset.slot = song.id;
+  el.innerHTML = `
+    <div class="vslot-num">${index + 1}</div>
+    <div class="vslot-info">
+      <input type="text" class="vslot-title-input" data-slot="${song.id}" maxlength="120"
+             value="${escHtml(song.title)}" placeholder="Titlu melodie..." />
+      <div class="vslot-meta-row">
+        <span class="vslot-status ${loaded ? 'loaded-status' : 'permission-status'}">
+          ${loaded ? '✓ ' + escHtml(songBlobsIntl[song.id].name) : '🔒 Apasă pe pictograma folder pentru a reconecta fișierul'}
+        </span>
+        ${song.position > 3 ? `<span class="vslot-watched-tag">⏱ ${formatSongTime(song.position)}</span>` : ''}
+      </div>
+    </div>
+    <button class="vslot-play ${loaded ? '' : 'hidden'}" data-slot="${song.id}" title="Redă melodia">
+      <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    </button>
+    <button class="vslot-pick" data-slot="${song.id}" title="${loaded ? 'Reconectează fișierul' : 'Selectează fișierul'}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    </button>
+    <button class="vslot-delete" data-slot="${song.id}" title="Șterge melodia" style="display:flex">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+    </button>
+  `;
+  return el;
+}
+
+function renderMusicPanelIntl() {
+  const list = document.getElementById('music-intl-cards-list');
+  const countEl = document.getElementById('music-intl-count');
+  const emptyEl = document.getElementById('music-intl-empty');
+  if (!list) return;
+
+  countEl.textContent = `${state.songsIntl.length} melodii`;
+
+  list.querySelectorAll('.song-slot').forEach(el => el.remove());
+  if (state.songsIntl.length === 0) {
+    if (emptyEl) emptyEl.style.display = '';
+  } else {
+    if (emptyEl) emptyEl.style.display = 'none';
+    state.songsIntl.forEach((song, i) => list.appendChild(createSongSlotElIntl(song, i)));
+  }
+
+  const continueCard = document.getElementById('continue-listen-card-intl');
+  const lastSong = state.songsIntl.find(s => s.id === state.lastPlayedSongIntlId);
+  if (lastSong && lastSong.position > 3) {
+    continueCard.classList.remove('hidden');
+    document.getElementById('continue-listen-title-intl').textContent = lastSong.title;
+    document.getElementById('continue-listen-time-intl').textContent = `de la ${formatSongTime(lastSong.position)}`;
+  } else {
+    continueCard.classList.add('hidden');
+  }
+}
+
+/* ── Player audio — Muzică internațională ── */
+function openAudioPlayerIntl(id) {
+  if (!songBlobsIntl[id]) { reconnectSongFileIntl(id); return; }
+  const song = state.songsIntl.find(s => s.id === id);
+  if (!song) return;
+
+  const modal = document.getElementById('audio-player-modal-intl');
+  const audioEl = document.getElementById('aplayer-el-intl');
+  const titleEl = document.getElementById('aplayer-title-intl');
+
+  currentPlayingSongIntlId = id;
+  state.lastPlayedSongIntlId = id;
+  audioEl.src = songBlobsIntl[id].url;
+  titleEl.textContent = song.title;
+  modal.classList.remove('hidden');
+
+  const resumeAt = song.position || 0;
+  const resumeOnce = () => {
+    if (resumeAt > 2 && resumeAt < audioEl.duration - 2) {
+      audioEl.currentTime = resumeAt;
+      showToast(`▶️ Continuă de la ${formatSongTime(resumeAt)}`, 'success');
+    }
+    audioEl.removeEventListener('loadedmetadata', resumeOnce);
+  };
+  audioEl.addEventListener('loadedmetadata', resumeOnce);
+  audioEl.play().catch(() => {});
+
+  clearInterval(songIntlPositionSaveTimer);
+  songIntlPositionSaveTimer = setInterval(saveSongPositionIntl, 4000);
+  audioEl.onpause = saveSongPositionIntl;
+  audioEl.onended = () => playAdjacentSongIntl(1);
+
+  renderMusicPanelIntl();
+}
+
+let songIntlPositionSaveTimer = null;
+
+function saveSongPositionIntl() {
+  if (currentPlayingSongIntlId == null) return;
+  const audioEl = document.getElementById('aplayer-el-intl');
+  const song = state.songsIntl.find(s => s.id === currentPlayingSongIntlId);
+  if (!song || !isFinite(audioEl.currentTime)) return;
+  song.position = audioEl.currentTime;
+  saveState();
+}
+
+function closeAudioPlayerIntl() {
+  const modal = document.getElementById('audio-player-modal-intl');
+  const audioEl = document.getElementById('aplayer-el-intl');
+  if (!modal || !audioEl) return;
+  saveSongPositionIntl();
+  clearInterval(songIntlPositionSaveTimer);
+  audioEl.pause();
+  audioEl.src = '';
+  modal.classList.add('hidden');
+  currentPlayingSongIntlId = null;
+  saveState();
+  renderMusicPanelIntl();
+}
+
+function playAdjacentSongIntl(dir) {
+  const idx = state.songsIntl.findIndex(s => s.id === currentPlayingSongIntlId);
+  if (idx === -1) return;
+  let next = idx + dir;
+  while (next >= 0 && next < state.songsIntl.length && !songBlobsIntl[state.songsIntl[next].id]) next += dir;
+  if (next < 0 || next >= state.songsIntl.length) { closeAudioPlayerIntl(); return; }
+  openAudioPlayerIntl(state.songsIntl[next].id);
 }

@@ -159,10 +159,10 @@ function renderChapters() {
   for (let i = 1; i <= brState.totalChapters; i++) {
     const key = `${brState.bookSlug}-${i}`;
     const hasNotes = state.bibleNotes && state.bibleNotes[key] &&
-      (state.bibleNotes[key].text || (state.bibleNotes[key].markedVerses || []).length > 0);
+      (state.bibleNotes[key].markedVerses || []).length > 0;
     buttons.push(`
       <button class="bible-chapter-btn ${brState.chapter === i ? 'active' : ''} ${hasNotes ? 'has-notes' : ''}"
-        onclick="openChapter(${i})" title="Capitol ${i}${hasNotes ? ' (ai notițe)' : ''}">${i}</button>
+        onclick="openChapter(${i})" title="Capitol ${i}${hasNotes ? ' (ai versete marcate)' : ''}">${i}</button>
     `);
   }
   container.innerHTML = buttons.join('');
@@ -175,7 +175,7 @@ function refreshChapterButtons() {
     const chapNum = idx + 1;
     const key = `${brState.bookSlug}-${chapNum}`;
     const hasNotes = state.bibleNotes && state.bibleNotes[key] &&
-      (state.bibleNotes[key].text || (state.bibleNotes[key].markedVerses || []).length > 0);
+      (state.bibleNotes[key].markedVerses || []).length > 0;
     btn.classList.toggle('active', brState.chapter === chapNum);
     btn.classList.toggle('has-notes', !!hasNotes);
   });
@@ -204,15 +204,6 @@ function openChapter(chapNum) {
   document.getElementById('btnPrevChap').disabled = chapNum <= 1;
   document.getElementById('btnNextChap').disabled = chapNum >= brState.totalChapters;
 
-  // Notițe textarea + badge
-  const notesTextEl = document.getElementById('chapterNotesText');
-  if (notesTextEl) {
-    notesTextEl.value = noteData.text || '';
-    if (typeof autoGrowTextarea === 'function') autoGrowTextarea(notesTextEl);
-  }
-  const badge = document.getElementById('chapterNotesBadge');
-  if (badge) badge.textContent = `${brState.bookName} ${chapNum}`;
-
   // Text capitol (scris/lipit de utilizator), salvat separat per capitol
   if (!state.bibleOfflineText) state.bibleOfflineText = {};
   const verseTextEl = document.getElementById('chapterVerseText');
@@ -220,9 +211,7 @@ function openChapter(chapNum) {
     verseTextEl.value = state.bibleOfflineText[key] || '';
     if (typeof autoGrowTextarea === 'function') autoGrowTextarea(verseTextEl);
   }
-
-  // Randare notițe salvate și versete marcate
-  renderChapterNotesDisplay(noteData);
+  if (typeof bwOnChapterOpen === 'function') bwOnChapterOpen();  // Randare evidențieri salvate
   renderMarkedVerses(noteData.markedVerses || []);
 
   // Reîmprospătare grilă capitole
@@ -255,28 +244,6 @@ function backToBooks() {
   renderBibleBooks(brState.testament);
 }
 
-// Auto-save notes as user types (debounced)
-let notesSaveTimer = null;
-function autoSaveChapterNote() {
-  const el = document.getElementById('chapterNotesText');
-  if (typeof autoGrowTextarea === 'function') autoGrowTextarea(el);
-  clearTimeout(notesSaveTimer);
-  notesSaveTimer = setTimeout(saveChapterNote, 800);
-}
-
-function saveChapterNote() {
-  if (!brState.bookSlug || !brState.chapter) return;
-  if (!state.bibleNotes) state.bibleNotes = {};
-  const key = `${brState.bookSlug}-${brState.chapter}`;
-  const text = document.getElementById('chapterNotesText').value;
-  if (!state.bibleNotes[key]) state.bibleNotes[key] = { text: '', markedVerses: [] };
-  state.bibleNotes[key].text = text;
-  saveState();
-  markStudyDay();
-  refreshChapterButtons();
-  renderChapterNotesDisplay(state.bibleNotes[key]);
-}
-
 // Auto-save chapter verse text as user types (debounced)
 let verseTextSaveTimer = null;
 function autoSaveChapterVerseText() {
@@ -297,20 +264,7 @@ function saveChapterVerseText() {
     delete state.bibleOfflineText[key];
   }
   saveState();
-}
-
-function renderChapterNotesDisplay(noteData) {
-  const container = document.getElementById('chapterNotesDisplay');
-  if (!container) return;
-  if (!noteData || !noteData.text) {
-    container.innerHTML = '';
-    return;
-  }
-  container.innerHTML = `
-    <div class="chapter-notes-box">
-      <p class="chapter-notes-box-title">📝 Notițele tale pentru ${escHtml(brState.bookName)} ${brState.chapter}</p>
-      <p class="chapter-notes-box-text">${escHtml(noteData.text)}</p>
-    </div>`;
+  markStudyDay();
 }
 
 function addMarkedVerse() {
