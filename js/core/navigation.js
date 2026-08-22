@@ -20,6 +20,7 @@ const pageTitles = {
   vestitor: 'Vestitor',
   notes: 'Notițele Mele',
   meetings: 'Programul Meu',
+  radarmeteo: 'Radar Meteo — Reșița',
 };
 
 let currentPage = 'dashboard';
@@ -78,6 +79,7 @@ function renderPage(page) {
     case 'fieldschedulingpreview': renderFieldSchedulingTable(); break;
     case 'standscheduling': renderStandSchedulingTable(); break;
     case 'vestitor': renderVestitorPage(); break;
+    case 'radarmeteo': if (typeof renderRadarMeteo === 'function') renderRadarMeteo(); break;
   }
   updateWordCounters();
 }
