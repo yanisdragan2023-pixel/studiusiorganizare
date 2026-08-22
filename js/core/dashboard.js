@@ -57,14 +57,33 @@ const WEATHER_CODE_MAP = {
   99: ['⛈️', 'Furtună puternică']
 };
 
+/**
+ * Cere vremea curentă de la Open-Meteo. Încearcă întâi modelul ICON (DWD),
+ * folosit și de WetterOnline / meteoradar.ro, ca temperatura afișată să fie
+ * cât mai apropiată de ce arată acel site. Dacă modelul ICON nu răspunde
+ * pentru zona respectivă, se comută automat pe modelul implicit ("best_match").
+ */
+async function fetchWeatherData() {
+  const base = `https://api.open-meteo.com/v1/forecast?latitude=${WEATHER_LAT}&longitude=${WEATHER_LON}&current=temperature_2m,precipitation,weather_code&timezone=Europe%2FBucharest`;
+  try {
+    const res = await fetch(`${base}&models=icon_seamless`);
+    if (!res.ok) throw new Error('ICON model unavailable');
+    const data = await res.json();
+    if (!data.current) throw new Error('ICON model unavailable');
+    return data;
+  } catch (err) {
+    console.warn('Modelul ICON indisponibil, revin la modelul implicit:', err);
+    const res = await fetch(base);
+    if (!res.ok) throw new Error('Weather request failed');
+    return res.json();
+  }
+}
+
 async function fetchWeather() {
   const widget = document.getElementById('weatherWidget');
   if (!widget) return;
   try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${WEATHER_LAT}&longitude=${WEATHER_LON}&current=temperature_2m,precipitation,weather_code&timezone=Europe%2FBucharest`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Weather request failed');
-    const data = await res.json();
+    const data = await fetchWeatherData();
     const current = data.current;
     if (!current) throw new Error('No current weather data');
 
