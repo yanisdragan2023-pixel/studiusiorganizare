@@ -49,6 +49,32 @@ function saveAISettings() {
   saveState();
 }
 
+function handleAIKeyBlur() {
+  const apiKey = (state.geminiApiKey || '').trim();
+  if (apiKey && typeof showToast === 'function') {
+    showToast('Cheia API a fost salvată pe acest dispozitiv.', 'success');
+  }
+}
+
+async function testAIKey() {
+  const apiKey = (state.geminiApiKey || '').trim();
+  if (!apiKey) {
+    showToast('Completează mai întâi cheia API Gemini.', 'error');
+    return;
+  }
+  const btn = document.getElementById('aiTestKeyBtn');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Se testează...'; }
+  try {
+    await callGeminiAPI([{ role: 'user', text: 'Răspunde doar cu cuvântul: OK' }], apiKey, normalizeGeminiModel(state.geminiModel));
+    showToast('✅ Cheia funcționează! Asistentul AI e gata de folosit.', 'success');
+  } catch (err) {
+    console.error('Test cheie AI eșuat:', err);
+    showToast(aiErrorMessage(err), 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '🔎 Testează cheia'; }
+  }
+}
+
 function normalizeGeminiModel(model) {
   const value = (model || '').trim();
   if (!value || AI_LEGACY_MODELS.has(value)) return AI_DEFAULT_MODEL;

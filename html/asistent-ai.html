@@ -14,12 +14,13 @@
         </div>
         <div class="form-group">
           <label>Cheia API (Gemini)</label>
-          <input type="password" id="ai-apikey" class="form-input" placeholder="Lipește aici cheia API" oninput="saveAISettings()" autocomplete="off" />
+          <input type="password" id="ai-apikey" class="form-input" placeholder="Lipește aici cheia API" oninput="saveAISettings()" onblur="handleAIKeyBlur()" autocomplete="off" />
         </div>
         <div class="form-group">
           <label>Model</label>
           <input type="text" id="ai-model" class="form-input" placeholder="gemini-2.5-flash" oninput="saveAISettings()" />
         </div>
+        <button type="button" class="btn-outline btn-sm" id="aiTestKeyBtn" onclick="testAIKey()">🔎 Testează cheia</button>
         <p class="page-sub" style="margin-top:4px">
           Cheia se salvează doar pe acest telefon/calculator (nu se trimite nicăieri în afară de Google).
           O poți genera gratuit pe <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>.
