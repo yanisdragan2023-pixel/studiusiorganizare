@@ -1164,7 +1164,7 @@ body {
 .curatenie-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 2208 / 1056;
+  aspect-ratio: 1920 / 1280;
   border-radius: 14px;
   overflow: hidden;
   background: #dfe6ee;
