@@ -234,7 +234,8 @@ function shareTemaCursantWhatsApp(id) {
   if (entry.partener) text += `🤝 Partener: ${entry.partener}\n`;
   text += `📅 Data: ${formatDate(entry.data)}\n`;
   if (entry.temanr) text += `📖 Tema nr.: ${entry.temanr}\n`;
-  text += `🏠 Se va ține în: ${salaLabel}`;
+  text += `🏠 Se va ține în: ${salaLabel}\n\n`;
+  text += `ℹ️ Notă pentru cursant: Materialul și lecția pentru tema repartizată sunt indicate în Caietul pentru întrunirea „Viața creștină și predicarea”. Când îți pregătești tema, te rugăm să ții cont de Instrucțiunile pentru întrunirea „Viața creștină și predicarea” (S-38).`;
 
   const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
   window.open(url, '_blank');
