@@ -22,6 +22,7 @@ const pageTitles = {
   notes: 'Notițele Mele',
   meetings: 'Programul Meu',
   radarmeteo: 'Radar Meteo — Reșița',
+  curatenie: 'Curățenie Sala Regatului',
 };
 
 let currentPage = 'dashboard';
@@ -86,6 +87,7 @@ function renderPage(page) {
     case 'standscheduling': renderStandSchedulingTable(); break;
     case 'vestitor': renderVestitorPage(); break;
     case 'radarmeteo': if (typeof renderRadarMeteo === 'function') renderRadarMeteo(); break;
+    case 'curatenie': renderCuratenie(); break;
   }
   updateWordCounters();
 }
