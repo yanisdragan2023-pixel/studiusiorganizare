@@ -17,6 +17,47 @@ const TC_SALA_LABELS = {
   secundara2: 'A doua sală secundară',
 };
 
+function getTcDataIso() {
+  const input = document.getElementById('tc-data');
+  return (input && input.dataset.iso) || '';
+}
+
+function setTcDataIso(iso) {
+  const input = document.getElementById('tc-data');
+  if (!input) return;
+  input.dataset.iso = iso || '';
+  input.value = iso ? formatDate(iso) : '';
+}
+
+function toggleTemaCursantCalendar(evt) {
+  if (evt) evt.stopPropagation();
+  const popup = document.getElementById('tcCalendarPopup');
+  if (!popup) return;
+  if (popup.classList.contains('open')) {
+    closeTemaCursantCalendar();
+    return;
+  }
+  const iso = getTcDataIso();
+  tcCalendarViewDate = iso ? new Date(iso) : new Date();
+  renderTemaCursantCalendar();
+  popup.classList.add('open');
+  document.addEventListener('click', tcOutsideClickHandler);
+}
+
+function closeTemaCursantCalendar() {
+  const popup = document.getElementById('tcCalendarPopup');
+  if (popup) popup.classList.remove('open');
+  document.removeEventListener('click', tcOutsideClickHandler);
+}
+
+function tcOutsideClickHandler(evt) {
+  const popup = document.getElementById('tcCalendarPopup');
+  const input = document.getElementById('tc-data');
+  if (!popup) return;
+  if (popup.contains(evt.target) || evt.target === input) return;
+  closeTemaCursantCalendar();
+}
+
 function renderTemaCursantPage() {
   if (!state.temeCursant) state.temeCursant = [];
   resetTemaCursantForm();
@@ -29,22 +70,22 @@ function resetTemaCursantForm() {
   tcEditingId = null;
   const nume = document.getElementById('tc-nume');
   const partener = document.getElementById('tc-partener');
-  const data = document.getElementById('tc-data');
   const temanr = document.getElementById('tc-temanr');
   const sala = document.getElementById('tc-sala');
   if (nume) nume.value = '';
   if (partener) partener.value = '';
-  if (data) data.value = new Date().toISOString().split('T')[0];
+  setTcDataIso(new Date().toISOString().split('T')[0]);
   if (temanr) temanr.value = '';
   if (sala) sala.value = 'principala';
   const deleteBtn = document.getElementById('tcDeleteBtn');
   if (deleteBtn) deleteBtn.style.display = 'none';
+  closeTemaCursantCalendar();
 }
 
 function saveTemaCursant() {
   const nume = document.getElementById('tc-nume')?.value?.trim();
   const partener = document.getElementById('tc-partener')?.value?.trim() || '';
-  const data = document.getElementById('tc-data')?.value || new Date().toISOString().split('T')[0];
+  const data = getTcDataIso() || new Date().toISOString().split('T')[0];
   const temanr = document.getElementById('tc-temanr')?.value?.trim() || '';
   const sala = document.getElementById('tc-sala')?.value || 'principala';
 
@@ -86,7 +127,7 @@ function loadTemaCursant(id) {
   tcEditingId = id;
   document.getElementById('tc-nume').value = entry.nume || '';
   document.getElementById('tc-partener').value = entry.partener || '';
-  document.getElementById('tc-data').value = entry.data || '';
+  setTcDataIso(entry.data || '');
   document.getElementById('tc-temanr').value = entry.temanr || '';
   document.getElementById('tc-sala').value = entry.sala || 'principala';
   const deleteBtn = document.getElementById('tcDeleteBtn');
@@ -159,8 +200,8 @@ function shiftTemaCursantCalendar(direction) {
 }
 
 function selectTemaCursantDay(isoDate) {
-  const dataInput = document.getElementById('tc-data');
-  if (dataInput) dataInput.value = isoDate;
+  setTcDataIso(isoDate);
+  closeTemaCursantCalendar();
 
   const entriesOnDay = (state.temeCursant || []).filter(t => t.data === isoDate);
   if (entriesOnDay.length === 1) {

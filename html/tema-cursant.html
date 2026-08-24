@@ -18,9 +18,20 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group">
+          <div class="form-group tc-data-wrap">
             <label>Data</label>
-            <input type="date" id="tc-data" class="form-input" />
+            <input type="text" id="tc-data" class="form-input" placeholder="Alege data" readonly onclick="toggleTemaCursantCalendar(event)" />
+            <div id="tcCalendarPopup" class="tc-cal-popup">
+              <div class="tc-cal-popup-header">
+                <button type="button" class="btn-ghost btn-sm" onclick="event.stopPropagation();shiftTemaCursantCalendar(-1)">◀</button>
+                <h4 id="tcCalendarTitle">📅 Calendar</h4>
+                <button type="button" class="btn-ghost btn-sm" onclick="event.stopPropagation();shiftTemaCursantCalendar(1)">▶</button>
+              </div>
+              <div id="tcCalendarGrid" class="tc-calendar-grid"></div>
+              <div class="tc-cal-popup-footer">
+                <button type="button" class="btn-ghost btn-sm" onclick="event.stopPropagation();shiftTemaCursantCalendar(0)">Azi</button>
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label>Tema nr.</label>
@@ -47,18 +58,6 @@
           Când îți pregătești tema, te rugăm să ții cont de Instrucțiunile
           pentru întrunirea „Viața creștină și predicarea” (S-38).
         </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <h3 id="tcCalendarTitle">📅 Calendar</h3>
-          <div style="display:flex;gap:6px">
-            <button class="btn-ghost btn-sm" onclick="shiftTemaCursantCalendar(-1)">◀</button>
-            <button class="btn-ghost btn-sm" onclick="shiftTemaCursantCalendar(0)">Azi</button>
-            <button class="btn-ghost btn-sm" onclick="shiftTemaCursantCalendar(1)">▶</button>
-          </div>
-        </div>
-        <div id="tcCalendarGrid" class="tc-calendar-grid"></div>
       </div>
 
       <div class="card">

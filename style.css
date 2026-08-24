@@ -2046,6 +2046,31 @@ select.form-input option { background: var(--bg-elevated); }
 /* ============================================
    TEMĂ PENTRU CURSANT - CALENDAR
    ============================================ */
+.tc-data-wrap { position: relative; }
+.tc-data-wrap .form-input { cursor: pointer; }
+.tc-cal-popup {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 60;
+  width: 260px;
+  max-width: 90vw;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border, rgba(127,127,127,0.15));
+  border-radius: var(--radius-md, 12px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.28);
+  padding: 12px;
+}
+.tc-cal-popup.open { display: block; }
+.tc-cal-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.tc-cal-popup-header h4 { margin: 0; font-size: 0.88rem; }
+.tc-cal-popup-footer { text-align: center; margin-top: 8px; }
 .tc-calendar-grid { display: flex; flex-direction: column; gap: 6px; }
 .tc-cal-weekdays {
   display: grid;
