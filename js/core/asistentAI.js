@@ -7,10 +7,11 @@
 
 'use strict';
 
-const AI_DEFAULT_MODEL = 'gemini-flash-latest';
+const AI_DEFAULT_MODEL = 'gemini-3.7-flash';
 const AI_HISTORY_LIMIT = 8;
 const AI_MAX_INPUT_CHARS = 6000;
 const AI_LEGACY_MODELS = new Set([
+  'gemini-flash-latest',
   'gemini-1.0-pro',
   'gemini-1.0-pro-latest',
   'gemini-1.5-flash',
@@ -23,6 +24,7 @@ const AI_LEGACY_MODELS = new Set([
   'gemini-2.5-flash',
   'gemini-2.5-flash-lite',
   'gemini-2.5-pro',
+  'gemini-3.6-flash',
 ]);
 
 class GeminiApiError extends Error {

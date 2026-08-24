@@ -67,7 +67,7 @@ function defaultAppState() {
     // Asistent AI (Google Gemini): cheia API + modelul ales, salvate local,
     // și istoricul conversației curente.
     geminiApiKey: '',
-    geminiModel: 'gemini-2.5-flash',
+    geminiModel: 'gemini-3.7-flash',
     aiChatHistory: [], // [{ role: 'user'|'assistant'|'error', text }]
 
     // Ciornă „Cuvântare 5 minute" (talk5) — subiect/durată/notițe curente.
