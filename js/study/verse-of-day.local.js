@@ -19,7 +19,7 @@ window.DAILY_VERSES_SEED = [
   { text: '„Iehova este Păstorul meu. Nu voi duce lipsă de nimic.”', ref: 'Psalmii 23:1' },
   { text: '„Iehova este tăria mea și scutul meu, în el se încrede inima mea. Am primit ajutor, de aceea inima mea exultă.”', ref: 'Psalmii 28:7' },
   { text: '„Găsește-ți desfătarea în Iehova, și el îți va îndeplini dorințele inimii.”', ref: 'Psalmii 37:4' },
-  { text: '„Aruncă-ți povara asupra lui Iehova și el te va susține. Nu va permite niciodată ca cel drept să se clatine.”', ref: 'Psalmii 55:22' },
+  { text: '„Aruncă-ți povara asupra lui Iehova și el te va susține. El nu va permite niciodată să cadă cel drept.”', ref: 'Psalmii 55:22' },
   { text: '„Cuvântul tău este o lampă pentru piciorul meu și o lumină pe calea mea.”', ref: 'Psalmii 119:105' },
   { text: '„Iehova este aproape de toți cei ce-l cheamă, de toți cei ce-l cheamă în adevăr.”', ref: 'Psalmii 145:18' },
   { text: '„Încrede-te în Iehova din toată inima ta și nu te baza pe propria înțelegere.”', ref: 'Proverbele 3:5' },

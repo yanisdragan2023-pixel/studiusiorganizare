@@ -1,7 +1,7 @@
 // StudiuMeu — Service Worker
 // Cache-first pentru fisierele aplicatiei = functionare completa offline.
 
-const CACHE_VERSION = 'studiumeu-v33';
+const CACHE_VERSION = 'studiumeu-v34';
 const CACHE_NAME = CACHE_VERSION;
 
 const APP_SHELL = [
@@ -60,6 +60,7 @@ const APP_SHELL = [
   './js/meetings/discursTimer.js',
   './js/meetings/icsExport.js',
   './js/meetings/meetings.js',
+  './js/meetings/ministryTimer.js',
   './js/meetings/talkTimer.js',
   './js/meetings/wordCounter.js',
   './js/field-service/fieldService.js',

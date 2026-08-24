@@ -79,7 +79,7 @@ function renderPage(page) {
     case 'meetings': renderMeetings(); break;
     case 'watchtower': renderWtParagraphs(); break;
     case 'discurs': renderDiscursPage(); break;
-    case 'workbook': break;
+    case 'workbook': renderWorkbookMinistrySection(); break;
     case 'talk5cuv': renderTalk5Page(); break;
     case 'biblereader': initBibleReader(); break;
     case 'fieldservice': renderFieldServiceList(); break;

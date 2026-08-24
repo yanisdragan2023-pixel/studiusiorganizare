@@ -12,7 +12,11 @@ function addWbMinistryItem() {
       <div class="form-group"><label>Subiect / Tip</label><input type="text" class="form-input" placeholder="ex: Prezentarea inițială"/></div>
       <div class="form-group"><label>Student / Asistent</label><input type="text" class="form-input" placeholder="Nume"/></div>
     </div>
-    <div class="form-group"><label>Notițe pregătire</label><textarea class="form-textarea small" placeholder="Ce vei spune, versete de folosit..."></textarea></div>
+    <div class="form-group">
+      <label>Notițe pregătire</label>
+      <textarea class="form-textarea small ministry-note-textarea" placeholder="Ce vei spune, versete de folosit..." oninput="handleMinistryNoteInput(this)"></textarea>
+      <div class="word-counter">Cuvinte: 0</div>
+    </div>
   `;
   list.appendChild(item);
 }

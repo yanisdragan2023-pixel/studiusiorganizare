@@ -3547,6 +3547,38 @@ select.form-input option { background: var(--bg-elevated); }
   font-weight:600;
 }
 
+/* Chip-uri selectare durată - cronometru practică Predicare (1-5 min) */
+.ministry-duration-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: -6px 0 14px;
+}
+.ministry-duration-btn {
+  padding: 5px 13px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.ministry-duration-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.ministry-duration-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.ministry-duration-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 
 /* Fullscreen mobile fix */
 .page-fullscreen textarea {

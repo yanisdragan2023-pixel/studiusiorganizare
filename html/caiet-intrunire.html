@@ -62,13 +62,44 @@
           <h3>🌾 Să fim mai eficienți în Predicare</h3>
           <button class="btn-primary btn-sm" onclick="addWbMinistryItem()">+ Adaugă</button>
         </div>
+
+        <!-- CRONOMETRU DE PRACTICĂ, DURATĂ SELECTABILĂ 1-5 MINUTE -->
+        <div class="discurs-timer-bar timer-bar-inline" id="ministryTimerBar">
+          <div class="discurs-timer-display">
+            <span class="discurs-timer-icon" id="ministryTimerIcon">⏱</span>
+            <span class="discurs-timer-value" id="ministryTimerValue">02:00</span>
+            <span class="discurs-timer-label" id="ministryTimerLabel">din 2 minute</span>
+          </div>
+          <div class="discurs-timer-progress-wrap">
+            <div class="discurs-timer-progress-bg">
+              <div class="discurs-timer-progress-fill" id="ministryTimerFill" style="width:100%"></div>
+            </div>
+          </div>
+          <div class="discurs-timer-btns">
+            <button class="btn-primary btn-sm" id="ministryTimerStartBtn" onclick="ministryTimerStart()">▶ Start</button>
+            <button class="btn-ghost btn-sm" id="ministryTimerPauseBtn" onclick="ministryTimerPause()" style="display:none">⏸ Pauză</button>
+            <button class="btn-ghost btn-sm" onclick="ministryTimerReset()">↺ Reset</button>
+          </div>
+        </div>
+        <div class="ministry-duration-chips">
+          <button type="button" class="ministry-duration-btn" data-minutes="1" onclick="ministryTimerSetDuration(1)">1 min</button>
+          <button type="button" class="ministry-duration-btn active" data-minutes="2" onclick="ministryTimerSetDuration(2)">2 min</button>
+          <button type="button" class="ministry-duration-btn" data-minutes="3" onclick="ministryTimerSetDuration(3)">3 min</button>
+          <button type="button" class="ministry-duration-btn" data-minutes="4" onclick="ministryTimerSetDuration(4)">4 min</button>
+          <button type="button" class="ministry-duration-btn" data-minutes="5" onclick="ministryTimerSetDuration(5)">5 min</button>
+        </div>
+
         <div id="wbMinistryList" class="wb-section-items">
           <div class="wb-item">
             <div class="form-row">
               <div class="form-group"><label>Subiect / Tip</label><input type="text" class="form-input" placeholder="ex: Prezentarea inițială"/></div>
               <div class="form-group"><label>Asistent / Student</label><input type="text" class="form-input" placeholder="Nume"/></div>
             </div>
-            <div class="form-group"><label>Notițe pregătire</label><textarea class="form-textarea small" placeholder="Ce vei spune, versete de folosit..."></textarea></div>
+            <div class="form-group">
+              <label>Notițe pregătire</label>
+              <textarea class="form-textarea small ministry-note-textarea" placeholder="Ce vei spune, versete de folosit..." oninput="handleMinistryNoteInput(this)"></textarea>
+              <div class="word-counter">Cuvinte: 0</div>
+            </div>
           </div>
         </div>
       </div>
