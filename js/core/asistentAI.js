@@ -8,6 +8,8 @@
 'use strict';
 
 const AI_DEFAULT_MODEL = 'gemini-flash-latest';
+const AI_HISTORY_LIMIT = 8;
+const AI_MAX_INPUT_CHARS = 6000;
 const AI_LEGACY_MODELS = new Set([
   'gemini-1.0-pro',
   'gemini-1.0-pro-latest',
@@ -194,9 +196,16 @@ async function callGeminiAPI(history, apiKey, model) {
 
   // Gemini nu are rol „system”/„assistant” direct — folosim „user”/„model”
   // și trimitem doar ultimele mesaje ca să nu creștem prea mult cererea.
-  const recent = history.slice(-20).filter(m => m.role === 'user' || m.role === 'assistant');
+  const recent = history
+    .slice(-AI_HISTORY_LIMIT)
+    .filter(m => m.role === 'user' || m.role === 'assistant')
+    .map(m => ({
+      role: m.role === 'assistant' ? 'model' : 'user',
+      text: String(m.text || '').slice(-AI_MAX_INPUT_CHARS),
+    }));
+
   const contents = recent.map(m => ({
-    role: m.role === 'assistant' ? 'model' : 'user',
+    role: m.role,
     parts: [{ text: m.text }],
   }));
 
@@ -208,7 +217,13 @@ async function callGeminiAPI(history, apiKey, model) {
         'Content-Type': 'application/json',
         'x-goog-api-key': cleanApiKey,
       },
-      body: JSON.stringify({ contents }),
+      body: JSON.stringify({
+        contents,
+        generationConfig: {
+          // Limitează răspunsurile foarte lungi pentru un timp de răspuns mai bun.
+          maxOutputTokens: 1200,
+        },
+      }),
     });
   } catch (err) {
     throw new GeminiApiError('network', err?.message || 'Nu s-a putut contacta Gemini.');
