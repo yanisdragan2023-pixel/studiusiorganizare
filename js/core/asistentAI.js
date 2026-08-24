@@ -71,7 +71,7 @@ async function testAIKey() {
   const btn = document.getElementById('aiTestKeyBtn');
   if (btn) { btn.disabled = true; btn.textContent = '⏳ Se testează...'; }
   try {
-    await callGeminiAPI([{ role: 'user', text: 'Răspunde doar cu cuvântul: OK' }], apiKey, normalizeGeminiModel(state.geminiModel));
+    await callGeminiAPIWithRetry([{ role: 'user', text: 'Răspunde doar cu cuvântul: OK' }], apiKey, normalizeGeminiModel(state.geminiModel));
     showToast('✅ Cheia funcționează! Asistentul AI e gata de folosit.', 'success');
   } catch (err) {
     console.error('Test cheie AI eșuat:', err);
@@ -148,7 +148,12 @@ async function sendAIMessage() {
   if (sendBtn) sendBtn.disabled = true;
 
   try {
-    const reply = await callGeminiAPI(state.aiChatHistory, apiKey, normalizeGeminiModel(state.geminiModel));
+    const reply = await callGeminiAPIWithRetry(
+      state.aiChatHistory,
+      apiKey,
+      normalizeGeminiModel(state.geminiModel),
+      (attempt) => { if (pendingEl) pendingEl.textContent = `Serverul Gemini e ocupat, se reîncearcă (${attempt})...`; }
+    );
     state.aiChatHistory.push({ role: 'assistant', text: reply });
   } catch (err) {
     console.error('Eroare Asistent AI:', err);
@@ -173,8 +178,14 @@ function aiErrorMessage(err) {
   if (err?.type === 'rate-limit') {
     return '⚠️ Limita API Gemini a fost atinsă. Mai încearcă puțin mai târziu.';
   }
+  if (err?.type === 'overloaded') {
+    return '⚠️ Serverele Gemini sunt momentan suprasolicitate (eroare de la Google, nu de la aplicație sau de la rețeaua ta). Aplicația a reîncercat automat, dar tot nu a mers — mai așteaptă puțin și încearcă din nou.';
+  }
   if (err?.type === 'network') {
     return '⚠️ Eroare de rețea: nu am putut contacta Google Gemini. Verifică internetul și încearcă din nou.';
+  }
+  if (err?.type === 'timeout') {
+    return '⚠️ Gemini a durat prea mult să răspundă (peste 20s) și cererea a fost anulată. Verifică rețeaua (Wi-Fi/date mobile) și încearcă din nou — dacă se repetă des, e posibil ca ceva din rețea (firewall/VPN) să blocheze Google.';
   }
   if (err?.type === 'invalid-response') {
     return '⚠️ Gemini a trimis un răspuns invalid sau gol. Încearcă din nou.';
@@ -209,6 +220,14 @@ async function callGeminiAPI(history, apiKey, model) {
     parts: [{ text: m.text }],
   }));
 
+  // Timeout explicit: dacă rețeaua e lentă sau cererea rămâne blocată
+  // (Wi-Fi slab, firewall/VPN, blocaj DNS pe domeniul Google), browserul ar
+  // putea aștepta minute întregi înainte să renunțe singur. Anulăm noi cererea
+  // mai devreme, ca eroarea să apară rapid și clar, nu după un blocaj lung.
+  const AI_TIMEOUT_MS = 20000;
+  const timeoutController = new AbortController();
+  const timeoutId = setTimeout(() => timeoutController.abort(), AI_TIMEOUT_MS);
+
   let response;
   try {
     response = await fetch(url, {
@@ -224,9 +243,15 @@ async function callGeminiAPI(history, apiKey, model) {
           maxOutputTokens: 1200,
         },
       }),
+      signal: timeoutController.signal,
     });
   } catch (err) {
+    if (err?.name === 'AbortError') {
+      throw new GeminiApiError('timeout', 'Cererea către Gemini a durat prea mult și a fost anulată.');
+    }
     throw new GeminiApiError('network', err?.message || 'Nu s-a putut contacta Gemini.');
+  } finally {
+    clearTimeout(timeoutId);
   }
 
   const rawText = await response.text().catch(() => '');
@@ -254,6 +279,9 @@ async function callGeminiAPI(history, apiKey, model) {
     if (response.status === 429 || googleStatus === 'RESOURCE_EXHAUSTED') {
       throw new GeminiApiError('rate-limit', googleMessage, response.status);
     }
+    if (response.status === 503 || googleStatus === 'UNAVAILABLE') {
+      throw new GeminiApiError('overloaded', googleMessage, response.status);
+    }
     throw new GeminiApiError('api-error', googleMessage, response.status);
   }
 
@@ -269,6 +297,27 @@ async function callGeminiAPI(history, apiKey, model) {
     );
   }
   return text;
+}
+
+// Reîncearcă automat cererea când Google răspunde că e supraîncărcat sau
+// că s-a atins limita de rată — aceste erori sunt de obicei temporare
+// (câteva secunde), deci merită o reîncercare înainte să deranjăm userul.
+const AI_RETRY_DELAYS_MS = [3000, 6000];
+
+async function callGeminiAPIWithRetry(history, apiKey, model, onRetry) {
+  let lastErr;
+  for (let attempt = 0; attempt <= AI_RETRY_DELAYS_MS.length; attempt++) {
+    try {
+      return await callGeminiAPI(history, apiKey, model);
+    } catch (err) {
+      lastErr = err;
+      const retryable = err?.type === 'overloaded' || err?.type === 'rate-limit';
+      if (!retryable || attempt >= AI_RETRY_DELAYS_MS.length) throw err;
+      if (typeof onRetry === 'function') onRetry(attempt + 1);
+      await new Promise(resolve => setTimeout(resolve, AI_RETRY_DELAYS_MS[attempt]));
+    }
+  }
+  throw lastErr;
 }
 
 function clearAIChat() {
