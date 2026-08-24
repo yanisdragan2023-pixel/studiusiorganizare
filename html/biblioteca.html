@@ -97,7 +97,7 @@
     <div id="lib-music" class="lib-panel hidden">
       <p class="lib-hint">🎵 Melodiile rămân <strong>doar pe acest calculator</strong> — nimic nu se încarcă pe internet. Adaugă-le una câte una, cu titlul pe care îl vrei. Aplicația reține exact de unde ai rămas la fiecare melodie.</p>
 
-      <!-- Card "Continuă ascultarea" -->
+      <!-- Card "Continuă ascultarea" (Melodiile Regatului) -->
       <div class="continue-listen-card hidden" id="continue-listen-card">
         <div class="continue-listen-icon">🎧</div>
         <div class="continue-listen-info">
@@ -113,10 +113,10 @@
       <div class="video-series">
         <div class="series-header">
           <span class="series-badge">🎶</span>
-          <h3 class="series-title">Melodiile Mele</h3>
+          <h3 class="series-title">Melodiile Regatului</h3>
           <span class="series-count" id="music-count">0 melodii</span>
         </div>
-        <div class="video-cards-list" id="music-cards-list">
+        <div class="video-cards-list" id="music-cards-list" data-category="kingdom">
           <div class="pub-empty" id="music-empty">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
             <p>Nicio melodie adăugată încă.</p>
@@ -124,15 +124,47 @@
         </div>
       </div>
 
-      <button class="add-media-btn" id="add-song-btn" onclick="openAddSongModal()" style="margin-top:14px">
+      <button class="add-media-btn" id="add-song-btn" onclick="openAddSongModal('kingdom')" style="margin-top:14px">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Adaugă Melodie
+      </button>
+
+      <!-- Card "Continuă ascultarea" (Melodii Internaționale) -->
+      <div class="continue-listen-card hidden" id="continue-listen-card-intl" style="margin-top:22px">
+        <div class="continue-listen-icon">🎧</div>
+        <div class="continue-listen-info">
+          <span class="continue-listen-label">Continuă ascultarea</span>
+          <span class="continue-listen-title" id="continue-listen-title-intl"></span>
+          <span class="continue-listen-time" id="continue-listen-time-intl"></span>
+        </div>
+        <button class="continue-listen-btn" id="continue-listen-btn-intl" title="Continuă">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </button>
+      </div>
+
+      <div class="video-series" style="margin-top:22px">
+        <div class="series-header">
+          <span class="series-badge">🌍</span>
+          <h3 class="series-title">Melodii Internaționale</h3>
+          <span class="series-count" id="music-count-intl">0 melodii</span>
+        </div>
+        <div class="video-cards-list" id="music-cards-list-intl" data-category="intl">
+          <div class="pub-empty" id="music-empty-intl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            <p>Nicio melodie adăugată încă.</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="add-media-btn" id="add-song-btn-intl" onclick="openAddSongModal('intl')" style="margin-top:14px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Adaugă Melodie Internațională
       </button>
 
       <!-- Modal adăugare melodie -->
       <div id="song-modal" class="mini-modal hidden">
         <div class="mini-modal-box">
-          <h4>Melodie nouă</h4>
+          <h4 id="song-modal-title">Melodie nouă</h4>
           <p style="font-size:0.8rem;color:var(--text-secondary);margin:-8px 0 12px">Scrie titlul, apoi apasă Salvează — se va deschide selectorul de fișiere ca să alegi melodia de pe calculator.</p>
           <input type="text" id="song-title-input" placeholder="Titlu melodie..." class="mini-input" maxlength="120" />
           <div class="mini-modal-btns">
