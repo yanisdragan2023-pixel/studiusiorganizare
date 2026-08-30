@@ -12,6 +12,25 @@
       <div class="year-text-box" id="yearTextBox">
         <div class="year-text-header">
           <span class="year-text-label">✨ Textul Anului</span>
+          <div class="year-text-actions" style="display:flex">
+            <button class="yt-menu-btn" id="yearTextColorMenuBtn" onclick="event.stopPropagation(); toggleYearTextColorMenu()" title="Culoare textul anului">
+              <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="8.5" cy="10" r="1.3" fill="currentColor"/><circle cx="12" cy="8" r="1.3" fill="currentColor"/><circle cx="15.5" cy="10" r="1.3" fill="currentColor"/><circle cx="9.5" cy="14" r="1.3" fill="currentColor"/></svg>
+            </button>
+            <div class="year-text-dropdown" id="yearTextColorDropdown" style="width:150px">
+              <div class="year-color-picker" style="margin-bottom:0">
+                <button class="color-swatch active" style="background:#e6edf3" data-color="#e6edf3" onclick="selectYearColor(this)" title="Alb"></button>
+                <button class="color-swatch" style="background:#e53e3e" data-color="#e53e3e" onclick="selectYearColor(this)" title="Roșu"></button>
+                <button class="color-swatch" style="background:#805ad5" data-color="#805ad5" onclick="selectYearColor(this)" title="Mov"></button>
+                <button class="color-swatch" style="background:#4299e1" data-color="#4299e1" onclick="selectYearColor(this)" title="Albastru"></button>
+                <button class="color-swatch" style="background:#48bb78" data-color="#48bb78" onclick="selectYearColor(this)" title="Verde"></button>
+                <button class="color-swatch" style="background:#ecc94b" data-color="#ecc94b" onclick="selectYearColor(this)" title="Galben"></button>
+                <button class="color-swatch" style="background:#ed8936" data-color="#ed8936" onclick="selectYearColor(this)" title="Portocaliu"></button>
+                <button class="color-swatch" style="background:#ed64a6" data-color="#ed64a6" onclick="selectYearColor(this)" title="Roz"></button>
+                <button class="color-swatch" style="background:#38b2ac" data-color="#38b2ac" onclick="selectYearColor(this)" title="Turcoaz"></button>
+                <button class="color-swatch" style="background:#d4af37" data-color="#d4af37" onclick="selectYearColor(this)" title="Auriu"></button>
+              </div>
+            </div>
+          </div>
           <div class="year-text-actions" id="yearTextActions" style="display:none">
             <button class="yt-menu-btn" id="yearTextMenuBtn" onclick="event.stopPropagation(); toggleYearTextMenu()" title="Meniu">
               <svg viewBox="0 0 24 24" width="16" height="16"><line x1="4" y1="6" x2="20" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -24,19 +43,6 @@
         </div>
         <p class="year-text-content" id="yearTextDisplay">Apasă pentru a adăuga textul anului...</p>
         <div class="year-text-edit" id="yearTextEdit" style="display:none" onclick="event.stopPropagation()">
-          <div class="year-color-picker" id="yearColorPicker">
-            <span style="font-size:0.75rem;color:var(--text-muted);margin-right:6px">Culoare:</span>
-            <button class="color-swatch active" style="background:#e6edf3" data-color="#e6edf3" onclick="selectYearColor(this)" title="Alb"></button>
-            <button class="color-swatch" style="background:#e53e3e" data-color="#e53e3e" onclick="selectYearColor(this)" title="Roșu"></button>
-            <button class="color-swatch" style="background:#805ad5" data-color="#805ad5" onclick="selectYearColor(this)" title="Mov"></button>
-            <button class="color-swatch" style="background:#4299e1" data-color="#4299e1" onclick="selectYearColor(this)" title="Albastru"></button>
-            <button class="color-swatch" style="background:#48bb78" data-color="#48bb78" onclick="selectYearColor(this)" title="Verde"></button>
-            <button class="color-swatch" style="background:#ecc94b" data-color="#ecc94b" onclick="selectYearColor(this)" title="Galben"></button>
-            <button class="color-swatch" style="background:#ed8936" data-color="#ed8936" onclick="selectYearColor(this)" title="Portocaliu"></button>
-            <button class="color-swatch" style="background:#ed64a6" data-color="#ed64a6" onclick="selectYearColor(this)" title="Roz"></button>
-            <button class="color-swatch" style="background:#38b2ac" data-color="#38b2ac" onclick="selectYearColor(this)" title="Turcoaz"></button>
-            <button class="color-swatch" style="background:#d4af37" data-color="#d4af37" onclick="selectYearColor(this)" title="Auriu"></button>
-          </div>
           <div class="year-size-picker">
             <span class="year-size-icon year-size-icon-sm" aria-hidden="true">A</span>
             <input type="range" id="yearSizeSlider" class="year-size-slider" min="10" max="30" step="1" value="14" oninput="selectYearSize(this.value)" aria-label="Mărime text">
