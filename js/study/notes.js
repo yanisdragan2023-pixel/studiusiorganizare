@@ -159,7 +159,7 @@ function openYearTextEdit() {
   input.style.fontSize = savedSize + 'px';
   yearTextColor = savedColor;
   yearFontSize = savedSize;
-  document.querySelectorAll('.color-swatch').forEach(btn => {
+  document.querySelectorAll('#yearColorPicker .color-swatch').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.color === savedColor);
   });
   setSizeSlider(savedSize);
@@ -176,7 +176,7 @@ function toggleYearTextEdit() {
 }
 
 function selectYearColor(btn) {
-  document.querySelectorAll('.color-swatch').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#yearColorPicker .color-swatch').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   yearTextColor = btn.dataset.color;
 }
