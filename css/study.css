@@ -1,0 +1,1648 @@
+/* ============================================
+   ECRAN COMPLET NOTIȚE (fundal alb, pe tot ecranul)
+   ============================================ */
+.page-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+  padding: 15px;
+  box-sizing: border-box;
+}
+.page-fullscreen.active { display: flex; }
+
+.page-fullscreen .top-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.page-fullscreen .top-bar button {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  color: #222;
+  cursor: pointer;
+}
+.page-fullscreen .top-bar button:hover { background: #f2f2f2; }
+.page-fullscreen .top-bar h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+}
+
+.page-fullscreen textarea {
+  flex: 1;
+  width: 100%;
+  resize: none;
+  font-size: 18px;
+  font-family: var(--font-main);
+  color: #111;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.page-fullscreen textarea:focus { outline: none; border-color: var(--accent); }
+
+.note-fullscreen-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  cursor: pointer;
+  margin-left: 6px;
+}
+.note-fullscreen-btn:hover { color: var(--text-primary); border-color: var(--accent); }
+
+/* ============================================
+   WATCHTOWER / WORKBOOK
+   ============================================ */
+.wt-container { display: flex; flex-direction: column; gap: 20px; }
+.wt-meta-card { }
+
+.paragraphs-list { display: flex; flex-direction: column; gap: 12px; }
+
+.paragraph-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  transition: border-color var(--transition);
+  animation: fadeIn 0.2s ease;
+}
+.paragraph-item:hover { border-color: var(--accent); }
+.paragraph-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.paragraph-num {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.875rem;
+}
+.paragraph-verse {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+.paragraph-main { font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+.paragraph-answer { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; }
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all var(--transition);
+}
+.delete-btn:hover { color: var(--red); background: rgba(248,81,73,0.1); }
+
+/* Workbook section items */
+.wb-section-items { display: flex; flex-direction: column; gap: 16px; }
+.wb-item {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ============================================
+   BIBLE STUDY
+   ============================================ */
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.filter-tab {
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-family: var(--font-main);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.filter-tab.active, .filter-tab:hover {
+  background: var(--accent-glow);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.verses-list { display: flex; flex-direction: column; gap: 12px; }
+.verse-entry {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  border-left: 3px solid var(--accent);
+  transition: transform var(--transition);
+  animation: fadeIn 0.2s ease;
+}
+.verse-entry:hover { transform: translateX(3px); }
+.verse-entry-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.verse-entry-ref { font-weight: 700; color: var(--accent); }
+.verse-entry-cat {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  background: var(--accent-glow);
+  color: var(--accent);
+  border-radius: 20px;
+}
+.verse-entry-text { font-style: italic; margin-bottom: 8px; line-height: 1.6; font-size: 0.9rem; }
+.verse-entry-meditation { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+
+/* ============================================
+   NOTES PAGE
+   ============================================ */
+.notes-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 0 32px;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 0 32px 32px;
+}
+
+.note-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  cursor: pointer;
+  transition: all var(--transition);
+  animation: fadeIn 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.note-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.note-card.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent) inset;
+}
+.note-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.note-card-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.note-card-body { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.note-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+.note-card-date { font-size: 0.75rem; color: var(--text-muted); }
+.note-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.note-tag { font-size: 0.7rem; padding: 2px 7px; border-radius: 20px; background: var(--bg-elevated); color: var(--text-muted); }
+
+/* Inline Split Notes Layout */
+.notes-split-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  padding: 0 24px 24px;
+  height: calc(100vh - 120px);
+  overflow: hidden;
+}
+
+.notes-list-panel {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  padding-right: 16px;
+  height: 100%;
+}
+
+.notes-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.notes-list-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.notes-list-stack {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.note-list-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.note-list-item:hover {
+  border-color: var(--accent);
+  background: var(--bg-elevated);
+}
+
+.note-list-item.active {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  box-shadow: 0 0 0 1px var(--accent) inset;
+}
+
+.note-list-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.note-list-item-title {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.note-list-item-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.note-list-item-preview {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.note-list-item-date {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.notes-editor-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.notes-editor-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+.notes-editor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+}
+
+.notes-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.notes-editor-title-label {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .notes-split-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+  .notes-list-panel {
+    border-right: none;
+    padding-right: 0;
+  }
+}
+
+
+/* ============================================
+   TEMĂ PENTRU CURSANT - CALENDAR
+   ============================================ */
+.tc-data-wrap { position: relative; }
+.tc-data-wrap .form-input { cursor: pointer; }
+.tc-cal-popup {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 60;
+  width: 260px;
+  max-width: 90vw;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border, rgba(127,127,127,0.15));
+  border-radius: var(--radius-md, 12px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.28);
+  padding: 12px;
+}
+.tc-cal-popup.open { display: block; }
+.tc-cal-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.tc-cal-popup-header h4 { margin: 0; font-size: 0.88rem; }
+.tc-cal-popup-footer { text-align: center; margin-top: 8px; }
+.tc-calendar-grid { display: flex; flex-direction: column; gap: 6px; }
+.tc-cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 2px;
+}
+.tc-cal-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.tc-cal-day {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.tc-cal-day:hover { background: var(--bg-hover); }
+.tc-cal-day.empty { background: transparent; cursor: default; }
+.tc-cal-day.today { border: 1px solid var(--accent); font-weight: 700; color: var(--accent); }
+.tc-cal-day.has-entry { background: var(--accent-glow); }
+.tc-cal-dot {
+  position: absolute;
+  bottom: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+@media (max-width: 480px) {
+  .tc-cal-day { font-size: 0.75rem; }
+}
+
+/* ============================================
+   BIBLE READER
+   ============================================ */
+
+/* Bible reader page override – full height, no extra padding */
+#page-biblereader {
+  padding: 0;
+  display: none;
+  flex-direction: column;
+  height: calc(100vh - var(--topbar-height));
+}
+#page-biblereader.active { display: flex; }
+
+.bible-reader-layout {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.bible-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--bg-surface);
+}
+
+.bible-nav-card {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bible-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.bible-nav-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.bible-nav-title-img-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-main);
+  transition: opacity var(--transition);
+}
+.bible-nav-title-img-btn:hover { opacity: 0.75; }
+.bible-nav-title-img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+
+/* Buton-imagine "Citește Biblia" din pagina principală (dashboard) */
+.dash-bible-img-btn {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.dash-bible-img-btn img {
+  display: block;
+  width: 100%;
+  max-height: none;
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+.dash-bible-img-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+}
+
+.jw-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid rgba(79,142,247,0.3);
+  border-radius: 20px;
+  padding: 3px 10px;
+  text-decoration: none;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.jw-badge:hover { background: var(--accent); color: white; }
+
+/* Testament tabs */
+.bible-testament-tabs {
+  display: flex;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  margin-bottom: 12px;
+  gap: 2px;
+}
+.testament-tab {
+  flex: 1;
+  padding: 7px 8px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-secondary);
+  font-family: var(--font-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.testament-tab.active {
+  background: var(--bg-surface);
+  color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Books grid */
+.bible-books-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.bible-book-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 9px 12px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition);
+}
+.bible-book-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+.bible-book-btn.active {
+  background: var(--accent-glow);
+  color: var(--accent);
+  border-color: rgba(79,142,247,0.3);
+  font-weight: 600;
+}
+.bible-book-chapters {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+.bible-book-btn.active .bible-book-chapters {
+  background: rgba(79,142,247,0.2);
+  color: var(--accent);
+}
+
+/* Chapter header */
+.bible-chap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.bible-book-name {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+/* Chapters grid */
+.bible-chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.bible-chapter-btn {
+  padding: 8px 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-family: var(--font-main);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+}
+.bible-chapter-btn:hover {
+  background: var(--accent-glow);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.bible-chapter-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+.bible-chapter-btn.has-notes {
+  border-color: var(--green);
+  color: var(--green);
+}
+.bible-chapter-btn.has-notes:hover,
+.bible-chapter-btn.has-notes.active {
+  background: var(--green);
+  color: white;
+}
+
+/* Biblia - Studiu Offline (afișare pe lățime completă) */
+#offlineBooksList.bible-books-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  max-height: none;
+}
+#offlineChaptersList.bible-chapters-grid {
+  grid-template-columns: repeat(10, 1fr);
+}
+@media (max-width: 700px) {
+  #offlineBooksList.bible-books-grid { grid-template-columns: 1fr; }
+  #offlineChaptersList.bible-chapters-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+/* Notes section */
+.bible-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
+
+.marked-verses-section { margin-top: 10px; }
+.marked-verse-input {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.marked-verse-input .form-input { flex: 1; }
+
+.marked-verses-list { display: flex; flex-direction: column; gap: 5px; }
+.marked-verse-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-elevated);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  border-left: 2px solid var(--accent);
+  animation: fadeIn 0.2s ease;
+}
+
+/* Reading panel */
+.bible-reading-panel {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--bg-base);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Placeholder (ecran gol – fără capitol selectat) – fără popup/modal */
+.bible-inline-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+.bible-inline-placeholder-inner {
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Secțiuni editor inline */
+.bible-inline-section {
+  margin-bottom: 22px;
+}
+.bible-inline-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+
+/* Stiluri vechi (păstrate pentru compatibilitate cu alte cod) */
+.bible-welcome {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+.bible-welcome-inner { max-width: 540px; text-align: center; }
+.bible-icon-big { font-size: 4rem; margin-bottom: 20px; }
+.bible-welcome-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+.bible-quick-books { text-align: left; }
+.bqb-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+.bqb-btn {
+  padding: 10px 8px; background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text-secondary); font-family: var(--font-main);
+  font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all var(--transition);
+}
+.bqb-btn:hover { background: var(--accent-glow); color: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
+
+/* Chapter view */
+.bible-chapter-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 36px;
+  max-width: 820px;
+}
+
+.chapter-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.chapter-nav-btns {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.chapter-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.chapter-nav-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.chapter-nav-btn:hover {
+  background: var(--accent-glow);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.chapter-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.jw-read-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  background: linear-gradient(135deg, var(--accent), #6c63ff);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all var(--transition);
+  box-shadow: 0 3px 12px var(--accent-glow);
+}
+.jw-read-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--accent-glow);
+}
+
+/* Info banner */
+.chapter-info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(79,142,247,0.08), rgba(108,99,255,0.08));
+  border: 1px solid rgba(79,142,247,0.2);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.chapter-info-banner svg { flex-shrink: 0; color: var(--accent); margin-top: 2px; }
+.chapter-info-banner strong { color: var(--accent); }
+
+/* Text capitol (versete scrise/lipite de utilizator) */
+.chapter-verse-editor {
+  margin-bottom: 24px;
+}
+
+/* Saved notes display */
+.chapter-notes-display {
+  margin-bottom: 20px;
+}
+.chapter-notes-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  border-left: 3px solid var(--green);
+}
+.chapter-notes-box-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+}
+.chapter-notes-box-text {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* Highlights */
+.chapter-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  animation: fadeIn 0.2s ease;
+}
+.highlight-ref {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.875rem;
+  flex: 1;
+}
+
+/* ============================================
+   BUTON ȘTERGE (MODAL NOTIȚE)
+   ============================================ */
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(248,81,73,0.4);
+  background: rgba(248,81,73,0.12);
+  color: var(--red);
+  transition: background var(--transition), border-color var(--transition);
+}
+.btn-danger:hover {
+  background: rgba(248,81,73,0.25);
+  border-color: var(--red);
+}
+
+/* ============================================
+   TABEL PROFEȚII
+   ============================================ */
+.prophecy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.prophecy-table thead th {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--accent);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--bg-surface);
+}
+
+.prophecy-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.prophecy-table tbody tr:hover {
+  background: var(--bg-hover);
+}
+
+.prophecy-table .prophecy-text {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.prophecy-table .prophecy-year {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.prophecy-table .prophecy-fulfillment {
+  color: var(--text-secondary);
+}
+
+.prophecy-table .prophecy-reference {
+  font-size: 0.8rem;
+  color: var(--purple);
+}
+
+.prophecy-table .prophecy-actions {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.prophecy-table .prophecy-actions button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  transition: all var(--transition);
+}
+
+.prophecy-table .prophecy-actions button:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.prophecy-table .prophecy-actions .edit-btn:hover {
+  color: var(--accent);
+}
+
+.prophecy-table .prophecy-actions .delete-btn:hover {
+  color: var(--red);
+}
+
+.prophecy-table .editing td {
+  background: var(--accent-glow);
+  padding: 4px 8px;
+}
+
+.prophecy-table .editing textarea,
+.prophecy-table .editing input {
+  width: 100%;
+  padding: 6px 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.prophecy-table .editing textarea {
+  min-height: 38px;
+  resize: vertical;
+}
+
+.prophecy-table .editing textarea:focus,
+.prophecy-table .editing input:focus {
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.prophecy-table .edit-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.prophecy-table .edit-actions button {
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.prophecy-table .edit-actions .save-edit {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.prophecy-table .edit-actions .save-edit:hover {
+  background: var(--accent-hover);
+}
+
+.prophecy-table .edit-actions .cancel-edit {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.prophecy-table .edit-actions .cancel-edit:hover {
+  background: var(--bg-hover);
+}
+
+@media (max-width: 768px) {
+  .prophecy-table {
+    font-size: 0.78rem;
+  }
+  .prophecy-table thead th,
+  .prophecy-table tbody td {
+    padding: 6px 8px;
+  }
+}
+
+
+.word-counter{
+  margin-top:8px;
+  font-size:0.82rem;
+  color:var(--text-muted);
+  text-align:right;
+  font-weight:600;
+}
+
+/* Chip-uri selectare durată - cronometru practică Predicare (1-5 min) */
+.ministry-duration-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: -6px 0 14px;
+}
+.ministry-duration-btn {
+  padding: 5px 13px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.ministry-duration-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.ministry-duration-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.ministry-duration-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* Fullscreen mobile fix */
+.page-fullscreen textarea {
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .page-fullscreen {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .page-fullscreen textarea {
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+}
+
+/* ============================================
+   BIBLIOTECĂ (mutat din aplicația "Studiu Personal")
+   Publicații + Materiale Video
+   ============================================ */
+.lib-big-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.lib-big-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 12px;
+  background: var(--bg-surface);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  color: var(--text-secondary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.lib-big-tab::before {
+  content: '';
+  position: absolute; inset: 0;
+  opacity: 0;
+  background: var(--accent);
+  transition: opacity var(--transition);
+  border-radius: 14px;
+}
+.lib-big-tab:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.lib-big-tab:hover::before { opacity: 0.08; }
+.lib-big-tab:active { transform: scale(0.95); }
+.lib-big-tab.active {
+  border-color: var(--accent);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 1px var(--accent-glow), 0 8px 28px var(--accent-glow);
+}
+.lib-big-tab.active::before { opacity: 0.12; }
+
+.lib-big-icon {
+  width: 52px; height: 52px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  transition: all var(--transition);
+  position: relative; z-index: 1;
+}
+.lib-big-icon svg { width: 26px; height: 26px; }
+.lib-big-tab.active .lib-big-icon {
+  background: var(--accent-glow);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.lib-big-label {
+  font-size: 0.78rem; font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  position: relative; z-index: 1;
+  transition: color var(--transition);
+}
+.lib-big-tab.active .lib-big-label { color: var(--accent); }
+
+/* Panels */
+.lib-panel { display: none; }
+.lib-panel.active { display: block; }
+
+.lib-hint {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.5;
+  padding: 10px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.lib-hint strong { color: var(--accent); }
+
+/* ── Iconiță poză MUZICĂ / VIDEO (fără etichetă text, cadru mai mare) ── */
+.lib-big-icon-photo {
+  padding: 0;
+  overflow: hidden;
+  width: 84px;
+  height: 84px;
+}
+.lib-big-icon-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 14px;
+}
+
+/* ── PUBLICAȚII ── */
+.pub-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.pub-empty {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 10px; padding: 28px;
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  color: var(--text-muted);
+  text-align: center;
+  font-size: 0.85rem;
+}
+.pub-empty svg { width: 36px; height: 36px; opacity: 0.4; }
+
+.pub-card {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+.pub-card:hover { border-color: var(--accent); transform: translateX(4px); }
+.pub-card-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--accent-glow);
+  border: 1px solid var(--accent-glow);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+.pub-card-icon svg { width: 20px; height: 20px; }
+.pub-card-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+.pub-card-url { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+.add-media-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%;
+  padding: 13px;
+  border: 1.5px dashed var(--accent);
+  border-radius: 14px;
+  background: var(--accent-glow);
+  color: var(--accent);
+  font-family: var(--font-main); font-size: 0.9rem; font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.add-media-btn svg { width: 18px; height: 18px; }
+.add-media-btn:hover { box-shadow: 0 0 16px var(--accent-glow); }
+.add-media-btn:active { transform: scale(0.97); }
+
+/* Mini modal (publicații) */
+.mini-modal {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.65);
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(8px);
+}
+.mini-modal.hidden { display: none; }
+.mini-modal-box {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  width: min(340px, 90vw);
+  box-shadow: var(--shadow);
+}
+.mini-modal-box h4 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; color: var(--accent); }
+.mini-input {
+  width: 100%; padding: 11px 14px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-main); font-size: 0.9rem;
+  margin-bottom: 10px;
+  transition: border-color 0.15s ease;
+}
+.mini-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.mini-modal-btns { display: flex; gap: 10px; margin-top: 4px; }
+.mini-btn-cancel, .mini-btn-ok {
+  flex: 1; padding: 11px;
+  border-radius: 10px; border: 1px solid var(--border);
+  font-family: var(--font-main); font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; transition: all 0.15s ease;
+}
+.mini-btn-cancel { background: var(--bg-surface); color: var(--text-secondary); }
+.mini-btn-cancel:hover { color: var(--red); border-color: var(--red); }
+.mini-btn-ok { background: var(--accent); color: #fff; border-color: transparent; box-shadow: 0 4px 14px var(--accent-glow); }
+.mini-btn-ok:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+/* ── VIDEO SERIES ── */
+.video-series {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.series-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 16px 18px;
+  background: var(--accent-glow);
+  border-bottom: 1px solid var(--border);
+}
+.series-badge { font-size: 1.4rem; }
+.series-title { font-size: 1rem; font-weight: 800; color: var(--text-primary); flex: 1; }
+.series-count {
+  font-size: 0.72rem; font-weight: 600;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3px 10px;
+  color: var(--text-muted);
+}
+
+.video-toolbar {
+  display: flex; justify-content: flex-end;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.reset-titles-btn {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.74rem; font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.reset-titles-btn svg { width: 13px; height: 13px; }
+.reset-titles-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+.video-cards-list { display: flex; flex-direction: column; }
+
+.video-slot {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+.video-slot:last-child { border-bottom: none; }
+.video-slot:hover { background: var(--bg-hover); }
+.video-slot.watched { background: rgba(249,123,79,0.06); }
+
+.vslot-num {
+  width: 32px; height: 32px;
+  border-radius: 10px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.video-slot.loaded .vslot-num {
+  background: rgba(16,201,160,0.15);
+  border-color: rgba(16,201,160,0.4);
+  color: var(--green);
+}
+
+.vslot-info { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.vslot-title-input {
+  font-family: var(--font-main);
+  font-size: 0.88rem; font-weight: 600;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  padding: 3px 6px; margin: -3px -6px;
+  width: 100%;
+  min-width: 0;
+  transition: all 0.15s ease;
+}
+.vslot-title-input:hover { border-color: var(--border); background: var(--bg-base); }
+.vslot-title-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg-base);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.vslot-meta-row { display: flex; align-items: center; gap: 8px; }
+.vslot-status { font-size: 0.72rem; }
+.empty-status { color: var(--text-muted); }
+.loaded-status { color: var(--green); }
+.permission-status { color: var(--orange); cursor: pointer; }
+.vslot-watched-tag { font-size: 0.68rem; font-weight: 700; color: var(--orange); }
+.vslot-watched-tag.hidden { display: none; }
+
+.vslot-watched-btn {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  opacity: 0.4;
+  flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.vslot-watched-btn:hover { opacity: 0.8; transform: scale(1.1); }
+.vslot-watched-btn.active {
+  opacity: 1;
+  background: rgba(249,123,79,0.18);
+  border-color: rgba(249,123,79,0.45);
+}
+
+.vslot-delete {
+  width: 38px; height: 38px;
+  border-radius: 11px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  display: none; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+  margin-left: 4px;
+}
+.vslot-delete svg { width: 16px; height: 16px; }
+.vslot-delete:hover { color: var(--red); border-color: var(--red); background: rgba(248,81,73,0.08); }
+.video-slot.loaded .vslot-delete { display: flex; }
+
+.vslot-pick {
+  position: relative;
+  width: 38px; height: 38px;
+  border-radius: 11px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+.vslot-pick svg { width: 17px; height: 17px; }
+.vslot-pick:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+.video-slot.loaded .vslot-pick { border-color: rgba(16,201,160,0.4); color: var(--green); }
+.vslot-pick input[type="file"] {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.vslot-play {
+  width: 38px; height: 38px;
+  border-radius: 11px;
+  background: rgba(16,201,160,0.15);
+  border: 1px solid rgba(16,201,160,0.4);
+  display: none; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--green);
+  flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-right: 4px;
+}
+.vslot-play svg { width: 16px; height: 16px; }
+.vslot-play:hover { transform: scale(1.15); box-shadow: 0 0 12px rgba(16,201,160,0.35); }
+.video-slot.loaded .vslot-play { display: flex; }
+
+/* Video player modal */
+.vplayer-overlay {
+  position: fixed; inset: 0; z-index: 400;
+  background: rgba(0,0,0,0.88);
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(12px);
+}
+.vplayer-overlay.hidden { display: none; }
+.vplayer-box {
+  width: min(460px, 95vw);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+}
+.vplayer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--accent-glow);
+}
+.vplayer-header span { font-size: 0.9rem; font-weight: 700; color: var(--accent); }
+.vplayer-close {
+  width: 32px; height: 32px; border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  cursor: pointer; font-size: 0.9rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s ease;
+}
+.vplayer-close:hover { color: var(--red); border-color: var(--red); }
+.vplayer-el { width: 100%; background: #000; display: block; max-height: 280px; }
+.vplayer-footer {
+  display: flex; justify-content: center;
+  padding: 12px 18px;
+  border-top: 1px solid var(--border);
+}
+.vplayer-exit-btn {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.85rem; font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.vplayer-exit-btn svg { width: 16px; height: 16px; }
+.vplayer-exit-btn:hover { color: var(--red); border-color: var(--red); }
+
+/* ============================================
+   MUZICĂ (Bibliotecă)
+   ============================================ */
+@media (max-width: 560px) {
+  .lib-big-tabs { gap: 6px; }
+  .lib-big-tab { padding: 14px 6px; }
+  .lib-big-icon { width: 40px; height: 40px; }
+  .lib-big-icon svg { width: 20px; height: 20px; }
+  .lib-big-icon-photo { width: 64px; height: 64px; }
+  .lib-big-label { font-size: 0.66rem; letter-spacing: 0.04em; }
+}
+
+.continue-listen-card {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--accent-glow);
+  border: 1px solid var(--accent);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.continue-listen-card.hidden { display: none; }
+.continue-listen-icon { font-size: 1.6rem; flex-shrink: 0; }
+.continue-listen-info { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.continue-listen-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.continue-listen-title {
+  font-size: 0.92rem; font-weight: 700; color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.continue-listen-time { font-size: 0.75rem; color: var(--text-secondary); }
+.continue-listen-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+.continue-listen-btn svg { width: 18px; height: 18px; }
+.continue-listen-btn:hover { transform: scale(1.1); }
+
+/* Song list uses .video-slot as a base; small tweaks below */
+.song-slot .vslot-num { font-size: 1.1rem; }
+.song-slot.playing { background: var(--accent-glow); }
+.song-slot.playing .vslot-num { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.aplayer-art {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.6rem;
+  padding: 24px 0 8px;
+  background: var(--bg-base);
+}
+.aplayer-el { width: 100%; display: block; padding: 8px 16px 16px; box-sizing: border-box; background: var(--bg-base); }
+

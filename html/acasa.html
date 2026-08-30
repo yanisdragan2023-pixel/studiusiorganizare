@@ -29,10 +29,18 @@
             <button class="color-swatch" style="background:#e53e3e" data-color="#e53e3e" onclick="selectYearColor(this)" title="Roșu"></button>
             <button class="color-swatch" style="background:#805ad5" data-color="#805ad5" onclick="selectYearColor(this)" title="Mov"></button>
             <button class="color-swatch active" style="background:#e6edf3" data-color="#e6edf3" onclick="selectYearColor(this)" title="Alb"></button>
+            <button class="color-swatch" style="background:#4299e1" data-color="#4299e1" onclick="selectYearColor(this)" title="Albastru"></button>
+            <button class="color-swatch" style="background:#48bb78" data-color="#48bb78" onclick="selectYearColor(this)" title="Verde"></button>
+            <button class="color-swatch" style="background:#ecc94b" data-color="#ecc94b" onclick="selectYearColor(this)" title="Galben"></button>
+            <button class="color-swatch" style="background:#ed8936" data-color="#ed8936" onclick="selectYearColor(this)" title="Portocaliu"></button>
+            <button class="color-swatch" style="background:#ed64a6" data-color="#ed64a6" onclick="selectYearColor(this)" title="Roz"></button>
+            <button class="color-swatch" style="background:#38b2ac" data-color="#38b2ac" onclick="selectYearColor(this)" title="Turcoaz"></button>
+            <button class="color-swatch" style="background:#d4af37" data-color="#d4af37" onclick="selectYearColor(this)" title="Auriu"></button>
           </div>
           <div class="year-size-picker">
-            <span style="font-size:0.75rem;color:var(--text-muted);margin-right:6px">Mărime:</span>
-            <div class="year-size-buttons" id="yearSizeButtons"></div>
+            <span class="year-size-icon year-size-icon-sm" aria-hidden="true">A</span>
+            <input type="range" id="yearSizeSlider" class="year-size-slider" min="10" max="30" step="1" value="14" oninput="selectYearSize(this.value)" aria-label="Mărime text">
+            <span class="year-size-icon year-size-icon-lg" aria-hidden="true">A</span>
           </div>
           <textarea id="yearTextInput" class="form-textarea" style="min-height:70px;font-size:0.85rem" placeholder="Scrie textul anului..."></textarea>
           <div style="display:flex;gap:8px;margin-top:6px">

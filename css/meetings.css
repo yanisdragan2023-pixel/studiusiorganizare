@@ -1,0 +1,375 @@
+/* ============================================
+   TRIMITE CUVÂNTĂRI (peer-to-peer)
+   ============================================ */
+.t-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 4px 0 10px;
+}
+.t-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  flex-shrink: 0;
+}
+.t-status-dot.t-online { background: var(--green); }
+
+.t-id-copy {
+  background: var(--accent-glow);
+  color: var(--accent);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  font-family: var(--font-main);
+}
+.t-id-copy:hover { background: var(--accent); color: #fff; }
+
+.t-contacts-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.t-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  padding: 6px 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.t-contact-row span:first-child { flex: 1; color: var(--text-primary); }
+
+.t-contact-id {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  background: var(--bg-hover);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.t-contacts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.t-contact-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.t-contact-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Comutator de temă (portat din aplicația "index"): buton cu 🌙 / ☀️
+   și un cerc alb care glisează pe o pistă */
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.theme-toggle-btn .toggle-track {
+  width: 48px;
+  height: 26px;
+  background: var(--bg-base);
+  border: 1px solid var(--border-strong);
+  border-radius: 13px;
+  position: relative;
+  transition: background var(--transition);
+}
+[data-theme="light"] .theme-toggle-btn .toggle-track {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  border-color: transparent;
+}
+.theme-toggle-btn .toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+[data-theme="light"] .theme-toggle-btn .toggle-thumb { transform: translateX(22px); }
+.theme-toggle-btn .theme-icon-moon,
+.theme-toggle-btn .theme-icon-sun { font-size: 1rem; }
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: border-color var(--transition);
+}
+.search-box:focus-within { border-color: var(--accent); }
+.search-box svg { color: var(--text-muted); flex-shrink: 0; }
+.search-box input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 0.875rem;
+  width: 180px;
+}
+.search-box input::placeholder { color: var(--text-muted); }
+
+/* ============================================
+   MEETINGS PAGE
+   ============================================ */
+.meetings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.meeting-type-card { }
+.meeting-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: white;
+  margin-bottom: 12px;
+}
+.meeting-agenda {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 12px 0;
+}
+.meeting-agenda li {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--bg-elevated);
+}
+
+.meetings-calendar-list { display: flex; flex-direction: column; gap: 10px; }
+.meeting-calendar-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+}
+.meeting-cal-date { font-size: 0.8rem; color: var(--text-muted); min-width: 80px; }
+.meeting-cal-name { font-weight: 600; flex: 1; }
+.meeting-cal-progress { font-size: 0.8rem; color: var(--accent); font-weight: 600; }
+
+/* ============================================
+   DISCURS BIBLIC MODAL + TIMER
+   ============================================ */
+
+/* Make agenda item clickable */
+.agenda-item-link {
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.agenda-item-link:hover {
+  background: var(--accent-glow) !important;
+  color: var(--accent) !important;
+  border-radius: 6px;
+  padding-left: 6px;
+}
+.agenda-item-arrow {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Modal size */
+.modal.modal-discurs {
+  max-width: 700px;
+  width: 95%;
+}
+
+/* Timer bar */
+.discurs-timer-bar {
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  transition: background 0.4s ease;
+}
+
+.discurs-timer-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 160px;
+}
+
+.discurs-timer-icon {
+  font-size: 1.2rem;
+}
+
+.discurs-timer-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  letter-spacing: 2px;
+  font-family: var(--font-main);
+  min-width: 80px;
+}
+
+.discurs-timer-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.discurs-timer-progress-wrap {
+  flex: 1;
+  min-width: 120px;
+}
+
+.discurs-timer-progress-bg {
+  height: 8px;
+  background: var(--bg-base);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.discurs-timer-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #6c63ff);
+  border-radius: 4px;
+  transition: width 1s linear, background 0.4s ease;
+}
+
+.discurs-timer-btns {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Warning state (sub 5 min) */
+.discurs-timer-bar.timer-warning {
+  background: rgba(249,123,79,0.08);
+}
+.discurs-timer-bar.timer-warning .discurs-timer-value {
+  color: var(--orange);
+}
+.discurs-timer-bar.timer-warning .discurs-timer-progress-fill {
+  background: linear-gradient(90deg, var(--orange), #f97b4f88);
+}
+
+/* Danger state (sub 2 min) */
+.discurs-timer-bar.timer-danger {
+  background: rgba(248,81,73,0.10);
+  animation: timerPulse 1.2s ease-in-out infinite;
+}
+.discurs-timer-bar.timer-danger .discurs-timer-value {
+  color: var(--red);
+}
+.discurs-timer-bar.timer-danger .discurs-timer-progress-fill {
+  background: linear-gradient(90deg, var(--red), #f8514966);
+}
+
+/* Done state */
+.discurs-timer-bar.timer-done {
+  background: rgba(248,81,73,0.08);
+  animation: none;
+}
+.discurs-timer-bar.timer-done .discurs-timer-value {
+  color: var(--red);
+}
+
+@keyframes timerPulse {
+  0%, 100% { background: rgba(248,81,73,0.10); }
+  50% { background: rgba(248,81,73,0.22); }
+}
+
+/* Textarea for discurs - larger; se mărește automat pe măsură ce scrii */
+.discurs-textarea {
+  min-height: 500px;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  resize: none;
+  overflow-y: hidden;
+}
+
+.discurs-textarea:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: var(--bg-base);
+  border-color: var(--red);
+}
+
+/* Blocked message */
+.discurs-blocked-msg {
+  margin-top: 8px;
+  padding: 10px 14px;
+  background: rgba(248,81,73,0.10);
+  border: 1px solid rgba(248,81,73,0.35);
+  border-radius: var(--radius-sm);
+  color: var(--red);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .discurs-timer-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .discurs-timer-progress-wrap {
+    width: 100%;
+  }
+}
+
+/* Inline variant (used in cards, not modal header) - Cuvântare 5 min */
+.discurs-timer-bar.timer-bar-inline {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+.discurs-timer-bar.timer-bar-inline .discurs-timer-value {
+  font-size: 1.5rem;
+}
+

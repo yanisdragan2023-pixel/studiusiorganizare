@@ -89,25 +89,14 @@ function deleteCurrentNote() {
 let yearTextColor = '#e6edf3';
 let yearFontSize = 14;
 
-// Generează butoanele 1-24 pentru mărime font
-function buildSizeButtons() {
-  const container = document.getElementById('yearSizeButtons');
-  if (!container) return;
-  container.innerHTML = '';
-  for (let i = 1; i <= 24; i++) {
-    const btn = document.createElement('button');
-    btn.textContent = i;
-    btn.className = 'size-btn' + (i === yearFontSize ? ' active' : '');
-    btn.dataset.size = i;
-    btn.onclick = () => selectYearSize(btn);
-    container.appendChild(btn);
-  }
+// Setează poziția sliderului de mărime (A mic -> A mare) fără cifre
+function setSizeSlider(size) {
+  const slider = document.getElementById('yearSizeSlider');
+  if (slider) slider.value = size;
 }
 
-function selectYearSize(btn) {
-  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  yearFontSize = parseInt(btn.dataset.size);
+function selectYearSize(size) {
+  yearFontSize = parseInt(size);
   // Previzualizare live în textarea
   const input = document.getElementById('yearTextInput');
   if (input) input.style.fontSize = yearFontSize + 'px';
@@ -173,7 +162,7 @@ function openYearTextEdit() {
   document.querySelectorAll('.color-swatch').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.color === savedColor);
   });
-  buildSizeButtons();
+  setSizeSlider(savedSize);
   editDiv.style.display = 'block';
   displayP.style.display = 'none';
   document.getElementById('yearTextActions').style.display = 'none';
