@@ -35,7 +35,8 @@ function defaultAppState() {
     myUser: null,      // { id, name } — identitatea folosită la trimiterea cuvântărilor
     contacts: [],      // [{ id, name }] — persoane cu care s-au trimis/primit cuvântări
     bibleNotes: {},    // notițe/versete marcate per capitol din citirea Bibliei
-    bibleOfflineText: {}, // textul versetelor scris/lipit de utilizator, per capitol (ex. "geneza-1")
+    bibleOfflineText: {}, // text simplu per capitol
+    bibleOfflineRichText: {}, // text cu culori/formatare per capitol
 
     // Setări notificări (anunț cu o zi înainte / în ziua respectivă)
     notifSettings: { enabled: false },

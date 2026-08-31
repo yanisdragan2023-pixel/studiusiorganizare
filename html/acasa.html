@@ -1,72 +1,107 @@
   <section class="page active" id="page-dashboard">
-
-    <!-- ================================================
-         1. ASTĂZI — dată, vreme, streak, statistici
-         ================================================ -->
-    <div class="dash-section dash-section-today">
-      <div class="dashboard-greeting">
-        <div>
-          <span class="dash-eyebrow">Astăzi</span>
-          <h2 id="greetingText">Bună ziua! 🌿</h2>
-          <p class="greeting-sub" id="greetingDate"></p>
-          <div class="weather-widget" id="weatherWidget" style="display:none" onclick="navigateTo('radarmeteo')" title="Vezi radarul meteo">
-            <span class="weather-icon" id="weatherIcon">☀️</span>
-            <span class="weather-temp" id="weatherTemp">--°C</span>
-            <span class="weather-detail" id="weatherDetail">Reșița</span>
-          </div>
-        </div>
-        <div class="streak-badge">
-          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
-          <span id="streakCount">0 zile studiu</span>
+    <div class="dashboard-greeting">
+      <div>
+        <h2 id="greetingText">Bună ziua! 🌿</h2>
+        <p class="greeting-sub" id="greetingDate"></p>
+        <div class="weather-widget" id="weatherWidget" style="display:none" onclick="navigateTo('radarmeteo')" title="Vezi radarul meteo">
+          <span class="weather-icon" id="weatherIcon">☀️</span>
+          <span class="weather-temp" id="weatherTemp">--°C</span>
+          <span class="weather-detail" id="weatherDetail">Reșița</span>
         </div>
       </div>
+      <div class="year-text-box" id="yearTextBox">
+        <div class="year-text-header">
+          <span class="year-text-label">✨ Textul Anului</span>
+          <div class="year-text-actions" id="yearTextActions" style="display:none">
+            <button class="yt-menu-btn modern-color-btn" id="yearColorMenuBtn" onclick="event.stopPropagation(); toggleYearColorMenu()" title="Culoare textului anului">
+              <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="8.5" cy="10" r="1.3" fill="currentColor"/><circle cx="12" cy="8" r="1.3" fill="currentColor"/><circle cx="15.5" cy="10" r="1.3" fill="currentColor"/><circle cx="9.5" cy="14" r="1.3" fill="currentColor"/></svg>
+            </button>
+            <div class="year-text-dropdown modern-color-dropdown" id="yearColorDropdown" style="width:176px">
+              <div class="color-palette-title">Culoarea textului</div>
+              <div class="year-color-picker modern-palette">
+                <button class="color-swatch active" style="background:#e6edf3" data-color="#e6edf3" onmousedown="event.preventDefault()" onclick="selectYearColor(this)" title="Alb"></button>
+                <button class="color-swatch" style="background:#e53e3e" data-color="#e53e3e" onmousedown="event.preventDefault()" onclick="selectYearColor(this)" title="Roșu"></button>
+                <button class="color-swatch" style="background:#805ad5" data-color="#805ad5" onmousedown="event.preventDefault()" onclick="selectYearColor(this)" title="Mov"></button>
+                <button class="color-swatch" style="background:#4299e1" data-color="#4299e1" onmousedown="event.preventDefault()" onclick="selectYearColor(this)" title="Albastru"></button>
+                <button class="color-swatch" style="background:#48bb78" data-color="#48bb78" onmousedown="event.preventDefault()" onclick="selectYearColor(this)" title="Verde"></button>
+                <button class="color-swatch" style="background:#ecc94b" data-color="#ecc94b" onmousedown="event.preventDefault()" onclick="selectYearColor(this)" title="Galben"></button>
+                <button class="color-swatch" style="background:#ed8936" data-color="#ed8936" onmousedown="event.preventDefault()" onclick="selectYearColor(this)" title="Portocaliu"></button>
+                <button class="color-swatch" style="background:#ed64a6" data-color="#ed64a6" onmousedown="event.preventDefault()" onclick="selectYearColor(this)" title="Roz"></button>
+                <button class="color-swatch" style="background:#38b2ac" data-color="#38b2ac" onmousedown="event.preventDefault()" onclick="selectYearColor(this)" title="Turcoaz"></button>
+                <button class="color-swatch" style="background:#d4af37" data-color="#d4af37" onmousedown="event.preventDefault()" onclick="selectYearColor(this)" title="Auriu"></button>
+              </div>
+            </div>
+            <button class="yt-menu-btn" id="yearTextMenuBtn" onclick="event.stopPropagation(); toggleYearTextMenu()" title="Meniu">
+              <svg viewBox="0 0 24 24" width="16" height="16"><line x1="4" y1="6" x2="20" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <div class="year-text-dropdown" id="yearTextDropdown">
+              <button class="yt-btn-edit" onclick="event.stopPropagation(); closeYearTextMenu(); openYearTextEdit()" title="Editează">✏️ Editează</button>
+              <button class="yt-btn-delete" onclick="event.stopPropagation(); closeYearTextMenu(); deleteYearText()" title="Șterge">🗑 Șterge</button>
+            </div>
+          </div>
+        </div>
+        <p class="year-text-content" id="yearTextDisplay">Apasă pentru a adăuga textul anului...</p>
+        <div class="year-text-edit" id="yearTextEdit" style="display:none" onclick="event.stopPropagation()">
+          <div class="year-size-picker">
+            <span class="year-size-icon year-size-icon-sm" aria-hidden="true">A</span>
+            <input type="range" id="yearSizeSlider" class="year-size-slider" min="10" max="30" step="1" value="14" oninput="selectYearSize(this.value)" aria-label="Mărime text">
+            <span class="year-size-icon year-size-icon-lg" aria-hidden="true">A</span>
+          </div>
+          <textarea id="yearTextInput" class="form-textarea" style="min-height:70px;font-size:0.85rem" placeholder="Scrie textul anului..."></textarea>
+          <div style="display:flex;gap:8px;margin-top:6px">
+            <button class="btn-primary btn-sm" onclick="saveYearText()">💾 Salvează</button>
+            <button class="btn-ghost btn-sm" onclick="cancelYearText()">Anulează</button>
+          </div>
+        </div>
+      </div>
+      <div class="streak-badge">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/></svg>
+        <span id="streakCount">0 zile studiu</span>
+      </div>
+    </div>
 
-      <!-- STATS CARDS -->
-      <div class="stats-grid">
-        <div class="stat-card" style="--accent:#4f8ef7">
-          <div class="stat-icon">
-            <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="white" stroke-width="2" fill="none"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="white" stroke-width="2" fill="none"/></svg>
-          </div>
-          <div>
-            <p class="stat-label">Articole Studiate</p>
-            <h3 class="stat-value" id="stat-articles">0</h3>
-          </div>
+    <!-- STATS CARDS -->
+    <div class="stats-grid">
+      <div class="stat-card" style="--accent:#4f8ef7">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="white" stroke-width="2" fill="none"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="white" stroke-width="2" fill="none"/></svg>
         </div>
-        <div class="stat-card" style="--accent:#10c9a0">
-          <div class="stat-icon" style="background:rgba(16,201,160,0.15)">
-            <svg viewBox="0 0 24 24" width="22" height="22"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" stroke="white" stroke-width="2" fill="none"/></svg>
-          </div>
-          <div>
-            <p class="stat-label">Notițe Salvate</p>
-            <h3 class="stat-value" id="stat-notes">0</h3>
-          </div>
+        <div>
+          <p class="stat-label">Articole Studiate</p>
+          <h3 class="stat-value" id="stat-articles">0</h3>
         </div>
-        <div class="stat-card" style="--accent:#f97b4f">
-          <div class="stat-icon" style="background:rgba(249,123,79,0.15)">
-            <svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="4" width="18" height="18" rx="2" stroke="white" stroke-width="2" fill="none"/><line x1="16" y1="2" x2="16" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="white" stroke-width="2"/></svg>
-          </div>
-          <div>
-            <p class="stat-label">Întruniri Pregătite</p>
-            <h3 class="stat-value" id="stat-meetings">0</h3>
-          </div>
+      </div>
+      <div class="stat-card" style="--accent:#10c9a0">
+        <div class="stat-icon" style="background:rgba(16,201,160,0.15)">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" stroke="white" stroke-width="2" fill="none"/></svg>
         </div>
-        <div class="stat-card" style="--accent:#a855f7">
-          <div class="stat-icon" style="background:rgba(168,85,247,0.15)">
-            <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M2 17l10 5 10-5" stroke="white" stroke-width="2" fill="none"/><path d="M2 12l10 5 10-5" stroke="white" stroke-width="2" fill="none"/></svg>
-          </div>
-          <div>
-            <p class="stat-label">Versete Marcate</p>
-            <h3 class="stat-value" id="stat-verses">0</h3>
-          </div>
+        <div>
+          <p class="stat-label">Notițe Salvate</p>
+          <h3 class="stat-value" id="stat-notes">0</h3>
+        </div>
+      </div>
+      <div class="stat-card" style="--accent:#f97b4f">
+        <div class="stat-icon" style="background:rgba(249,123,79,0.15)">
+          <svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="4" width="18" height="18" rx="2" stroke="white" stroke-width="2" fill="none"/><line x1="16" y1="2" x2="16" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="white" stroke-width="2"/></svg>
+        </div>
+        <div>
+          <p class="stat-label">Întruniri Pregătite</p>
+          <h3 class="stat-value" id="stat-meetings">0</h3>
+        </div>
+      </div>
+      <div class="stat-card" style="--accent:#a855f7">
+        <div class="stat-icon" style="background:rgba(168,85,247,0.15)">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M2 17l10 5 10-5" stroke="white" stroke-width="2" fill="none"/><path d="M2 12l10 5 10-5" stroke="white" stroke-width="2" fill="none"/></svg>
+        </div>
+        <div>
+          <p class="stat-label">Versete Marcate</p>
+          <h3 class="stat-value" id="stat-verses">0</h3>
         </div>
       </div>
     </div>
 
-    <!-- ================================================
-         2. CE URMEAZĂ — următoarea întrunire
-         ================================================ -->
-    <div class="dash-section dash-section-next">
-      <h3 class="dash-section-title">Ce urmează</h3>
+    <div class="dashboard-grid">
+      <!-- NEXT MEETING -->
       <div class="card">
         <div class="card-header">
           <h3>Următoarea Întrunire</h3>
@@ -85,150 +120,105 @@
         </div>
         <button class="btn-outline w-full" onclick="navigateTo('watchtower')">Deschide Studiul →</button>
       </div>
-    </div>
 
-    <!-- ================================================
-         3. STUDIU — Textul Anului (hero), Versetul Zilei,
-            Citește Biblia, Notițe Recente
-         ================================================ -->
-    <div class="dash-section dash-section-study">
-      <h3 class="dash-section-title">Studiu</h3>
-
-      <!-- TEXTUL ANULUI — element hero al paginii -->
-      <div class="year-text-box year-text-hero" id="yearTextBox">
-        <div class="year-text-header">
-          <span class="year-text-label">✨ Textul Anului</span>
-          <div class="year-text-actions" id="yearTextActions" style="display:none">
-            <button class="yt-menu-btn" id="yearTextMenuBtn" onclick="event.stopPropagation(); toggleYearTextMenu()" title="Meniu">
-              <svg viewBox="0 0 24 24" width="16" height="16"><line x1="4" y1="6" x2="20" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </button>
-            <div class="year-text-dropdown" id="yearTextDropdown">
-              <button class="yt-btn-edit" onclick="event.stopPropagation(); closeYearTextMenu(); openYearTextEdit()" title="Editează">✏️ Editează</button>
-              <button class="yt-btn-delete" onclick="event.stopPropagation(); closeYearTextMenu(); deleteYearText()" title="Șterge">🗑 Șterge</button>
-            </div>
-          </div>
+      <!-- RECENT NOTES -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Notițe Recente</h3>
+          <a href="#" class="card-link" onclick="navigateTo('notes')">Vezi toate</a>
         </div>
-        <p class="year-text-content" id="yearTextDisplay">Apasă pentru a adăuga textul anului...</p>
-        <div class="year-text-edit" id="yearTextEdit" style="display:none">
-          <div class="year-color-picker">
-            <span style="font-size:0.75rem;color:var(--text-muted);margin-right:6px">Culoare:</span>
-            <button class="color-swatch" style="background:#e53e3e" data-color="#e53e3e" onclick="selectYearColor(this)" title="Roșu"></button>
-            <button class="color-swatch" style="background:#805ad5" data-color="#805ad5" onclick="selectYearColor(this)" title="Mov"></button>
-            <button class="color-swatch active" style="background:#e6edf3" data-color="#e6edf3" onclick="selectYearColor(this)" title="Alb"></button>
-            <button class="color-swatch" style="background:#4299e1" data-color="#4299e1" onclick="selectYearColor(this)" title="Albastru"></button>
-            <button class="color-swatch" style="background:#48bb78" data-color="#48bb78" onclick="selectYearColor(this)" title="Verde"></button>
-            <button class="color-swatch" style="background:#ecc94b" data-color="#ecc94b" onclick="selectYearColor(this)" title="Galben"></button>
-            <button class="color-swatch" style="background:#ed8936" data-color="#ed8936" onclick="selectYearColor(this)" title="Portocaliu"></button>
-            <button class="color-swatch" style="background:#ed64a6" data-color="#ed64a6" onclick="selectYearColor(this)" title="Roz"></button>
-            <button class="color-swatch" style="background:#38b2ac" data-color="#38b2ac" onclick="selectYearColor(this)" title="Turcoaz"></button>
-            <button class="color-swatch" style="background:#d4af37" data-color="#d4af37" onclick="selectYearColor(this)" title="Auriu"></button>
-          </div>
-          <div class="year-size-picker">
-            <span class="year-size-icon year-size-icon-sm" aria-hidden="true">A</span>
-            <input type="range" id="yearSizeSlider" class="year-size-slider" min="10" max="30" step="1" value="14" oninput="selectYearSize(this.value)" aria-label="Mărime text">
-            <span class="year-size-icon year-size-icon-lg" aria-hidden="true">A</span>
-          </div>
-          <textarea id="yearTextInput" class="form-textarea" style="min-height:70px;font-size:0.85rem" placeholder="Scrie textul anului..."></textarea>
-          <div style="display:flex;gap:8px;margin-top:6px">
-            <button class="btn-primary btn-sm" onclick="saveYearText()">💾 Salvează</button>
-            <button class="btn-ghost btn-sm" onclick="cancelYearText()">Anulează</button>
-          </div>
+        <div id="recentNotesList" class="recent-list">
+          <div class="empty-state-small">Nicio notiță încă. Începe studiul!</div>
         </div>
       </div>
 
-      <div class="study-grid">
-        <!-- VERSE OF DAY -->
-        <div class="card verse-card">
-          <div class="card-header">
-            <h3>✨ Versetul Zilei</h3>
-            <div class="year-text-actions" style="display:flex">
-              <button class="yt-menu-btn" id="verseColorMenuBtn" onclick="event.stopPropagation(); toggleVerseColorMenu()" title="Culoare verset">
-                <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="8.5" cy="10" r="1.3" fill="currentColor"/><circle cx="12" cy="8" r="1.3" fill="currentColor"/><circle cx="15.5" cy="10" r="1.3" fill="currentColor"/><circle cx="9.5" cy="14" r="1.3" fill="currentColor"/></svg>
-              </button>
-              <div class="year-text-dropdown" id="verseColorDropdown" style="width:150px">
-                <div class="year-color-picker" style="margin-bottom:0">
-                  <button class="color-swatch active" style="background:#e6edf3" data-color="#e6edf3" onclick="selectVerseColor(this)" title="Alb"></button>
-                  <button class="color-swatch" style="background:#e53e3e" data-color="#e53e3e" onclick="selectVerseColor(this)" title="Roșu"></button>
-                  <button class="color-swatch" style="background:#805ad5" data-color="#805ad5" onclick="selectVerseColor(this)" title="Mov"></button>
-                  <button class="color-swatch" style="background:#4299e1" data-color="#4299e1" onclick="selectVerseColor(this)" title="Albastru"></button>
-                  <button class="color-swatch" style="background:#48bb78" data-color="#48bb78" onclick="selectVerseColor(this)" title="Verde"></button>
-                  <button class="color-swatch" style="background:#ecc94b" data-color="#ecc94b" onclick="selectVerseColor(this)" title="Galben"></button>
-                  <button class="color-swatch" style="background:#ed8936" data-color="#ed8936" onclick="selectVerseColor(this)" title="Portocaliu"></button>
-                  <button class="color-swatch" style="background:#ed64a6" data-color="#ed64a6" onclick="selectVerseColor(this)" title="Roz"></button>
-                  <button class="color-swatch" style="background:#38b2ac" data-color="#38b2ac" onclick="selectVerseColor(this)" title="Turcoaz"></button>
-                  <button class="color-swatch" style="background:#d4af37" data-color="#d4af37" onclick="selectVerseColor(this)" title="Auriu"></button>
-                </div>
+      <!-- VERSE OF DAY -->
+      <div class="card verse-card">
+        <div class="card-header">
+          <h3>✨ Versetul Zilei</h3>
+          <div class="year-text-actions" style="display:flex">
+            <button class="yt-menu-btn" id="verseColorMenuBtn" onclick="event.stopPropagation(); toggleVerseColorMenu()" title="Culoare verset">
+              <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="8.5" cy="10" r="1.3" fill="currentColor"/><circle cx="12" cy="8" r="1.3" fill="currentColor"/><circle cx="15.5" cy="10" r="1.3" fill="currentColor"/><circle cx="9.5" cy="14" r="1.3" fill="currentColor"/></svg>
+            </button>
+            <div class="year-text-dropdown" id="verseColorDropdown" style="width:150px">
+              <div class="year-color-picker" style="margin-bottom:0">
+                <button class="color-swatch active" style="background:#e6edf3" data-color="#e6edf3" onclick="selectVerseColor(this)" title="Alb"></button>
+                <button class="color-swatch" style="background:#e53e3e" data-color="#e53e3e" onclick="selectVerseColor(this)" title="Roșu"></button>
+                <button class="color-swatch" style="background:#805ad5" data-color="#805ad5" onclick="selectVerseColor(this)" title="Mov"></button>
+                <button class="color-swatch" style="background:#4299e1" data-color="#4299e1" onclick="selectVerseColor(this)" title="Albastru"></button>
+                <button class="color-swatch" style="background:#48bb78" data-color="#48bb78" onclick="selectVerseColor(this)" title="Verde"></button>
+                <button class="color-swatch" style="background:#ecc94b" data-color="#ecc94b" onclick="selectVerseColor(this)" title="Galben"></button>
+                <button class="color-swatch" style="background:#ed8936" data-color="#ed8936" onclick="selectVerseColor(this)" title="Portocaliu"></button>
+                <button class="color-swatch" style="background:#ed64a6" data-color="#ed64a6" onclick="selectVerseColor(this)" title="Roz"></button>
+                <button class="color-swatch" style="background:#38b2ac" data-color="#38b2ac" onclick="selectVerseColor(this)" title="Turcoaz"></button>
+                <button class="color-swatch" style="background:#d4af37" data-color="#d4af37" onclick="selectVerseColor(this)" title="Auriu"></button>
               </div>
             </div>
           </div>
-          <blockquote class="verse-text" id="verseText">
-            „El va șterge orice lacrimă din ochii lor și moartea nu va mai fi. Nici jale, nici strigăt, nici durere nu vor mai fi.”
-          </blockquote>
-          <p class="verse-ref" id="verseRef">— Revelația 21:4</p>
-          <button class="btn-ghost btn-sm" onclick="newVerse()">Alt verset 📖</button>
         </div>
+        <blockquote class="verse-text" id="verseText">
+          „El va șterge orice lacrimă din ochii lor și moartea nu va mai fi. Nici jale, nici strigăt, nici durere nu vor mai fi.”
+        </blockquote>
+        <p class="verse-ref" id="verseRef">— Revelația 21:4</p>
+        <button class="btn-ghost btn-sm" onclick="newVerse()">Alt verset 📖</button>
+      </div>
 
-        <!-- CITEȘTE BIBLIA — card funcțional -->
-        <button type="button" class="card bible-cta-card" onclick="readVerseInBible()" title="Citește Biblia">
-          <div class="bible-cta-top">
-            <span class="bible-cta-icon">📖</span>
-            <img class="bible-cta-img" src="assets/citeste-biblia.webp" alt="" aria-hidden="true" />
-          </div>
-          <h3 class="bible-cta-title">Citește Biblia</h3>
-          <p class="bible-cta-desc">Deschide versetul zilei direct în Sfânta Scriptură.</p>
-          <span class="btn-primary btn-sm bible-cta-btn">Deschide →</span>
+      <!-- BIBLE BUTTON -->
+      <div class="card verse-card">
+        <button type="button" class="dash-bible-img-btn" onclick="readVerseInBible()" title="Citește Biblia">
+          <img src="assets/citeste-biblia.webp" alt="Citește Biblia" />
         </button>
+      </div>
 
-        <!-- RECENT NOTES -->
-        <div class="card">
-          <div class="card-header">
-            <h3>Notițe Recente</h3>
-            <a href="#" class="card-link" onclick="navigateTo('notes')">Vezi toate</a>
-          </div>
-          <div id="recentNotesList" class="recent-list">
-            <div class="empty-state-small">Nicio notiță încă. Începe studiul!</div>
-          </div>
+      <!-- QUICK STUDY -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Studiu Rapid</h3>
+          <span class="badge badge-green">Activ</span>
+        </div>
+        <div class="quick-links">
+          <h4 class="quick-section-title">Întrunirea Publică și Studiul Turnului de Veghe</h4>
+          <a class="quick-link-item" href="#" onclick="navigateTo('watchtower')">
+            <span class="ql-icon"><svg viewBox="0 0 130 60" width="19" height="8.8" style="display:block"><path d="M19,56 L19,43 L11,43 L11,36 L2,36 L2,2 L21,2 L21,12 L32,12 L32,2 L46,2 L46,12 L57,12 L57,2 L72,2 L72,12 L83,12 L83,2 L98,2 L98,12 L109,12 L109,2 L127,2 L127,36 L119,36 L119,43 L111,43 L111,56" stroke="currentColor" stroke-width="8" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
+            <span>Turnul de Veghe – Studiu</span>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </a>
+          <a class="quick-link-item" href="#" onclick="navigateTo('temacursant')">
+            <span class="ql-icon">📝</span>
+            <span>Temă pentru cursant</span>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </a>
+
+          <a class="quick-link-item" href="#" onclick="navigateTo('workbook')">
+            <span class="ql-icon">📋</span>
+            <span>Viața creștină și predicarea</span>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </a>
+
+          <a class="quick-link-item" href="#" onclick="navigateTo('fieldservice')">
+            <span class="ql-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg></span>
+            <span>Întrunirea de ieșire pe teren</span>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </a>
+
+          <a class="quick-link-item" href="#" onclick="navigateTo('bible')">
+            <span class="ql-icon">✏️</span>
+            <span>Studiu Biblic Personal</span>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </a>
+          <a class="quick-link-item" href="#" onclick="navigateTo('radarmeteo')">
+            <span class="ql-icon">🌧️</span>
+            <span>Radar Meteo — Reșița</span>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </a>
+          <a class="quick-link-item" href="https://www.jw.org/ro" target="_blank">
+            <span class="ql-icon">🌐</span>
+            <span>Deschide jw.org/ro</span>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="2" fill="none"/><polyline points="15 3 21 3 21 9" stroke="currentColor" stroke-width="2" fill="none"/><line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </a>
         </div>
       </div>
     </div>
-
-    <!-- ================================================
-         4. ACCES RAPID — scurtături principale
-         ================================================ -->
-    <div class="dash-section dash-section-quick">
-      <h3 class="dash-section-title">Acces Rapid</h3>
-      <div class="quick-access-grid">
-        <a class="quick-access-tile" href="#" onclick="navigateTo('watchtower')">
-          <span class="qa-icon"><svg viewBox="0 0 130 60" width="19" height="8.8" style="display:block"><path d="M19,56 L19,43 L11,43 L11,36 L2,36 L2,2 L21,2 L21,12 L32,12 L32,2 L46,2 L46,12 L57,12 L57,2 L72,2 L72,12 L83,12 L83,2 L98,2 L98,12 L109,12 L109,2 L127,2 L127,36 L119,36 L119,43 L111,43 L111,56" stroke="currentColor" stroke-width="8" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
-          <span class="qa-label">Turnul de Veghe – Studiu</span>
-        </a>
-        <a class="quick-access-tile" href="#" onclick="navigateTo('temacursant')">
-          <span class="qa-icon">📝</span>
-          <span class="qa-label">Temă pentru cursant</span>
-        </a>
-        <a class="quick-access-tile" href="#" onclick="navigateTo('workbook')">
-          <span class="qa-icon">📋</span>
-          <span class="qa-label">Viața creștină și predicarea</span>
-        </a>
-        <a class="quick-access-tile" href="#" onclick="navigateTo('fieldservice')">
-          <span class="qa-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg></span>
-          <span class="qa-label">Întrunirea de ieșire pe teren</span>
-        </a>
-        <a class="quick-access-tile" href="#" onclick="navigateTo('bible')">
-          <span class="qa-icon">✏️</span>
-          <span class="qa-label">Studiu Biblic Personal</span>
-        </a>
-        <a class="quick-access-tile" href="#" onclick="navigateTo('radarmeteo')">
-          <span class="qa-icon">🌧️</span>
-          <span class="qa-label">Radar Meteo — Reșița</span>
-        </a>
-        <a class="quick-access-tile" href="https://www.jw.org/ro" target="_blank">
-          <span class="qa-icon">🌐</span>
-          <span class="qa-label">Deschide jw.org/ro</span>
-        </a>
-      </div>
-    </div>
-
   </section>
 
   <!-- PAGE: WATCHTOWER -->

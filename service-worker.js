@@ -1,7 +1,7 @@
 // StudiuMeu — Service Worker
 // Cache-first pentru fisierele aplicatiei = functionare completa offline.
 
-const CACHE_VERSION = 'studiumeu-v35';
+const CACHE_VERSION = 'studiumeu-v36';
 const CACHE_NAME = CACHE_VERSION;
 
 const APP_SHELL = [
@@ -78,7 +78,21 @@ const APP_SHELL = [
   './js/field-service/vestitor.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/icon-512-maskable.png'
+  './icons/icon-512-maskable.png',
+  './fonts/work-sans-latin-400-normal.woff2',
+  './fonts/work-sans-latin-ext-400-normal.woff2',
+  './fonts/work-sans-latin-500-normal.woff2',
+  './fonts/work-sans-latin-ext-500-normal.woff2',
+  './fonts/work-sans-latin-600-normal.woff2',
+  './fonts/work-sans-latin-ext-600-normal.woff2',
+  './fonts/work-sans-latin-700-normal.woff2',
+  './fonts/work-sans-latin-ext-700-normal.woff2',
+  './fonts/fraunces-latin-500-normal.woff2',
+  './fonts/fraunces-latin-ext-500-normal.woff2',
+  './fonts/fraunces-latin-600-normal.woff2',
+  './fonts/fraunces-latin-ext-600-normal.woff2',
+  './fonts/fraunces-latin-700-normal.woff2',
+  './fonts/fraunces-latin-ext-700-normal.woff2'
 ];
 
 self.addEventListener('install', (event) => {

@@ -145,6 +145,11 @@ document.addEventListener('click', (e) => {
   if (menu && !menu.contains(e.target)) {
     closeYearTextMenu();
   }
+  const colorMenu = document.getElementById('yearColorDropdown');
+  const colorBtn = document.getElementById('yearColorMenuBtn');
+  if (colorMenu && colorMenu.classList.contains('open') && !colorMenu.contains(e.target) && e.target !== colorBtn) {
+    colorMenu.classList.remove('open');
+  }
 });
 
 function openYearTextEdit() {
@@ -159,7 +164,7 @@ function openYearTextEdit() {
   input.style.fontSize = savedSize + 'px';
   yearTextColor = savedColor;
   yearFontSize = savedSize;
-  document.querySelectorAll('.color-swatch').forEach(btn => {
+  document.querySelectorAll('#yearColorDropdown .color-swatch').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.color === savedColor);
   });
   setSizeSlider(savedSize);
@@ -175,10 +180,22 @@ function toggleYearTextEdit() {
   openYearTextEdit();
 }
 
+function toggleYearColorMenu() {
+  document.getElementById('yearColorDropdown')?.classList.toggle('open');
+}
+
+function closeYearColorMenu() {
+  document.getElementById('yearColorDropdown')?.classList.remove('open');
+}
+
 function selectYearColor(btn) {
-  document.querySelectorAll('.color-swatch').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#yearColorDropdown .color-swatch').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   yearTextColor = btn.dataset.color;
+  localStorage.setItem('studiuMeu_yearColor', yearTextColor);
+  const display = document.getElementById('yearTextDisplay');
+  if (display) display.style.color = yearTextColor;
+  closeYearColorMenu();
 }
 
 function saveYearText() {
