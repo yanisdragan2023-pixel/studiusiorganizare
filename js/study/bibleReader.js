@@ -220,7 +220,6 @@ function openChapter(chapNum) {
     verseTextEl.value = state.bibleOfflineText[key] || '';
     if (typeof autoGrowTextarea === 'function') autoGrowTextarea(verseTextEl);
   }
-  applyBibleTextColor();
 
   // Randare notițe salvate și versete marcate
   renderChapterNotesDisplay(noteData);
@@ -356,38 +355,6 @@ function renderMarkedVerses(list) {
     </div>`).join('');
   renderChapterHighlights(list);
 }
-
-// ============================================
-// CULOARE TEXT CAPITOL (Scripturile Ebraice și Grecești)
-// ============================================
-let bibleTextColor = localStorage.getItem('studiuMeu_bibleTextColor') || '#e6edf3';
-
-function applyBibleTextColor() {
-  const el = document.getElementById('chapterVerseText');
-  if (el) el.style.color = bibleTextColor;
-  document.querySelectorAll('#bibleTextColorDropdown .color-swatch').forEach(b => {
-    b.classList.toggle('active', b.dataset.color === bibleTextColor);
-  });
-}
-
-function toggleBibleTextColorMenu() {
-  document.getElementById('bibleTextColorDropdown')?.classList.toggle('open');
-}
-
-function selectBibleTextColor(btn) {
-  bibleTextColor = btn.dataset.color;
-  localStorage.setItem('studiuMeu_bibleTextColor', bibleTextColor);
-  applyBibleTextColor();
-}
-
-// Închide meniul de culoare al textului capitolului la click în afara lui
-document.addEventListener('click', (e) => {
-  const dropdown = document.getElementById('bibleTextColorDropdown');
-  const btn = document.getElementById('bibleTextColorMenuBtn');
-  if (dropdown && dropdown.classList.contains('open') && !dropdown.contains(e.target) && e.target !== btn) {
-    dropdown.classList.remove('open');
-  }
-});
 
 function renderChapterHighlights(list) {
   const container = document.getElementById('chapterHighlights');

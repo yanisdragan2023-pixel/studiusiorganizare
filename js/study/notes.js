@@ -108,9 +108,6 @@ function loadYearText() {
   const savedSize = parseInt(localStorage.getItem('studiuMeu_yearSize')) || 14;
   yearTextColor = savedColor;
   yearFontSize = savedSize;
-  document.querySelectorAll('#yearTextColorDropdown .color-swatch').forEach(b => {
-    b.classList.toggle('active', b.dataset.color === savedColor);
-  });
   const display = document.getElementById('yearTextDisplay');
   const actions = document.getElementById('yearTextActions');
   if (display) {
@@ -145,10 +142,9 @@ function closeYearTextMenu() {
 // Închide meniul „Textul Anului” la click în afara lui
 document.addEventListener('click', (e) => {
   const menu = document.getElementById('yearTextActions');
-  const colorMenu = document.getElementById('yearTextColorDropdown');
-  const colorBtn = document.getElementById('yearTextColorMenuBtn');
-  if (menu && !menu.contains(e.target)) closeYearTextMenu();
-  if (colorMenu && colorBtn && !colorMenu.contains(e.target) && !colorBtn.contains(e.target)) closeYearTextColorMenu();
+  if (menu && !menu.contains(e.target)) {
+    closeYearTextMenu();
+  }
 });
 
 function openYearTextEdit() {
@@ -163,7 +159,7 @@ function openYearTextEdit() {
   input.style.fontSize = savedSize + 'px';
   yearTextColor = savedColor;
   yearFontSize = savedSize;
-  document.querySelectorAll('#yearTextColorDropdown .color-swatch').forEach(btn => {
+  document.querySelectorAll('.color-swatch').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.color === savedColor);
   });
   setSizeSlider(savedSize);
@@ -179,26 +175,10 @@ function toggleYearTextEdit() {
   openYearTextEdit();
 }
 
-function toggleYearTextColorMenu() {
-  document.getElementById('yearTextColorDropdown')?.classList.toggle('open');
-  const savedColor = localStorage.getItem('studiuMeu_yearColor') || yearTextColor || '#e6edf3';
-  document.querySelectorAll('#yearTextColorDropdown .color-swatch').forEach(b => {
-    b.classList.toggle('active', b.dataset.color === savedColor);
-  });
-}
-
-function closeYearTextColorMenu() {
-  document.getElementById('yearTextColorDropdown')?.classList.remove('open');
-}
-
 function selectYearColor(btn) {
-  document.querySelectorAll('#yearTextColorDropdown .color-swatch').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.color-swatch').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   yearTextColor = btn.dataset.color;
-  localStorage.setItem('studiuMeu_yearColor', yearTextColor);
-  const display = document.getElementById('yearTextDisplay');
-  if (display && localStorage.getItem('studiuMeu_yearText')) display.style.color = yearTextColor;
-  closeYearTextColorMenu();
 }
 
 function saveYearText() {

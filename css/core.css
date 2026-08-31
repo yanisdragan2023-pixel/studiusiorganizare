@@ -1528,3 +1528,217 @@ select.form-input option { background: var(--bg-elevated); }
 @media (max-width: 800px) {
   .save-indicator { display: none; }
 }
+
+/* ============================================
+   ACASĂ — REORGANIZARE VIZUALĂ (UI/UX)
+   Doar stiluri; toate regulile sunt scopate pe
+   #page-dashboard ca să nu afecteze alte pagini
+   care refolosesc .card / .card-header / .badge.
+   ============================================ */
+
+/* --- Spațiere între secțiuni --- */
+#page-dashboard .dash-section { margin-bottom: 32px; }
+#page-dashboard .dash-section:last-child { margin-bottom: 0; }
+
+#page-dashboard .dash-eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+#page-dashboard .dash-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+#page-dashboard .dash-section-title::before {
+  content: "";
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--purple));
+  display: inline-block;
+}
+
+/* --- Mai mult aer între carduri, fără să lungească inutil pagina --- */
+#page-dashboard .stats-grid { gap: 14px; }
+#page-dashboard .study-grid { gap: 18px; }
+#page-dashboard .card { padding: 18px 20px; box-shadow: var(--shadow-sm); }
+
+/* --- Carduri statistice: mai elegante, compacte, ierarhie clară --- */
+#page-dashboard .stat-card {
+  padding: 16px 18px;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+}
+#page-dashboard .stat-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+#page-dashboard .stat-icon { width: 42px; height: 42px; border-radius: 11px; }
+#page-dashboard .stat-label { font-size: 0.72rem; letter-spacing: 0.2px; }
+#page-dashboard .stat-value { font-size: 1.6rem; }
+
+/* --- "Ce urmează": iconiță de întrunire mai vizibilă --- */
+#page-dashboard .meeting-type-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  background: var(--accent-glow);
+  border-radius: 14px;
+}
+
+/* --- "Textul Anului": element hero al paginii --- */
+#page-dashboard .year-text-hero {
+  max-width: none;
+  min-width: 0;
+  width: 100%;
+  flex: none;
+  padding: 26px 30px;
+  background: linear-gradient(135deg, var(--bg-elevated), var(--accent-glow));
+  border: 1px solid var(--accent-glow);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+#page-dashboard .year-text-hero::before {
+  content: "❝";
+  position: absolute;
+  top: 4px;
+  right: 20px;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.18;
+  pointer-events: none;
+}
+#page-dashboard .year-text-hero .year-text-label {
+  font-size: 0.75rem;
+}
+#page-dashboard .year-text-hero .year-text-content {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 92%;
+}
+
+/* --- Grila secțiunii Studiu: Verset / Citește Biblia / Notițe --- */
+#page-dashboard .study-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: stretch;
+}
+#page-dashboard .study-grid > * { height: 100%; }
+
+/* --- "Citește Biblia": card funcțional, nu doar o imagine --- */
+#page-dashboard .bible-cta-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  background: linear-gradient(135deg, var(--bg-surface), rgba(16,201,160,0.08));
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+#page-dashboard .bible-cta-card:hover,
+#page-dashboard .bible-cta-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--green);
+  box-shadow: 0 8px 22px rgba(16,201,160,0.15);
+  outline: none;
+}
+#page-dashboard .bible-cta-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#page-dashboard .bible-cta-icon { font-size: 1.6rem; line-height: 1; }
+#page-dashboard .bible-cta-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+#page-dashboard .bible-cta-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+#page-dashboard .bible-cta-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4; flex: 1; }
+#page-dashboard .bible-cta-btn { margin-top: auto; pointer-events: none; }
+
+/* --- "Acces Rapid": tile-uri mari, ușor de apăsat pe telefon --- */
+#page-dashboard .quick-access-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+#page-dashboard .quick-access-tile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  min-height: 64px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+#page-dashboard .quick-access-tile:hover,
+#page-dashboard .quick-access-tile:focus-visible {
+  background: var(--bg-hover);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  outline: none;
+}
+#page-dashboard .quick-access-tile:active { transform: translateY(0); }
+#page-dashboard .qa-icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  background: var(--accent-glow);
+  color: var(--accent);
+  border-radius: 10px;
+}
+#page-dashboard .qa-label { line-height: 1.3; }
+
+/* --- Responsive: Acasă --- */
+@media (max-width: 1100px) {
+  #page-dashboard .study-grid { grid-template-columns: repeat(2, 1fr); }
+  #page-dashboard .quick-access-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  #page-dashboard .study-grid { grid-template-columns: 1fr; }
+  #page-dashboard .study-grid > * { height: auto; }
+  #page-dashboard .year-text-hero { padding: 20px 22px; }
+  #page-dashboard .year-text-hero .year-text-content { font-size: 1.05rem; max-width: 100%; }
+  #page-dashboard .year-text-hero::before { font-size: 2.3rem; }
+}
+@media (max-width: 480px) {
+  #page-dashboard .quick-access-grid { grid-template-columns: 1fr; }
+  #page-dashboard .dash-section { margin-bottom: 26px; }
+}
