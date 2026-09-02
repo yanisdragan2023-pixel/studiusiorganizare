@@ -216,14 +216,10 @@ function openChapter(chapNum) {
   // Text capitol (scris/lipit de utilizator), salvat separat per capitol
   if (!state.bibleOfflineText) state.bibleOfflineText = {};
   const verseTextEl = document.getElementById('chapterVerseText');
-  const verseEditor = document.getElementById('chapterVerseEditor');
-  if (verseTextEl) verseTextEl.value = state.bibleOfflineText[key] || '';
-  if (verseEditor) {
-    const rich = state.bibleOfflineRichText?.[key];
-    verseEditor.innerHTML = rich || escHtml(state.bibleOfflineText[key] || '').replace(/\n/g, '<br>');
-    verseEditor.style.color = bibleTextColor;
+  if (verseTextEl) {
+    verseTextEl.value = state.bibleOfflineText[key] || '';
+    if (typeof autoGrowTextarea === 'function') autoGrowTextarea(verseTextEl);
   }
-  applyBibleTextColor();
 
   // Randare notițe salvate și versete marcate
   renderChapterNotesDisplay(noteData);
@@ -284,9 +280,8 @@ function saveChapterNote() {
 // Auto-save chapter verse text as user types (debounced)
 let verseTextSaveTimer = null;
 function autoSaveChapterVerseText() {
-  const editor = document.getElementById('chapterVerseEditor');
-  const hidden = document.getElementById('chapterVerseText');
-  if (editor && hidden) hidden.value = editor.innerText;
+  const el = document.getElementById('chapterVerseText');
+  if (typeof autoGrowTextarea === 'function') autoGrowTextarea(el);
   clearTimeout(verseTextSaveTimer);
   verseTextSaveTimer = setTimeout(saveChapterVerseText, 500);
 }
@@ -294,65 +289,14 @@ function autoSaveChapterVerseText() {
 function saveChapterVerseText() {
   if (!brState.bookSlug || !brState.chapter) return;
   if (!state.bibleOfflineText) state.bibleOfflineText = {};
-  if (!state.bibleOfflineRichText) state.bibleOfflineRichText = {};
   const key = `${brState.bookSlug}-${brState.chapter}`;
-  const editor = document.getElementById('chapterVerseEditor');
-  const text = editor ? editor.innerText.trim() : (document.getElementById('chapterVerseText')?.value || '').trim();
-  const html = editor ? editor.innerHTML.trim() : '';
-  if (text) {
+  const text = document.getElementById('chapterVerseText').value;
+  if (text.trim()) {
     state.bibleOfflineText[key] = text;
-    state.bibleOfflineRichText[key] = html;
   } else {
     delete state.bibleOfflineText[key];
-    delete state.bibleOfflineRichText[key];
   }
   saveState();
-}
-
-let savedBibleSelection = null;
-function rememberBibleSelection() {
-  const editor = document.getElementById('chapterVerseEditor');
-  const sel = window.getSelection();
-  if (!editor || !sel || !sel.rangeCount || !editor.contains(sel.anchorNode) || !editor.contains(sel.focusNode)) return false;
-  savedBibleSelection = sel.getRangeAt(0).cloneRange();
-  return !savedBibleSelection.collapsed;
-}
-
-function restoreBibleSelection() {
-  if (!savedBibleSelection) return false;
-  const sel = window.getSelection();
-  sel.removeAllRanges();
-  sel.addRange(savedBibleSelection);
-  return true;
-}
-
-function applyColorToBibleSelection(color) {
-  const editor = document.getElementById('chapterVerseEditor');
-  if (!editor) return;
-  if (!restoreBibleSelection()) {
-    showToast('Selectează mai întâi versetul sau textul pe care vrei să-l colorezi.', 'error');
-    return;
-  }
-  document.execCommand('styleWithCSS', false, true);
-  document.execCommand('foreColor', false, color);
-  editor.focus();
-  autoSaveChapterVerseText();
-}
-
-function clearBibleSelectionColor() {
-  applyColorToBibleSelection('inherit');
-}
-
-function selectBibleHighlightColor(btn) {
-  const color = btn.dataset.color;
-  applyColorToBibleSelection(color);
-  document.querySelectorAll('#bibleTextColorDropdown .color-swatch').forEach(b => b.classList.toggle('active', b === btn));
-  document.getElementById('bibleTextColorDropdown')?.classList.remove('open');
-}
-
-function rememberAndOpenBibleColorMenu() {
-  rememberBibleSelection();
-  toggleBibleTextColorMenu();
 }
 
 function renderChapterNotesDisplay(noteData) {
@@ -411,52 +355,6 @@ function renderMarkedVerses(list) {
     </div>`).join('');
   renderChapterHighlights(list);
 }
-
-// ============================================
-// CULOARE TEXT CAPITOL (Scripturile Ebraice și Grecești)
-// ============================================
-let bibleTextColor = localStorage.getItem('studiuMeu_bibleTextColor') || '#e6edf3';
-
-function applyBibleTextColor() {
-  const el = document.getElementById('chapterVerseText');
-  const editor = document.getElementById('chapterVerseEditor');
-  if (el) el.style.color = bibleTextColor;
-  if (editor) editor.style.color = bibleTextColor;
-  document.querySelectorAll('#bibleTextColorDropdown .color-swatch').forEach(b => {
-    b.classList.toggle('active', b.dataset.color === bibleTextColor);
-  });
-}
-
-function toggleBibleTextColorMenu() {
-  rememberBibleSelection();
-  document.getElementById('bibleTextColorDropdown')?.classList.toggle('open');
-}
-
-function selectBibleTextColor(btn) {
-  bibleTextColor = btn.dataset.color;
-  localStorage.setItem('studiuMeu_bibleTextColor', bibleTextColor);
-  applyColorToBibleSelection(bibleTextColor);
-  document.getElementById('bibleTextColorDropdown')?.classList.remove('open');
-}
-
-// Închide meniul de culoare al textului capitolului la click în afara lui
-document.addEventListener('click', (e) => {
-  const dropdown = document.getElementById('bibleTextColorDropdown');
-  const btn = document.getElementById('bibleTextColorMenuBtn');
-  if (dropdown && dropdown.classList.contains('open') && !dropdown.contains(e.target) && e.target !== btn) {
-    dropdown.classList.remove('open');
-  }
-});
-
-// Lipește text simplu în editor pentru a evita formatarea nedorită de pe site-uri externe.
-document.addEventListener('paste', (e) => {
-  const editor = document.getElementById('chapterVerseEditor');
-  if (!editor || document.activeElement !== editor) return;
-  e.preventDefault();
-  const text = e.clipboardData?.getData('text/plain') || '';
-  document.execCommand('insertText', false, text);
-  autoSaveChapterVerseText();
-});
 
 function renderChapterHighlights(list) {
   const container = document.getElementById('chapterHighlights');

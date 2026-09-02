@@ -7,11 +7,7 @@ const CACHE_NAME = CACHE_VERSION;
 const APP_SHELL = [
   './',
   './index.html',
-  './css/base.css',
-  './css/core.css',
-  './css/meetings.css',
-  './css/study.css',
-  './css/field-service.css',
+  './style.css',
   './manifest.json',
   './html/acasa.html',
   './html/asistent-ai.html',
@@ -53,11 +49,7 @@ const APP_SHELL = [
   './js/core/utils.js',
   './js/study/bibleReader.js',
   './js/study/curatenie.js',
-  './js/study/library/library-core.js',
-  './js/study/library/publications.js',
-  './js/study/library/video.js',
-  './js/study/library/video-player.js',
-  './js/study/library/music.js',
+  './js/study/library.js',
   './js/study/notes.js',
   './js/study/prophecies.js',
   './js/study/search.js',
@@ -78,21 +70,7 @@ const APP_SHELL = [
   './js/field-service/vestitor.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/icon-512-maskable.png',
-  './fonts/work-sans-latin-400-normal.woff2',
-  './fonts/work-sans-latin-ext-400-normal.woff2',
-  './fonts/work-sans-latin-500-normal.woff2',
-  './fonts/work-sans-latin-ext-500-normal.woff2',
-  './fonts/work-sans-latin-600-normal.woff2',
-  './fonts/work-sans-latin-ext-600-normal.woff2',
-  './fonts/work-sans-latin-700-normal.woff2',
-  './fonts/work-sans-latin-ext-700-normal.woff2',
-  './fonts/fraunces-latin-500-normal.woff2',
-  './fonts/fraunces-latin-ext-500-normal.woff2',
-  './fonts/fraunces-latin-600-normal.woff2',
-  './fonts/fraunces-latin-ext-600-normal.woff2',
-  './fonts/fraunces-latin-700-normal.woff2',
-  './fonts/fraunces-latin-ext-700-normal.woff2'
+  './icons/icon-512-maskable.png'
 ];
 
 self.addEventListener('install', (event) => {

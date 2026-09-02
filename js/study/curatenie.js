@@ -3,13 +3,16 @@
 // ============================================
 // CURĂȚENIE SALA REGATULUI
 // ============================================
-// Fiecare perioadă: [luna_start(0-11), zi_start] -> [luna_sfarsit, zi_sfarsit]
-const curatenieSchedule = [
-  { start: [6, 27], end: [7, 2],  text: 'Grupele 7 și 8 — curățenie' },
-  { start: [7, 3],  end: [7, 9],  text: 'Grupele 9, 1 și 2 — curățenie' },
-  { start: [7, 10], end: [7, 16], text: 'Grupele 3 și 4 — curățenie' },
-  { start: [7, 17], end: [7, 23], text: 'Grupele 5 și 6 — curățenie' },
-  { start: [7, 24], end: [7, 30], text: 'Grupele 7 și 8 — curățenie' }
+// Punct de plecare al rotației: luni, 31 august 2026 (începutul primei perioade cunoscute).
+// De aici, rotația se repetă la infinit, câte o săptămână (luni–duminică) pentru fiecare grupă.
+const ANCHOR_MONDAY = new Date(2026, 7, 31); // lună 0-indexată: 7 = august
+
+// Ordinea grupelor care se repetă la infinit, o intrare pe săptămână.
+const GROUP_CYCLE = [
+  'Grupele 9, 1 și 2',
+  'Grupele 3 și 4',
+  'Grupele 5 și 6',
+  'Grupele 7 și 8'
 ];
 
 function curatenieDateOnly(d) {
@@ -18,18 +21,18 @@ function curatenieDateOnly(d) {
 
 function curatenieCurrentMessage() {
   const now = curatenieDateOnly(new Date());
-  const year = now.getFullYear();
-  for (const period of curatenieSchedule) {
-    const start = new Date(year, period.start[0], period.start[1]);
-    const end = new Date(year, period.end[0], period.end[1]);
-    if (now >= start && now <= end) return period.text;
-  }
-  return null;
+  const msPerDay = 24 * 60 * 60 * 1000;
+  const diffDays = Math.round((now - ANCHOR_MONDAY) / msPerDay);
+  const weekIndex = Math.floor(diffDays / 7);
+  const n = GROUP_CYCLE.length;
+  const idx = ((weekIndex % n) + n) % n; // modulo pozitiv, funcționează și pt. date anterioare ancorei
+  return GROUP_CYCLE[idx];
 }
 
 function renderCuratenie() {
   const el = document.getElementById('curatenieScheduleText');
   if (!el) return;
   const msg = curatenieCurrentMessage();
-  el.textContent = msg || 'Nu există o programare pentru perioada curentă.';
+  el.textContent = msg || '';
+  el.style.display = msg ? 'block' : 'none';
 }

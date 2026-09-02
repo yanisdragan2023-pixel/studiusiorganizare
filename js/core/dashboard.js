@@ -224,45 +224,11 @@ function setVerse(v) {
   if (!v) {
     if (textEl) textEl.textContent = 'Adaugă fișierul local js/study/verse-of-day.local.js pentru a vedea versetul zilei (vezi verse-of-day.example.js).';
     if (refEl) refEl.textContent = '';
-    applyVerseColor();
     return;
   }
   if (textEl) textEl.textContent = v.text;
   if (refEl) refEl.textContent = `— ${v.ref}`;
-  applyVerseColor();
 }
-
-// ============================================
-// CULOARE VERSETUL ZILEI
-// ============================================
-let verseTextColor = localStorage.getItem('studiuMeu_verseColor') || '#e6edf3';
-
-function applyVerseColor() {
-  const textEl = document.getElementById('verseText');
-  if (textEl) textEl.style.color = verseTextColor;
-  document.querySelectorAll('#verseColorDropdown .color-swatch').forEach(b => {
-    b.classList.toggle('active', b.dataset.color === verseTextColor);
-  });
-}
-
-function toggleVerseColorMenu() {
-  document.getElementById('verseColorDropdown')?.classList.toggle('open');
-}
-
-function selectVerseColor(btn) {
-  verseTextColor = btn.dataset.color;
-  localStorage.setItem('studiuMeu_verseColor', verseTextColor);
-  applyVerseColor();
-}
-
-// Închide meniul de culoare al Versetului Zilei la click în afara lui
-document.addEventListener('click', (e) => {
-  const dropdown = document.getElementById('verseColorDropdown');
-  const btn = document.getElementById('verseColorMenuBtn');
-  if (dropdown && dropdown.classList.contains('open') && !dropdown.contains(e.target) && e.target !== btn) {
-    dropdown.classList.remove('open');
-  }
-});
 
 function newVerse() {
   if (!DAILY_VERSES.length) { setVerse(null); return; }
